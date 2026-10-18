@@ -33,6 +33,7 @@ jobs:
           set -o pipefail
           mkdir -p results
           pkg-config --modversion wlroots-0.20 > results/wlroots-version.txt 2>&1 || true
+          tar czf results/wlroots-headers.tar.gz -C /usr/include wlroots-0.20 2>/dev/null || true
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
             -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" 2>&1 | tee results/configure.log

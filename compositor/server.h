@@ -2,6 +2,7 @@
 #ifndef CHRONO_SERVER_H
 #define CHRONO_SERVER_H
 
+#include <cairo.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <wayland-server-core.h>

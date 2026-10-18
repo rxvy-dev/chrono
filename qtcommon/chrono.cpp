@@ -1,5 +1,6 @@
 #include "chrono.h"
 
+#include <QColor>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>

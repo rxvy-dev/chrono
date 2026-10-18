@@ -326,8 +326,9 @@ static void xwayland_ready(struct wl_listener *l, void *data)
 	struct wlr_xcursor *xc = wlr_xcursor_manager_get_xcursor(s->xcursor, "default", 1);
 	if (xc) {
 		struct wlr_xcursor_image *img = xc->images[0];
-		wlr_xwayland_set_cursor(s->xwayland, img->buffer, img->width * 4, img->width, img->height,
-					(int32_t)img->hotspot_x, (int32_t)img->hotspot_y);
+		struct wlr_buffer *buf = wlr_xcursor_image_get_buffer(img);
+		if (buf)
+			wlr_xwayland_set_cursor(s->xwayland, buf, (int32_t)img->hotspot_x, (int32_t)img->hotspot_y);
 	}
 }
 
