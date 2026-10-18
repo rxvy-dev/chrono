@@ -132,8 +132,11 @@ endif()
 # ---------------------------------------------------------------- Qt apps
 if(CHRONO_QT_APPS)
   add_subdirectory(qtcommon)
-  add_subdirectory(shell)
-  add_subdirectory(settings)
+  foreach(app shell settings)
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${app}/main.cpp)
+      add_subdirectory(${app})
+    endif()
+  endforeach()
 endif()
 
 # ---------------------------------------------------------------- session files
