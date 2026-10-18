@@ -8,6 +8,7 @@
 #include <string.h>
 #include <strings.h>
 #include <time.h>
+#include <wlr/render/color.h>
 #include <wlr/types/wlr_gamma_control_v1.h>
 #include <wlr/types/wlr_output.h>
 #include <wlr/types/wlr_output_layout.h>
@@ -450,7 +451,8 @@ static void output_frame(struct wl_listener *l, void *data)
 	(void)data;
 	if (!o->scene_output)
 		return;
-	wlr_scene_output_commit(o->scene_output, NULL);
+	struct wlr_scene_output_state_options opts = {.color_transform = o->night_tf};
+	wlr_scene_output_commit(o->scene_output, &opts);
 	struct timespec now;
 	clock_gettime(CLOCK_MONOTONIC, &now);
 	wlr_scene_output_send_frame_done(o->scene_output, &now);
@@ -475,6 +477,8 @@ static void output_destroy(struct wl_listener *l, void *data)
 		wlr_scene_node_destroy(&o->desktop->node);
 	if (o->lock_buf)
 		wlr_scene_node_destroy(&o->lock_buf->node);
+	if (o->night_tf)
+		wlr_color_transform_unref(o->night_tf);
 	free(o);
 }
 
@@ -611,31 +615,35 @@ void night_light_update(struct chrono_server *s)
 {
 	bool on = night_now(s);
 	s->night_active = on;
+	/* one shared LUT; each output holds a reference. Applied in output_frame via the scene, so it
+	 * works on every renderer and doesn't fight clients that use gamma-control. */
+	struct wlr_color_transform *tf = NULL;
+	if (on && !s->renderer->features.output_color_transform) {
+		wlr_log(WLR_INFO, "night light: this renderer can't apply colour transforms (try the Vulkan or GLES renderer)");
+		on = false;
+	}
+	if (on) {
+		enum { N = 256 };
+		uint16_t r[N], g[N], b[N];
+		double fr, fg, fb;
+		temp_to_rgb(s->config.night_temp, &fr, &fg, &fb);
+		for (int i = 0; i < N; i++) {
+			double v = (double)i / (N - 1) * 65535.0;
+			r[i] = (uint16_t)(v * fr);
+			g[i] = (uint16_t)(v * fg);
+			b[i] = (uint16_t)(v * fb);
+		}
+		tf = wlr_color_transform_init_lut_3x1d(N, r, g, b);
+	}
 	struct chrono_output *o;
 	wl_list_for_each(o, &s->outputs, link) {
-		size_t n = wlr_output_get_gamma_size(o->wlr_output);
-		if (n == 0)
-			continue;
-		struct wlr_output_state st;
-		wlr_output_state_init(&st);
-		if (on) {
-			double r, g, b;
-			temp_to_rgb(s->config.night_temp, &r, &g, &b);
-			uint16_t *lut = calloc(n * 3, sizeof *lut);
-			for (size_t i = 0; i < n; i++) {
-				double v = (double)i / (n - 1) * 65535.0;
-				lut[i] = (uint16_t)(v * r);
-				lut[n + i] = (uint16_t)(v * g);
-				lut[2 * n + i] = (uint16_t)(v * b);
-			}
-			wlr_output_state_set_gamma_lut(&st, n, lut, lut + n, lut + 2 * n);
-			free(lut);
-		} else {
-			wlr_output_state_set_gamma_lut(&st, 0, NULL, NULL, NULL);
-		}
-		wlr_output_commit_state(o->wlr_output, &st);
-		wlr_output_state_finish(&st);
+		if (o->night_tf)
+			wlr_color_transform_unref(o->night_tf);
+		o->night_tf = tf ? wlr_color_transform_ref(tf) : NULL;
+		wlr_output_schedule_frame(o->wlr_output);
 	}
+	if (tf)
+		wlr_color_transform_unref(tf);
 }
 
 static int night_tick(void *data)

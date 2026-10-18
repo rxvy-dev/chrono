@@ -124,6 +124,7 @@ struct chrono_output {
 	unsigned desktop_gen;
 	struct wlr_scene_tree *layers[4];      /* layer-shell trees per layer, children of the global layer trees */
 	struct wlr_scene_buffer *lock_buf;
+	struct wlr_color_transform *night_tf;  /* night light, applied by the scene renderer */
 	struct wl_listener frame, request_state, destroy;
 };
 
