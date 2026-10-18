@@ -1,0 +1,18 @@
+#!/bin/sh
+# Start XDG autostart entries (~/.config/autostart, /etc/xdg/autostart) that apply to Chrono.
+for d in /etc/xdg/autostart "${XDG_CONFIG_HOME:-$HOME/.config}/autostart"; do
+    [ -d "$d" ] || continue
+    for f in "$d"/*.desktop; do
+        [ -f "$f" ] || continue
+        name=$(basename "$f")
+        # a user entry overrides the system one with the same name
+        [ "$d" = /etc/xdg/autostart ] && [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/autostart/$name" ] && continue
+        grep -qi '^Hidden=true' "$f" && continue
+        only=$(sed -n 's/^OnlyShowIn=//p' "$f"); not=$(sed -n 's/^NotShowIn=//p' "$f")
+        [ -n "$only" ] && ! echo "$only" | grep -qi 'chrono' && continue
+        echo "$not" | grep -qi 'chrono' && continue
+        try=$(sed -n 's/^TryExec=//p' "$f"); [ -n "$try" ] && ! command -v "$try" >/dev/null && continue
+        cmd=$(sed -n 's/^Exec=//p' "$f" | head -1 | sed 's/ %[fFuUdDnNickvm]//g')
+        [ -n "$cmd" ] && sh -c "$cmd" >/dev/null 2>&1 &
+    done
+done

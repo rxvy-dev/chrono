@@ -1,0 +1,6 @@
+build/
+build-*/
+results/
+*.o
+.cache/
+compile_commands.json

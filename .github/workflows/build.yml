@@ -1,0 +1,67 @@
+name: build
+on:
+  push:
+    branches-ignore: [ci-results]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  arch:
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm --needed base-devel git cmake meson ninja pkgconf \
+            wayland wayland-protocols libinput libxkbcommon pixman libdrm cairo pango pam \
+            xcb-util-wm xorg-xwayland seatd libdisplay-info libliftoff hwdata vulkan-headers \
+            glslang mesa libxcb xcb-util-renderutil xcb-util-errors lcms2 \
+            qt6-base qt6-declarative qt6-wayland qt6-svg layer-shell-qt \
+            foot grim fastfetch python ttf-dejavu noto-fonts
+          pacman -S --noconfirm --needed wlroots0.20 || echo "WLROOTS_FROM_SOURCE=1" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+      - name: Build wlroots 0.20 from source (if not packaged)
+        if: env.WLROOTS_FROM_SOURCE == '1'
+        run: |
+          git clone --depth 1 --branch 0.20.0 https://gitlab.freedesktop.org/wlroots/wlroots.git /tmp/wlroots \
+            || git clone --depth 1 https://gitlab.freedesktop.org/wlroots/wlroots.git /tmp/wlroots
+          cd /tmp/wlroots && meson setup build --prefix=/usr -Dexamples=false && ninja -C build install
+      - name: Configure & build
+        id: build
+        run: |
+          set -o pipefail
+          mkdir -p results
+          pkg-config --modversion wlroots-0.20 > results/wlroots-version.txt 2>&1 || true
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
+            -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" 2>&1 | tee results/configure.log
+          ninja -C build -k 0 2>&1 | tee results/build.log
+      - name: Smoke test (headless)
+        id: smoke
+        if: always() && steps.build.outcome == 'success'
+        env:
+          ASAN_OPTIONS: detect_leaks=0
+        run: tests/smoke.sh build results
+      - name: Report compile errors as annotations
+        if: always()
+        run: |
+          grep -E "^/.*: (error|warning):" results/build.log 2>/dev/null | head -60 | \
+            sed -E 's#^'"$PWD"'/([^:]+):([0-9]+):([0-9]+): (error|warning): (.*)#::\4 file=\1,line=\2,col=\3::\5#' || true
+      - name: Publish results to the ci-results branch
+        if: always()
+        run: |
+          git config --global --add safe.directory "$PWD"
+          git config --global user.name "chrono-ci"
+          git config --global user.email "ci@chrono.invalid"
+          dest="runs/${GITHUB_SHA::7}"
+          if git fetch origin ci-results; then
+            git worktree add -f /tmp/res FETCH_HEAD
+          else
+            git worktree add --orphan -b ci-results-new /tmp/res
+          fi
+          mkdir -p "/tmp/res/$dest"
+          cp -r results/. "/tmp/res/$dest/" 2>/dev/null || true
+          printf 'sha=%s\nbuild=%s\nsmoke=%s\n' "$GITHUB_SHA" "${{ steps.build.outcome }}" "${{ steps.smoke.outcome }}" > "/tmp/res/$dest/status.txt"
+          cp "/tmp/res/$dest/status.txt" /tmp/res/latest.txt
+          cd /tmp/res && git add -A && git commit -qm "results for ${GITHUB_SHA::7}" && git push origin HEAD:refs/heads/ci-results

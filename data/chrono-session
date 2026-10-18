@@ -1,0 +1,19 @@
+#!/bin/sh
+# Login-manager entry point: set up the environment, then run the compositor under a D-Bus session.
+export XDG_CURRENT_DESKTOP=Chrono
+export XDG_SESSION_DESKTOP=chrono
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export MOZ_ENABLE_WAYLAND=1
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+export SDL_VIDEODRIVER="wayland,x11"
+export _JAVA_AWT_WM_NONREPARENTING=1
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/chrono/environment" ] && . "${XDG_CONFIG_HOME:-$HOME/.config}/chrono/environment"
+mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}/chrono"
+LOG="${XDG_STATE_HOME:-$HOME/.local/state}/chrono/chrono.log"
+[ -f "$LOG" ] && mv -f "$LOG" "$LOG.old"
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ] && command -v dbus-run-session >/dev/null; then
+    exec dbus-run-session chrono "$@" >"$LOG" 2>&1
+fi
+exec chrono "$@" >"$LOG" 2>&1

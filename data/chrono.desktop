@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Chrono
+Comment=A Wayland desktop with retro and modern themes
+Exec=chrono-session
+TryExec=chrono
+Type=Application
+DesktopNames=Chrono
