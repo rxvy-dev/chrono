@@ -106,7 +106,7 @@ if(CHRONO_COMPOSITOR)
     compositor/main.c compositor/config.c compositor/buffer.c compositor/decor.c
     compositor/view.c compositor/output.c compositor/layer.c compositor/input.c
     compositor/switcher.c compositor/lock.c compositor/idle.c compositor/ipc.c
-    compositor/xwayland.c)
+    compositor/xwayland.c compositor/themewatch.c)
   add_dependencies(chrono chrono-protocols)
   target_include_directories(chrono PRIVATE ${PROTO_OUT} compositor)
   target_compile_definitions(chrono PRIVATE

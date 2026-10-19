@@ -9,6 +9,66 @@ SettingsPage {
 	property string filter: "all"
 	Component.onCompleted: Chrono.refreshThemes()
 
+	readonly property string mode: Chrono.config["appearance.mode"] || "theme"
+	readonly property string accent: Chrono.config["appearance.accent"] || "theme"
+	property int gen: 0
+	Connections { target: Chrono; function onThemeChanged() { p.gen++ } function onConfigChanged() { p.gen++ } }
+
+	// ----- live preview + appearance controls
+	RowLayout {
+		Layout.fillWidth: true
+		spacing: 20
+		Image {
+			Layout.preferredWidth: 400
+			Layout.preferredHeight: 250
+			source: "image://preview/" + encodeURIComponent(Chrono.selectedTheme + "?mode=" + p.mode + "&accent=" + p.accent) + "#" + p.gen
+			sourceSize: Qt.size(800, 500)
+			asynchronous: true
+			cache: false
+		}
+		ColumnLayout {
+			Layout.fillWidth: true
+			spacing: 12
+			Label { text: Chrono.theme.name; font.pointSize: 15; font.bold: true }
+			Label { text: Chrono.theme.description; wrapMode: Text.Wrap; opacity: 0.75; Layout.fillWidth: true }
+			RowLayout {
+				spacing: 6
+				Label { text: qsTr("Style"); Layout.preferredWidth: 60 }
+				Repeater {
+					model: [{ v: "theme", t: qsTr("As designed") }, { v: "light", t: qsTr("Light") }, { v: "dark", t: qsTr("Dark") }]
+					Button { required property var modelData; text: modelData.t; checkable: true; checked: p.mode === modelData.v
+						onClicked: Chrono.setConfig("appearance", "mode", modelData.v) }
+				}
+			}
+			Label { visible: p.mode !== "theme" && !Chrono.theme.pair && Chrono.theme.variant !== p.mode; opacity: 0.6; font.pointSize: 8; wrapMode: Text.Wrap; Layout.fillWidth: true
+				text: qsTr("This theme only comes in one style.") }
+			RowLayout {
+				spacing: 6
+				Label { text: qsTr("Accent"); Layout.preferredWidth: 60 }
+				Repeater {
+					model: ["theme", "wallpaper", "#3b82f6", "#8b5cf6", "#ec4899", "#ef4444", "#f97316", "#eab308", "#22c55e", "#14b8a6"]
+					Rectangle {
+						required property string modelData
+						width: 26; height: 26; radius: 13
+						color: modelData === "theme" ? "transparent" : modelData === "wallpaper" ? "transparent" : modelData
+						border.width: p.accent === modelData ? 3 : 1
+						border.color: p.accent === modelData ? palette.windowText : Qt.rgba(palette.windowText.r, palette.windowText.g, palette.windowText.b, 0.3)
+						Label { anchors.centerIn: parent; visible: modelData === "theme"; text: "T"; font.bold: true; font.pointSize: 8 }
+						Rectangle { visible: modelData === "wallpaper"; anchors.fill: parent; anchors.margins: 4; radius: width / 2
+							gradient: Gradient { GradientStop { position: 0; color: Chrono.theme.desktop1 } GradientStop { position: 1; color: Chrono.theme.desktop2 } } }
+						MouseArea { anchors.fill: parent; onClicked: Chrono.setConfig("appearance", "accent", modelData)
+							hoverEnabled: true; ToolTip.visible: containsMouse
+							ToolTip.text: modelData === "theme" ? qsTr("The theme's own accent") : modelData === "wallpaper" ? qsTr("From the wallpaper") : modelData }
+					}
+				}
+				TextField { Layout.preferredWidth: 90; placeholderText: "#rrggbb"; text: p.accent.indexOf("#") === 0 ? p.accent : ""
+					validator: RegularExpressionValidator { regularExpression: /#[0-9a-fA-F]{6}/ }
+					onEditingFinished: if (acceptableInput) Chrono.setConfig("appearance", "accent", text) }
+			}
+			ConfigSwitch { label: qsTr("Reduce motion"); description: qsTr("Turn off animations everywhere."); section: "appearance"; key: "reduce_motion"; defaultValue: false }
+		}
+	}
+
 	RowLayout {
 		spacing: 6
 		Repeater {
@@ -16,7 +76,7 @@ SettingsPage {
 			Button { required property var modelData; text: modelData.text; checkable: true; checked: p.filter === modelData.id; onClicked: p.filter = modelData.id }
 		}
 		Item { Layout.fillWidth: true }
-		Label { text: qsTr("Current: %1").arg(Chrono.theme.name); opacity: 0.7 }
+		Label { text: qsTr("%1 themes").arg(Chrono.themes.length); opacity: 0.7 }
 	}
 
 	GridLayout {
@@ -28,7 +88,7 @@ SettingsPage {
 			model: Chrono.themes.filter(t => p.filter === "all" || t.era === p.filter)
 			Item {
 				required property var modelData
-				readonly property bool current: Chrono.theme.id === modelData.id
+				readonly property bool current: Chrono.selectedTheme === modelData.id
 				Layout.fillWidth: true
 				Layout.preferredHeight: width * 10 / 16 + 54
 				Rectangle {
@@ -77,8 +137,8 @@ SettingsPage {
 	Section {
 		title: qsTr("Make your own")
 		Label { Layout.fillWidth: true; wrapMode: Text.Wrap; opacity: 0.8
-			text: qsTr("Themes are plain text files. Copy one from %1 into ~/.local/share/chrono/themes/, rename it and change colours, title-bar style, button shapes, fonts, panel and wallpaper. It shows up here straight away.").arg(Chrono.theme.path.replace(/\/[^/]*$/, "")) }
-		Button { text: qsTr("Open my themes folder"); onClicked: Backend.run("mkdir -p ~/.local/share/chrono/themes && xdg-open ~/.local/share/chrono/themes") }
+			text: qsTr("Themes are plain text files. Copy one from %1 into ~/.config/chrono/themes/, rename it and change colours, title-bar style, button shapes, fonts, panel and wallpaper. It shows up here straight away, and saving the file restyles the desktop live.").arg(Chrono.theme.path.replace(/\/[^/]*$/, "")) }
+		Button { text: qsTr("Open my themes folder"); onClicked: Backend.run("mkdir -p ~/.config/chrono/themes && xdg-open ~/.config/chrono/themes") }
 	}
 	Item { Layout.preferredHeight: 20 }
 }

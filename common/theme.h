@@ -38,6 +38,8 @@ struct chrono_theme {
 	char era[16];            /* "retro" | "modern" */
 	char description[256];
 	char path[1024];
+	char variant[8];         /* "dark" | "light" (worked out from the background if not set) */
+	char pair[64];           /* id of the same theme in the other variant, for the light/dark switch */
 
 	/* palette */
 	struct chrono_rgba bg, fg, accent, accent_fg, selection;
@@ -96,6 +98,19 @@ void chrono_theme_defaults(struct chrono_theme *t);
 void chrono_theme_list(void (*cb)(const char *path, const char *id, void *data), void *data);
 
 bool chrono_parse_color(const char *s, struct chrono_rgba *out);
+
+/* Load a theme the way the user's preferences ask for it:
+ *   mode   "theme" (or NULL) | "light" | "dark" — switches to the theme's pair when the variant differs
+ *   accent NULL/"" /"theme" | "#rrggbb" | "wallpaper" (derived from the theme's wallpaper colours) */
+bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char *mode, const char *accent);
+void chrono_theme_apply_accent(struct chrono_theme *t, const char *accent);
+
+/* WCAG 2 contrast ratio between two colours (alpha is ignored), 1..21 */
+double chrono_contrast(struct chrono_rgba a, struct chrono_rgba b);
+double chrono_luminance(struct chrono_rgba c);
+
+/* Directories themes are read from, most important first; returns how many were written. */
+int chrono_theme_dirs(char dirs[][4096], int max);
 
 #ifdef __cplusplus
 }

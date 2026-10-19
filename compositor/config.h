@@ -19,6 +19,9 @@ struct chrono_config {
 
 	/* general */
 	char theme[64];
+	char appearance_mode[16];   /* theme | light | dark */
+	char accent[32];            /* theme | #rrggbb | wallpaper */
+	bool reduce_motion;
 	char terminal[256];
 	char file_manager[256];
 	char browser[256];

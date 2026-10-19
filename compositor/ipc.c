@@ -152,6 +152,10 @@ static void theme_list_cb(const char *path, const char *id, void *data)
 	jbuf_string(b, n, t.description);
 	jbuf_append(b, n, ",\"path\":");
 	jbuf_string(b, n, path);
+	jbuf_append(b, n, ",\"variant\":");
+	jbuf_string(b, n, t.variant);
+	jbuf_append(b, n, ",\"pair\":");
+	jbuf_string(b, n, t.pair);
 	jbuf_append(b, n, "}");
 }
 
@@ -193,6 +197,8 @@ static void handle(struct ipc_client *c, char *line)
 			jbuf_string(&b, &n, s->theme.name);
 			jbuf_append(&b, &n, ",\"path\":");
 			jbuf_string(&b, &n, s->theme.path);
+			jbuf_append(&b, &n, ",\"selected\":");
+			jbuf_string(&b, &n, s->config.theme);
 			jbuf_append(&b, &n, "}");
 			reply(c, b, n);
 		}

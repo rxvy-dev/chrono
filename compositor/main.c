@@ -140,17 +140,36 @@ static void reload_cursor_theme(struct chrono_server *s)
 
 static void load_theme(struct chrono_server *s, const char *id)
 {
-	if (!chrono_theme_load(&s->theme, id))
+	if (!chrono_theme_load_prefs(&s->theme, id, s->config.appearance_mode, s->config.accent))
 		wlr_log(WLR_ERROR, "theme '%s' not found, using the built-in default", id);
 	s->theme_gen++;
 	decor_rebuild_shadow_templates(s);
 }
 
+void server_refresh_theme(struct chrono_server *s)
+{
+	load_theme(s, s->config.theme);
+	reload_cursor_theme(s);
+	views_redecorate(s);
+	output_update_desktops(s);
+	if (lock_active(s))
+		lock_redraw(s);
+	char *b = NULL;
+	size_t n = 0;
+	jbuf_append(&b, &n, "{\"id\":");
+	jbuf_string(&b, &n, s->theme.id);
+	jbuf_append(&b, &n, "}");
+	ipc_event(s, "theme", b);
+	free(b);
+}
+
 void server_apply_theme(struct chrono_server *s, const char *id)
 {
 	load_theme(s, id);
-	snprintf(s->config.theme, sizeof s->config.theme, "%s", s->theme.id);
-	chrono_ini_set_in_file(s->config.path, "general", "theme", s->theme.id);
+	/* remember what was picked, not the light/dark pair we may be showing instead */
+	if (strcmp(s->config.theme, id) && s->config.theme != id)
+		snprintf(s->config.theme, sizeof s->config.theme, "%s", id);
+	chrono_ini_set_in_file(s->config.path, "general", "theme", s->config.theme);
 	reload_cursor_theme(s);
 	views_redecorate(s);
 	output_update_desktops(s);
@@ -183,12 +202,8 @@ void server_reload(struct chrono_server *s)
 	}
 	if (strcmp(old_theme, s->config.theme))
 		server_apply_theme(s, s->config.theme);
-	else {
-		load_theme(s, s->config.theme);
-		reload_cursor_theme(s);
-		views_redecorate(s);
-		output_update_desktops(s);
-	}
+	else
+		server_refresh_theme(s);
 	input_apply_config(s);
 	night_light_update(s);
 	idle_reset(s);
@@ -278,7 +293,7 @@ int main(int argc, char **argv)
 	config_load(&s->config);
 	if (no_shell)
 		s->config.start_shell = false;
-	chrono_theme_load(&s->theme, s->config.theme);
+	chrono_theme_load_prefs(&s->theme, s->config.theme, s->config.appearance_mode, s->config.accent);
 	s->theme_gen = 1;
 	s->ipc_fd = -1;
 	wl_list_init(&s->views);
@@ -343,6 +358,7 @@ int main(int argc, char **argv)
 
 	xwayland_init(s);
 	ipc_init(s);
+	themewatch_init(s);
 
 	if (!wlr_backend_start(s->backend)) {
 		wlr_log(WLR_ERROR, "can't start the backend");
@@ -368,6 +384,7 @@ int main(int argc, char **argv)
 	wl_display_run(s->display);
 
 	ipc_finish(s);
+	themewatch_finish();
 	wl_display_destroy_clients(s->display);
 #ifdef CHRONO_HAVE_XWAYLAND
 	if (s->xwayland) {

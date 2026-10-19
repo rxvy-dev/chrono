@@ -4,6 +4,7 @@
 
 #include <dirent.h>
 #include <limits.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -177,6 +178,8 @@ bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 	str(&ini, "theme.name", t->name, sizeof t->name);
 	str(&ini, "theme.era", t->era, sizeof t->era);
 	str(&ini, "theme.description", t->description, sizeof t->description);
+	str(&ini, "theme.variant", t->variant, sizeof t->variant);
+	str(&ini, "theme.pair", t->pair, sizeof t->pair);
 
 	col(&ini, "colors.bg", &t->bg);
 	col(&ini, "colors.fg", &t->fg);
@@ -247,6 +250,9 @@ bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 	t->cursor_size = (int)chrono_ini_num(&ini, "cursor.size", t->cursor_size);
 	str(&ini, "icons.theme", t->icon_theme, sizeof t->icon_theme);
 
+	if (!t->variant[0])
+		snprintf(t->variant, sizeof t->variant, "%s", chrono_luminance(t->window_bg) < 0.35 ? "dark" : "light");
+
 	/* sanity */
 	if (t->title_height < 0) t->title_height = 0;
 	if (t->title_height > 80) t->title_height = 80;
@@ -262,26 +268,40 @@ bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 	return true;
 }
 
+int chrono_theme_dirs(char dirs[][4096], int max)
+{
+	int n = 0;
+	const char *env = getenv("CHRONO_THEME_DIR");
+	const char *home = getenv("HOME");
+	const char *cfg = getenv("XDG_CONFIG_HOME");
+	const char *data = getenv("XDG_DATA_HOME");
+#define ADD(...) do { if (n < max) snprintf(dirs[n++], 4096, __VA_ARGS__); } while (0)
+	if (env && *env)
+		ADD("%s", env);
+	/* your own themes: ~/.config/chrono/themes (and the older ~/.local/share location) */
+	if (cfg && *cfg)
+		ADD("%s/chrono/themes", cfg);
+	else if (home)
+		ADD("%s/.config/chrono/themes", home);
+	if (data && *data)
+		ADD("%s/chrono/themes", data);
+	else if (home)
+		ADD("%s/.local/share/chrono/themes", home);
+	ADD("/usr/local/share/chrono/themes");
+	ADD("/usr/share/chrono/themes");
+	ADD("themes");
+#undef ADD
+	return n;
+}
+
 static void theme_dirs(char dirs[][PATH_MAX], int *n)
 {
-	*n = 0;
-	const char *env = getenv("CHRONO_THEME_DIR");
-	if (env && *env)
-		snprintf(dirs[(*n)++], PATH_MAX, "%s", env);
-	const char *xdg = getenv("XDG_DATA_HOME");
-	const char *home = getenv("HOME");
-	if (xdg && *xdg)
-		snprintf(dirs[(*n)++], PATH_MAX, "%s/chrono/themes", xdg);
-	else if (home)
-		snprintf(dirs[(*n)++], PATH_MAX, "%s/.local/share/chrono/themes", home);
-	snprintf(dirs[(*n)++], PATH_MAX, "/usr/local/share/chrono/themes");
-	snprintf(dirs[(*n)++], PATH_MAX, "/usr/share/chrono/themes");
-	snprintf(dirs[(*n)++], PATH_MAX, "themes");
+	*n = chrono_theme_dirs(dirs, 8);
 }
 
 bool chrono_theme_load(struct chrono_theme *t, const char *id)
 {
-	char dirs[6][PATH_MAX];
+	char dirs[8][PATH_MAX];
 	int n;
 	theme_dirs(dirs, &n);
 	for (int i = 0; i < n; i++) {
@@ -297,7 +317,7 @@ bool chrono_theme_load(struct chrono_theme *t, const char *id)
 
 void chrono_theme_list(void (*cb)(const char *path, const char *id, void *data), void *data)
 {
-	char dirs[6][PATH_MAX];
+	char dirs[8][PATH_MAX];
 	int n;
 	theme_dirs(dirs, &n);
 	char seen[256][64];
@@ -327,4 +347,106 @@ void chrono_theme_list(void (*cb)(const char *path, const char *id, void *data),
 		}
 		closedir(d);
 	}
+}
+
+/* ------------------------------------------------------------------ colour helpers */
+static double lin(double c)
+{
+	return c <= 0.03928 ? c / 12.92 : pow((c + 0.055) / 1.055, 2.4);
+}
+
+double chrono_luminance(struct chrono_rgba c)
+{
+	return 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+}
+
+double chrono_contrast(struct chrono_rgba a, struct chrono_rgba b)
+{
+	double la = chrono_luminance(a), lb = chrono_luminance(b);
+	if (la < lb) {
+		double x = la;
+		la = lb;
+		lb = x;
+	}
+	return (la + 0.05) / (lb + 0.05);
+}
+
+static void rgb_to_hsl(struct chrono_rgba c, double *h, double *s, double *l)
+{
+	double mx = fmax(c.r, fmax(c.g, c.b)), mn = fmin(c.r, fmin(c.g, c.b));
+	*l = (mx + mn) / 2;
+	if (mx == mn) {
+		*h = *s = 0;
+		return;
+	}
+	double d = mx - mn;
+	*s = *l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+	if (mx == c.r) *h = (c.g - c.b) / d + (c.g < c.b ? 6 : 0);
+	else if (mx == c.g) *h = (c.b - c.r) / d + 2;
+	else *h = (c.r - c.g) / d + 4;
+	*h /= 6;
+}
+
+static double hue2(double p, double q, double t)
+{
+	if (t < 0) t += 1;
+	if (t > 1) t -= 1;
+	if (t < 1.0 / 6) return p + (q - p) * 6 * t;
+	if (t < 0.5) return q;
+	if (t < 2.0 / 3) return p + (q - p) * (2.0 / 3 - t) * 6;
+	return p;
+}
+
+static struct chrono_rgba hsl(double h, double s, double l, double a)
+{
+	if (s == 0)
+		return (struct chrono_rgba){l, l, l, a};
+	double q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+	return (struct chrono_rgba){hue2(p, q, h + 1.0 / 3), hue2(p, q, h), hue2(p, q, h - 1.0 / 3), a};
+}
+
+/* readable text colour on top of c */
+static struct chrono_rgba text_on(struct chrono_rgba c)
+{
+	struct chrono_rgba w = {1, 1, 1, 1}, k = {0.08, 0.08, 0.1, 1};
+	return chrono_contrast(c, w) >= chrono_contrast(c, k) ? w : k;
+}
+
+void chrono_theme_apply_accent(struct chrono_theme *t, const char *accent)
+{
+	if (!accent || !*accent || !strcasecmp(accent, "theme"))
+		return;
+	struct chrono_rgba a;
+	bool dark = !strcmp(t->variant, "dark");
+	if (!strcasecmp(accent, "wallpaper")) {
+		/* Material-You style: take the more colourful wallpaper colour and make it a usable accent */
+		double h1, s1, l1, h2, s2, l2;
+		rgb_to_hsl(t->desktop1, &h1, &s1, &l1);
+		rgb_to_hsl(t->desktop2, &h2, &s2, &l2);
+		double h = s2 > s1 ? h2 : h1, sat = fmax(fmax(s1, s2), 0.45);
+		a = hsl(h, fmin(sat, 0.85), dark ? 0.68 : 0.42, 1);
+	} else if (!chrono_parse_color(accent, &a)) {
+		return;
+	}
+	struct chrono_rgba old = t->accent;
+	t->accent = a;
+	t->accent_fg = text_on(a);
+	t->selection = (struct chrono_rgba){a.r, a.g, a.b, 0.4};
+	/* modern frames that used the old accent for the focused border follow the new one */
+	if (fabs(t->border_active.r - old.r) + fabs(t->border_active.g - old.g) + fabs(t->border_active.b - old.b) < 0.02)
+		t->border_active = (struct chrono_rgba){a.r, a.g, a.b, t->border_active.a};
+}
+
+bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char *mode, const char *accent)
+{
+	bool ok = chrono_theme_load(t, id);
+	if (ok && mode && (!strcmp(mode, "light") || !strcmp(mode, "dark")) && strcmp(t->variant, mode) && t->pair[0]) {
+		char pair[64];
+		snprintf(pair, sizeof pair, "%s", t->pair);
+		struct chrono_theme other;
+		if (chrono_theme_load(&other, pair) && !strcmp(other.variant, mode))
+			*t = other;
+	}
+	chrono_theme_apply_accent(t, accent);
+	return ok;
 }

@@ -22,6 +22,7 @@ class Chrono : public QObject
 	Q_PROPERTY(int workspaceCount READ workspaceCount NOTIFY workspaceChanged)
 	Q_PROPERTY(QVariantMap theme READ theme NOTIFY themeChanged)
 	Q_PROPERTY(QVariantList themes READ themes NOTIFY themesChanged)
+	Q_PROPERTY(QString selectedTheme READ selectedTheme NOTIFY themeChanged)   // what the user picked (may differ from theme.id in light/dark mode)
 	Q_PROPERTY(QString version READ version CONSTANT)
 	Q_PROPERTY(QVariantMap config READ readConfig NOTIFY configChanged)
 	// where the panel actually is ("top"/"bottom") and whether the dock is on, from config + theme
@@ -34,7 +35,7 @@ public:
 	void setEngine(QJSEngine *e) { m_engine = e; }
 
 	static QString socketPath();
-	static QVariantMap themeToMap(const QString &path);
+	static QVariantMap themeToMap(const QString &pathOrId, const QString &mode = QString(), const QString &accent = QString());
 	static QString configPath();
 	static QString outputsPath();
 
@@ -45,6 +46,7 @@ public:
 	int workspaceCount() const { return m_workspaceCount; }
 	QVariantMap theme() const { return m_theme; }
 	QVariantList themes() const { return m_themes; }
+	QString selectedTheme() const { return m_selectedTheme; }
 	QString version() const;
 	QString panelPosition() const;
 	bool dockEnabled() const;
@@ -97,7 +99,7 @@ private:
 	QTimer m_retry;
 	QVariantList m_windows, m_outputs, m_themes;
 	QVariantMap m_theme;
-	QString m_themeId;
+	QString m_themeId, m_selectedTheme;
 	int m_workspace = 1, m_workspaceCount = 4;
 	void request(const QString &line, std::function<void(const QVariant &)> fn);
 };

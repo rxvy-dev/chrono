@@ -69,18 +69,19 @@ static const char *decorName(int d)
 	return d >= 0 && d < int(sizeof n / sizeof *n) ? n[d] : "flat";
 }
 
-QVariantMap Chrono::themeToMap(const QString &pathOrId)
+QVariantMap Chrono::themeToMap(const QString &pathOrId, const QString &mode, const QString &accent)
 {
 	chrono_theme t;
-	const QByteArray p = pathOrId.toUtf8();
+	const QByteArray p = pathOrId.toUtf8(), md = mode.toUtf8(), ac = accent.toUtf8();
 	bool ok = pathOrId.contains(QLatin1Char('/')) ? chrono_theme_load_file(&t, p.constData())
-						      : chrono_theme_load(&t, p.constData());
+						      : chrono_theme_load_prefs(&t, p.constData(), md.constData(), nullptr);
 	if (!ok)
 		chrono_theme_defaults(&t);
+	chrono_theme_apply_accent(&t, ac.constData());
 	QVariantMap m;
 #define S(k, v) m[QStringLiteral(k)] = QString::fromUtf8(v)
 #define C(k, v) m[QStringLiteral(k)] = qc(t.v)
-	S("id", t.id); S("name", t.name); S("era", t.era); S("description", t.description); S("path", t.path);
+	S("id", t.id); S("name", t.name); S("variant", t.variant); S("pair", t.pair); S("era", t.era); S("description", t.description); S("path", t.path);
 	C("bg", bg); C("fg", fg); C("accent", accent); C("accentFg", accent_fg); C("selection", selection);
 	C("windowBg", window_bg); C("windowFg", window_fg);
 	C("titleActive", title_active); C("titleActive2", title_active2); C("titleActiveFg", title_active_fg);
@@ -190,7 +191,8 @@ Chrono::Chrono(QObject *parent) : QObject(parent)
 	connect(&m_retry, &QTimer::timeout, this, &Chrono::connectNow);
 	connect(this, &Chrono::configChanged, this, &Chrono::panelChanged);
 	connect(this, &Chrono::themeChanged, this, &Chrono::panelChanged);
-	m_theme = themeToMap(configValue(QStringLiteral("general.theme"), QStringLiteral("midnight")));
+	m_selectedTheme = configValue(QStringLiteral("general.theme"), QStringLiteral("midnight"));
+	m_theme = themeToMap(m_selectedTheme, configValue(QStringLiteral("appearance.mode")), configValue(QStringLiteral("appearance.accent")));
 	if (!configValue(QStringLiteral("icons.theme")).isEmpty())
 		m_theme[QStringLiteral("iconTheme")] = configValue(QStringLiteral("icons.theme"));
 	m_themeId = m_theme.value(QStringLiteral("id")).toString();
@@ -313,7 +315,8 @@ void Chrono::refreshTheme()
 		const QString id = m.value(QStringLiteral("id")).toString();
 		if (id.isEmpty())
 			return;
-		m_theme = themeToMap(path.isEmpty() ? id : path);
+		m_theme = themeToMap(path.isEmpty() ? id : path, QString(), configValue(QStringLiteral("appearance.accent")));
+		m_selectedTheme = m.value(QStringLiteral("selected"), id).toString();
 		const QString icons = configValue(QStringLiteral("icons.theme"));
 		if (!icons.isEmpty())
 			m_theme[QStringLiteral("iconTheme")] = icons;
@@ -340,6 +343,8 @@ void Chrono::refreshThemes()
 						 {QStringLiteral("name"), QString::fromUtf8(t.name)},
 						 {QStringLiteral("era"), QString::fromUtf8(t.era)},
 						 {QStringLiteral("description"), QString::fromUtf8(t.description)},
+						 {QStringLiteral("variant"), QString::fromUtf8(t.variant)},
+						 {QStringLiteral("pair"), QString::fromUtf8(t.pair)},
 						 {QStringLiteral("path"), QString::fromUtf8(path)}});
 		}, &m_themes);
 		emit themesChanged();
@@ -375,6 +380,8 @@ void Chrono::handleEvent(const QVariantMap &ev)
 		});
 	} else if (e == QLatin1String("theme")) {
 		refreshTheme();
+	} else if (e == QLatin1String("themes")) {
+		refreshThemes();
 	} else if (e == QLatin1String("config")) {
 		emit configChanged();
 		request(QStringLiteral("workspaces"), [this](const QVariant &r) {
@@ -434,6 +441,9 @@ bool Chrono::setConfig(const QString &section, const QString &key, const QString
 	QDir().mkpath(QFileInfo(configPath()).absolutePath());
 	const QByteArray p = configPath().toLocal8Bit(), s = section.toUtf8(), k = key.toUtf8(), v = value.toUtf8();
 	const bool ok = chrono_ini_set_in_file(p.constData(), s.constData(), k.constData(), v.constData());
+	m_selectedTheme = configValue(QStringLiteral("general.theme"), QStringLiteral("midnight"));
+	m_theme = themeToMap(m_selectedTheme, configValue(QStringLiteral("appearance.mode")), configValue(QStringLiteral("appearance.accent")));
+	emit themeChanged();
 	emit configChanged();
 	return ok;
 }

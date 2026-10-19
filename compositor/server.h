@@ -342,6 +342,9 @@ void idle_reset(struct chrono_server *s);
 void ipc_init(struct chrono_server *s);
 void ipc_finish(struct chrono_server *s);
 void ipc_event(struct chrono_server *s, const char *event, const char *json_payload);
+void themewatch_init(struct chrono_server *s);
+void themewatch_finish(void);
+void server_refresh_theme(struct chrono_server *s);  /* re-read the current theme from disk */
 
 /* xwayland.c */
 void xwayland_init(struct chrono_server *s);

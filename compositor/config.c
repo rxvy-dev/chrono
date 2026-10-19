@@ -184,6 +184,9 @@ void config_load(struct chrono_config *c)
 	chrono_ini_load(&ini, c->path);
 
 	STR(c->theme, "general.theme", "midnight");
+	STR(c->appearance_mode, "appearance.mode", "theme");
+	STR(c->accent, "appearance.accent", "theme");
+	c->reduce_motion = chrono_ini_bool(&ini, "appearance.reduce_motion", false);
 	STR(c->terminal, "general.terminal", "");
 	if (!c->terminal[0])
 		snprintf(c->terminal, sizeof c->terminal, "%s", config_default_terminal());
