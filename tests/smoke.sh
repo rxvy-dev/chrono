@@ -11,8 +11,10 @@ export WLR_LIBINPUT_NO_DEVICES=1 CHRONO_THEME_DIR=$PWD/themes CHRONO_CONFIG=$OUT
 export HOME=$(mktemp -d)
 chmod 700 "$XDG_RUNTIME_DIR"
 printf '[general]\ntheme = midnight\n[power]\nlock_after = 0\nscreen_off_after = 0\n' > "$CHRONO_CONFIG"
-PATH="$PWD/$BUILD:$PWD/data:$PATH"
-"$BUILD/chrono" --no-shell -d >"$OUT/chrono.log" 2>&1 &
+PATH="$PWD/$BUILD:$PWD/$BUILD/shell:$PWD/$BUILD/settings:$PWD/data:$PATH"
+export QT_QPA_PLATFORM=wayland QT_QUICK_BACKEND=software XDG_CURRENT_DESKTOP=Chrono
+SHELLFLAG=""; [ -x "$BUILD/shell/chrono-shell" ] || SHELLFLAG=--no-shell
+"$BUILD/chrono" $SHELLFLAG -d >"$OUT/chrono.log" 2>&1 &
 PID=$!
 sock=""
 for i in $(seq 50); do
@@ -42,6 +44,21 @@ for t in $(cd themes && ls *.theme | sed 's/\.theme$//'); do
     grim "$OUT/shot-$t.png" || { echo "::error::grim failed for $t"; fail=1; }
     kill -0 $PID 2>/dev/null || { echo "::error::chrono crashed applying theme $t"; fail=1; break; }
 done
+# the shell: launcher, power menu, calendar + a notification, OSD
+chronoctl theme midnight >/dev/null; sleep 1
+command -v notify-send >/dev/null && notify-send -a "Smoke test" "Hello from CI" "This is a <b>Chrono</b> notification." && sleep 0.8
+grim "$OUT/shell-notification.png"
+for t in midnight ninety-five liquid-glass meadow topaz; do
+    chronoctl theme $t >/dev/null; sleep 1.2
+    chronoctl action launcher >/dev/null; sleep 1.2
+    grim "$OUT/shell-launcher-$t.png"
+    chronoctl action launcher >/dev/null; sleep 0.4
+done
+chronoctl theme midnight >/dev/null; sleep 1
+chronoctl action notifications >/dev/null; sleep 1; grim "$OUT/shell-calendar.png"; chronoctl action notifications >/dev/null; sleep 0.4
+chronoctl action power-menu >/dev/null; sleep 1; grim "$OUT/shell-power.png"
+chronoctl action "volume up" >/dev/null; sleep 0.5; grim "$OUT/shell-osd.png"
+pgrep -x chrono-shell >/dev/null || echo "::error::chrono-shell is not running"
 chronoctl action "snap left" >/dev/null; sleep 0.4
 grim "$OUT/shot-snap.png"
 chronoctl action "maximize" >/dev/null; sleep 0.4

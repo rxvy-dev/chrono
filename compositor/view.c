@@ -497,6 +497,19 @@ static void place_new(struct chrono_view *v)
 			x = a.x + l + 40 + (n % 8) * 32;
 			y = a.y + t + 30 + (n % 8) * 32;
 		}
+		/* never land exactly on top of another window: step down-right until the spot is free */
+		for (int tries = 0; tries < 12; tries++) {
+			bool taken = false;
+			struct chrono_view *p;
+			wl_list_for_each(p, &s->views, link)
+				if (p != v && p->mapped && !p->minimized && p->workspace == s->workspace &&
+				    abs(p->x - x) < 12 && abs(p->y - y) < 12)
+					taken = true;
+			if (!taken)
+				break;
+			x += 32;
+			y += 32;
+		}
 	}
 	/* keep the title bar reachable */
 	if (x < a.x + l) x = a.x + l;
