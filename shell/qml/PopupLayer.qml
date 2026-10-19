@@ -7,7 +7,7 @@ Window {
 	id: pop
 	property real targetX: 0            // screen x the popup should line up with
 	property real targetY: -1           // >= 0: open at this y instead of against the panel
-	property string edge: Chrono.theme.panelPosition === "top" ? "top" : "bottom"
+	property string edge: Chrono.panelPosition
 	property int gap: Chrono.theme.panelStyle === "floating" ? 8 : 2
 	property string keyboard: "ondemand"
 	property string layerName: "top"

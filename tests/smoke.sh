@@ -58,7 +58,9 @@ chronoctl theme midnight >/dev/null; sleep 1
 chronoctl action notifications >/dev/null; sleep 1; grim "$OUT/shell-calendar.png"; chronoctl action notifications >/dev/null; sleep 0.4
 chronoctl action power-menu >/dev/null; sleep 1; grim "$OUT/shell-power.png"
 chronoctl action "volume up" >/dev/null; sleep 0.5; grim "$OUT/shell-osd.png"
-pgrep -x chrono-shell >/dev/null || echo "::error::chrono-shell is not running"
+pgrep -x chrono-shell >/dev/null || { echo "::error::chrono-shell is not running"; fail=1; }
+grep -q "Assertion" "$OUT/chrono.log" && { echo "::error::an assertion failed"; fail=1; }
+grep -E "qrc:/.*(Error|error|TypeError|ReferenceError)" "$OUT/chrono.log" | sort -u | head -20 | sed "s/^/::warning::/"
 chronoctl action "snap left" >/dev/null; sleep 0.4
 grim "$OUT/shot-snap.png"
 chronoctl action "maximize" >/dev/null; sleep 0.4

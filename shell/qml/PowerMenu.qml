@@ -2,7 +2,7 @@
 import QtQuick
 
 PopupLayer {
-	id: P
+	id: pm
 	readonly property var t: Chrono.theme
 	layerName: "overlay"
 	keyboard: "exclusive"
@@ -20,7 +20,7 @@ PopupLayer {
 	onOpened: current = 0
 
 	Rectangle {
-		parent: P.contentItem
+		parent: pm.contentItem
 		anchors.fill: parent
 		z: -1
 		color: Qt.rgba(0, 0, 0, 0.45)
@@ -34,12 +34,12 @@ PopupLayer {
 		anchors.top: head.bottom; anchors.topMargin: 16
 		spacing: 10
 		Repeater {
-			model: P.entries
+			model: pm.entries
 			Item {
 				required property var modelData
 				required property int index
 				width: 92; height: 96
-				Skin { anchors.fill: parent; kind: "button"; hovered: ma.containsMouse; pressed: ma.pressed; checked: P.current === index }
+				Skin { anchors.fill: parent; kind: "button"; hovered: ma.containsMouse; pressed: ma.pressed; checked: pm.current === index }
 				Column {
 					anchors.centerIn: parent
 					spacing: 8
@@ -47,15 +47,15 @@ PopupLayer {
 					Text { anchors.horizontalCenter: parent.horizontalCenter; text: modelData.text; color: Chrono.theme.panelFg
 						font.family: Chrono.theme.fontUi.family; font.pointSize: Chrono.theme.fontUi.size }
 				}
-				MouseArea { id: ma; anchors.fill: parent; hoverEnabled: true; onEntered: P.current = index; onClicked: { P.close(); modelData.run() } }
+				MouseArea { id: ma; anchors.fill: parent; hoverEnabled: true; onEntered: pm.current = index; onClicked: { pm.close(); modelData.run() } }
 			}
 		}
 	}
 	Item {
 		focus: true
-		Keys.onLeftPressed: P.current = (P.current + P.entries.length - 1) % P.entries.length
-		Keys.onRightPressed: P.current = (P.current + 1) % P.entries.length
-		Keys.onReturnPressed: { P.close(); P.entries[P.current].run() }
-		Keys.onEscapePressed: P.close()
+		Keys.onLeftPressed: pm.current = (pm.current + pm.entries.length - 1) % pm.entries.length
+		Keys.onRightPressed: pm.current = (pm.current + 1) % pm.entries.length
+		Keys.onReturnPressed: { pm.close(); pm.entries[pm.current].run() }
+		Keys.onEscapePressed: pm.close()
 	}
 }

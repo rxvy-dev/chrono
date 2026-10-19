@@ -28,6 +28,34 @@ QtObject {
 			{ separator: true },
 		].concat(ws).concat([{ separator: true }, { glyph: "close", text: qsTr("Close"), run: () => Chrono.windowCommand("close", w.id) }])
 	}
+	function openTaskMenu(scr, x, item) {
+		let items = []
+		if (item.appId) {
+			const a = Apps.app(item.appId)
+			for (const act of (a.actions || [])) items.push({ text: act.name, run: () => Apps.launch(item.appId, act.id) })
+			if (items.length) items.push({ separator: true })
+			items.push({ glyph: "play", text: item.win ? qsTr("New window") : qsTr("Open"), run: () => Apps.launch(item.appId) })
+			items.push(Apps.isPinned(item.appId) ? { glyph: "pin", text: qsTr("Unpin from bar"), run: () => Apps.unpin(item.appId) }
+							     : { glyph: "pin", text: qsTr("Pin to bar"), run: () => Apps.pin(item.appId) })
+			const i = Apps.pinned.indexOf(item.appId)
+			if (i > 0) items.push({ glyph: "prev", text: qsTr("Move left"), run: () => Apps.movePinned(i, i - 1) })
+			if (i >= 0 && i < Apps.pinned.length - 1) items.push({ glyph: "next", text: qsTr("Move right"), run: () => Apps.movePinned(i, i + 1) })
+		}
+		if (item.win) {
+			if (items.length) items.push({ separator: true })
+			items = items.concat(windowMenuItems(item.win))
+		}
+		menu.show(scr, x, items, item.win ? item.win.title : item.name)
+	}
+	function openAppMenu(scr, x, y, app) {
+		let items = []
+		for (const act of (app.actions || [])) items.push({ text: act.name, run: () => Apps.launch(app.id, act.id) })
+		if (items.length) items.push({ separator: true })
+		items.push({ glyph: "play", text: qsTr("Open"), run: () => { launcher.close(); Apps.launch(app.id) } })
+		items.push(Apps.isPinned(app.id) ? { glyph: "pin", text: qsTr("Unpin from bar"), run: () => Apps.unpin(app.id) }
+						 : { glyph: "pin", text: qsTr("Pin to bar"), run: () => Apps.pin(app.id) })
+		menu.show(scr, x, items, app.name, y)
+	}
 	function openWindowMenu(scr, x, w) { menu.show(scr, x, windowMenuItems(w), w.title) }
 	function openDockMenu(scr, x, item, wins) {
 		let items = []
@@ -52,7 +80,7 @@ QtObject {
 		delegate: Panel { required property var modelData; screen: modelData; shell: shell }
 	}
 	property var docks: Instantiator {
-		model: Chrono.theme.panelDock ? Qt.application.screens : []
+		model: Chrono.dockEnabled ? Qt.application.screens : []
 		delegate: Dock { required property var modelData; screen: modelData; shell: shell }
 	}
 

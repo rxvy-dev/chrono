@@ -371,6 +371,8 @@ int main(int argc, char **argv)
 	wl_display_destroy_clients(s->display);
 #ifdef CHRONO_HAVE_XWAYLAND
 	if (s->xwayland)
+		wl_list_remove(&s->xwayland_ready.link);
+		wl_list_remove(&s->new_xwayland_surface.link);
 		wlr_xwayland_destroy(s->xwayland);
 #endif
 	wlr_scene_node_destroy(&s->scene->tree.node);

@@ -2,7 +2,7 @@
 import QtQuick
 
 PopupLayer {
-	id: C
+	id: cal
 	readonly property var t: Chrono.theme
 	contentWidth: 600
 	contentHeight: 330
@@ -40,15 +40,15 @@ PopupLayer {
 		Text { text: Qt.formatDate(new Date(), "d MMMM yyyy"); color: t.panelFg; font.family: t.fontUi.family; font.pointSize: t.fontUi.size + 4; font.bold: true }
 		Item {
 			width: parent.width; height: 26
-			PanelButton { glyph: "prev"; height: 24; iconSize: 10; onClicked: C.shown = new Date(C.shown.getFullYear(), C.shown.getMonth() - 1, 1) }
-			Text { anchors.centerIn: parent; text: Qt.formatDate(C.shown, "MMMM yyyy"); color: t.panelFg; font.family: t.fontUi.family; font.pointSize: t.fontUi.size; font.bold: true }
-			PanelButton { anchors.right: parent.right; glyph: "next"; height: 24; iconSize: 10; onClicked: C.shown = new Date(C.shown.getFullYear(), C.shown.getMonth() + 1, 1) }
+			PanelButton { glyph: "prev"; height: 24; iconSize: 10; onClicked: cal.shown = new Date(cal.shown.getFullYear(), cal.shown.getMonth() - 1, 1) }
+			Text { anchors.centerIn: parent; text: Qt.formatDate(cal.shown, "MMMM yyyy"); color: t.panelFg; font.family: t.fontUi.family; font.pointSize: t.fontUi.size; font.bold: true }
+			PanelButton { anchors.right: parent.right; glyph: "next"; height: 24; iconSize: 10; onClicked: cal.shown = new Date(cal.shown.getFullYear(), cal.shown.getMonth() + 1, 1) }
 		}
 		Grid {
 			id: grid
 			columns: 7
 			readonly property int first: Qt.locale().firstDayOfWeek
-			readonly property var start: { const d = new Date(C.shown.getFullYear(), C.shown.getMonth(), 1); const off = (d.getDay() - first + 7) % 7; return new Date(d.getFullYear(), d.getMonth(), 1 - off) }
+			readonly property var start: { const d = new Date(cal.shown.getFullYear(), cal.shown.getMonth(), 1); const off = (d.getDay() - first + 7) % 7; return new Date(d.getFullYear(), d.getMonth(), 1 - off) }
 			Repeater {
 				model: 7
 				Text { required property int index; width: 37; height: 22; horizontalAlignment: Text.AlignHCenter
@@ -66,7 +66,7 @@ PopupLayer {
 						color: parent.today ? t.accent : "transparent" }
 					Text { anchors.centerIn: parent; text: parent.day.getDate()
 						color: parent.today ? t.accentFg : t.panelFg
-						opacity: parent.day.getMonth() === C.shown.getMonth() ? 1 : 0.35
+						opacity: parent.day.getMonth() === cal.shown.getMonth() ? 1 : 0.35
 						font.family: t.fontUi.family; font.pointSize: t.fontUi.size }
 				}
 			}

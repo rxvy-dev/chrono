@@ -74,7 +74,7 @@ Item {
 		// panels: only a light line on the edge facing the desktop
 		Rectangle { visible: skin.kind === "panel"; color: t.panelBorder; height: 1
 			anchors { left: parent.left; right: parent.right }
-			y: t.panelPosition === "top" ? parent.height - 1 : 0 }
+			y: Chrono.panelPosition === "top" ? parent.height - 1 : 0 }
 		Item {
 			anchors.fill: parent
 			visible: skin.kind !== "panel"
@@ -99,7 +99,7 @@ Item {
 		border.color: t.panelBorder
 		Rectangle { visible: skin.kind === "panel"; color: t.panelBorder; height: 2
 			anchors { left: parent.left; right: parent.right }
-			y: t.panelPosition === "top" ? parent.height - 2 : 0 }
+			y: Chrono.panelPosition === "top" ? parent.height - 2 : 0 }
 		Rectangle { visible: skin.kind === "popup"; x: 3; y: parent.height; width: parent.width; height: 3; color: t.panelBorder }
 		Rectangle { visible: skin.kind === "popup"; x: parent.width; y: 3; width: 3; height: parent.height; color: t.panelBorder }
 	}

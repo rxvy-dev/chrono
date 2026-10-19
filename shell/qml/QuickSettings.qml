@@ -2,7 +2,7 @@
 import QtQuick
 
 PopupLayer {
-	id: Q
+	id: qs
 	property var shell
 	readonly property var t: Chrono.theme
 	contentWidth: 340
@@ -53,13 +53,13 @@ PopupLayer {
 				text: System.networkName || (System.network === "ethernet" ? qsTr("Wired") : System.network === "wifi" ? qsTr("Wi-Fi") : qsTr("Offline"))
 				maxWidth: parent.cw
 				checked: System.network !== "none"
-				onClicked: { Q.showWifi = !Q.showWifi; if (Q.showWifi) Q.wifi = System.wifiNetworks() }
+				onClicked: { qs.showWifi = !qs.showWifi; if (qs.showWifi) qs.wifi = System.wifiNetworks() }
 			}
 			PanelButton {
 				width: parent.cw; height: 38
 				glyph: "moon"; text: qsTr("Night light")
-				checked: Q.nightOn
-				onClicked: { Q.nightOn = !Q.nightOn; Chrono.setConfig("night_light", "enabled", Q.nightOn ? "true" : "false") }
+				checked: qs.nightOn
+				onClicked: { qs.nightOn = !qs.nightOn; Chrono.setConfig("night_light", "enabled", qs.nightOn ? "true" : "false") }
 			}
 			PanelButton {
 				width: parent.cw; height: 38
@@ -77,13 +77,13 @@ PopupLayer {
 
 		// Wi-Fi list
 		Column {
-			visible: Q.showWifi
+			visible: qs.showWifi
 			width: parent.width
 			spacing: 2
-			Text { visible: Q.wifi.length === 0; text: System.has("nmcli") ? qsTr("No networks found") : qsTr("Install NetworkManager to manage Wi-Fi here")
+			Text { visible: qs.wifi.length === 0; text: System.has("nmcli") ? qsTr("No networks found") : qsTr("Install NetworkManager to manage Wi-Fi here")
 				color: t.panelFg; opacity: 0.7; font.family: t.fontUi.family; font.pointSize: t.fontUi.size }
 			Repeater {
-				model: Q.wifi
+				model: qs.wifi
 				PanelButton {
 					required property var modelData
 					width: parent.width; height: 28
@@ -124,9 +124,9 @@ PopupLayer {
 		Row {
 			spacing: 6
 			anchors.right: parent.right
-			PanelButton { height: 30; glyph: "settings"; text: qsTr("Settings"); onClicked: { Chrono.action("settings"); Q.close() } }
-			PanelButton { height: 30; glyph: "lock"; onClicked: { Q.close(); Chrono.command("lock") } }
-			PanelButton { height: 30; glyph: "power"; onClicked: { Q.close(); Q.shell.openPowerMenu() } }
+			PanelButton { height: 30; glyph: "settings"; text: qsTr("Settings"); onClicked: { Chrono.action("settings"); qs.close() } }
+			PanelButton { height: 30; glyph: "lock"; onClicked: { qs.close(); Chrono.command("lock") } }
+			PanelButton { height: 30; glyph: "power"; onClicked: { qs.close(); qs.shell.openPowerMenu() } }
 		}
 	}
 }

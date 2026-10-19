@@ -3,7 +3,7 @@
 import QtQuick
 
 PopupLayer {
-	id: L
+	id: launcher
 	property var shell
 	readonly property var t: Chrono.theme
 	keyboard: "exclusive"
@@ -12,10 +12,12 @@ PopupLayer {
 	contentHeight: 470
 	property string query: ""
 	property string category: ""
-	readonly property var results: query !== "" ? Apps.search(query, 40) : Apps.inCategory(category)
+	readonly property var results: query !== "" ? Apps.search(query, 40)
+				     : category === "__pinned" ? Apps.pinned.map(id => Apps.app(id)).filter(a => a.id)
+				     : Apps.inCategory(category)
 	property int current: 0
 
-	onOpened: { query = ""; field.text = ""; category = ""; current = 0; field.forceActiveFocus() }
+	onOpened: { query = ""; field.text = ""; category = Apps.pinned.length ? "__pinned" : ""; current = 0; field.forceActiveFocus() }
 	onResultsChanged: current = 0
 
 	function launch(a) { Apps.launch(a.id); close() }
@@ -65,13 +67,13 @@ PopupLayer {
 				font.family: t.fontUi.family; font.pointSize: t.fontUi.size + 1
 				focus: true
 				clip: true
-				onTextChanged: L.query = text
-				Keys.onReturnPressed: L.accept()
-				Keys.onEnterPressed: L.accept()
-				Keys.onEscapePressed: L.close()
-				Keys.onDownPressed: L.current = Math.min(L.results.length - 1, L.current + 1)
-				Keys.onUpPressed: L.current = Math.max(0, L.current - 1)
-				Keys.onTabPressed: L.current = Math.min(L.results.length - 1, L.current + 1)
+				onTextChanged: launcher.query = text
+				Keys.onReturnPressed: launcher.accept()
+				Keys.onEnterPressed: launcher.accept()
+				Keys.onEscapePressed: launcher.close()
+				Keys.onDownPressed: launcher.current = Math.min(launcher.results.length - 1, launcher.current + 1)
+				Keys.onUpPressed: launcher.current = Math.max(0, launcher.current - 1)
+				Keys.onTabPressed: launcher.current = Math.min(launcher.results.length - 1, launcher.current + 1)
 				Text { visible: !field.text; text: qsTr("Type to search apps, or a command to run"); color: field.color; opacity: 0.5; font: field.font }
 			}
 		}
@@ -79,15 +81,16 @@ PopupLayer {
 		// ----- categories
 		Column {
 			id: cats
-			visible: L.query === ""
+			visible: launcher.query === ""
 			anchors { top: search.bottom; topMargin: 10; left: parent.left; bottom: footer.top; bottomMargin: 8 }
 			width: visible ? 140 : 0
 			spacing: 2
-			PanelButton { width: parent.width; height: 26; text: qsTr("All apps"); checked: L.category === ""; onClicked: L.category = "" }
+			PanelButton { width: parent.width; height: 26; glyph: "pin"; text: qsTr("Pinned"); checked: launcher.category === "__pinned"; onClicked: launcher.category = "__pinned" }
+			PanelButton { width: parent.width; height: 26; glyph: "start"; text: qsTr("All apps"); checked: launcher.category === ""; onClicked: launcher.category = "" }
 			Repeater {
 				model: Apps.categories
 				PanelButton { required property var modelData; width: cats.width; height: 26
-					text: modelData.name; checked: L.category === modelData.id; onClicked: L.category = modelData.id }
+					text: modelData.name; checked: launcher.category === modelData.id; onClicked: launcher.category = modelData.id }
 			}
 		}
 
@@ -100,8 +103,8 @@ PopupLayer {
 				anchors.fill: parent
 				anchors.margins: t.panelStyle === "bevel" ? 3 : 0
 				clip: true
-				model: L.results
-				currentIndex: L.current
+				model: launcher.results
+				currentIndex: launcher.current
 				boundsBehavior: Flickable.StopAtBounds
 				highlightMoveDuration: 0
 				delegate: PanelButton {
@@ -112,9 +115,11 @@ PopupLayer {
 					icon: modelData.icon
 					iconSize: 24
 					text: modelData.name
-					checked: index === L.current
-					onClicked: L.launch(modelData)
-					onRightClicked: Apps.isPinned(modelData.id) ? Apps.unpin(modelData.id) : Apps.pin(modelData.id)
+					checked: index === launcher.current
+					onClicked: launcher.launch(modelData)
+					Glyph { visible: Apps.pinned.indexOf(modelData.id) >= 0; name: "pin"; width: 12; height: 12; color: parent.fg; opacity: 0.6
+						anchors.verticalCenter: parent.verticalCenter }
+					onRightClicked: (m) => { const g = mapToItem(null, m.x, m.y); launcher.shell.openAppMenu(launcher.screen, g.x, g.y, modelData) }
 					Text {
 						anchors.verticalCenter: parent.verticalCenter
 						text: modelData.genericName || modelData.comment || ""
@@ -126,8 +131,8 @@ PopupLayer {
 				}
 				Text {
 					anchors.centerIn: parent
-					visible: L.results.length === 0
-					text: L.query ? qsTr("No apps found — press Enter to run “%1”").arg(L.query) : ""
+					visible: launcher.results.length === 0
+					text: launcher.query ? qsTr("No apps found — press Enter to run “%1”").arg(launcher.query) : ""
 					color: t.panelFg; opacity: 0.6
 					font.family: t.fontUi.family; font.pointSize: t.fontUi.size
 				}
@@ -149,9 +154,9 @@ PopupLayer {
 				anchors.right: parent.right
 				anchors.verticalCenter: parent.verticalCenter
 				spacing: 4
-				PanelButton { height: 28; glyph: "settings"; text: qsTr("Settings"); onClicked: { Chrono.action("settings"); L.close() } }
-				PanelButton { height: 28; glyph: "lock"; onClicked: { L.close(); Chrono.command("lock") } }
-				PanelButton { height: 28; glyph: "power"; onClicked: { L.close(); L.shell.openPowerMenu() } }
+				PanelButton { height: 28; glyph: "settings"; text: qsTr("Settings"); onClicked: { Chrono.action("settings"); launcher.close() } }
+				PanelButton { height: 28; glyph: "lock"; onClicked: { launcher.close(); Chrono.command("lock") } }
+				PanelButton { height: 28; glyph: "power"; onClicked: { launcher.close(); launcher.shell.openPowerMenu() } }
 			}
 		}
 	}

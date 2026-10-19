@@ -138,6 +138,22 @@ QString Chrono::outputsPath()
 	return QFileInfo(configPath()).absolutePath() + QStringLiteral("/outputs.conf");
 }
 
+bool Chrono::dockEnabled() const
+{
+	const QString d = configValue(QStringLiteral("panel.dock"), QStringLiteral("theme"));
+	return d == QLatin1String("theme") ? m_theme.value(QStringLiteral("panelDock")).toBool() : d == QLatin1String("true");
+}
+
+QString Chrono::panelPosition() const
+{
+	if (dockEnabled())
+		return QStringLiteral("top");
+	const QString p = configValue(QStringLiteral("panel.position"), QStringLiteral("bottom"));
+	if (p == QLatin1String("theme"))
+		return m_theme.value(QStringLiteral("panelPosition")).toString() == QLatin1String("top") ? QStringLiteral("top") : QStringLiteral("bottom");
+	return p == QLatin1String("top") ? QStringLiteral("top") : QStringLiteral("bottom");
+}
+
 QString Chrono::version() const
 {
 #ifdef CHRONO_VERSION
@@ -172,6 +188,8 @@ Chrono::Chrono(QObject *parent) : QObject(parent)
 	m_retry.setInterval(1000);
 	m_retry.setSingleShot(true);
 	connect(&m_retry, &QTimer::timeout, this, &Chrono::connectNow);
+	connect(this, &Chrono::configChanged, this, &Chrono::panelChanged);
+	connect(this, &Chrono::themeChanged, this, &Chrono::panelChanged);
 	m_theme = themeToMap(configValue(QStringLiteral("general.theme"), QStringLiteral("midnight")));
 	m_themeId = m_theme.value(QStringLiteral("id")).toString();
 	connectNow();

@@ -2,11 +2,12 @@
 import QtQuick
 
 PopupLayer {
-	id: M
+	id: menu
 	property var items: []
 	property string title: ""
 	readonly property var t: Chrono.theme
 	contentWidth: 220
+	layerName: "overlay"
 	contentHeight: col.implicitHeight + 8
 
 	function show(scr, x, list, heading, y) {
@@ -20,10 +21,10 @@ PopupLayer {
 		id: col
 		x: 4; y: 4
 		width: parent.width - 8
-		Text { visible: M.title !== ""; width: parent.width; text: M.title; elide: Text.ElideRight; padding: 6
+		Text { visible: menu.title !== ""; width: parent.width; text: menu.title; elide: Text.ElideRight; padding: 6
 			color: t.panelFg; opacity: 0.65; font.family: t.fontUi.family; font.pointSize: t.fontUi.size - 1; font.bold: true }
 		Repeater {
-			model: M.items
+			model: menu.items
 			Loader {
 				required property var modelData
 				width: col.width
@@ -36,7 +37,7 @@ PopupLayer {
 						glyph: modelData.glyph || ""
 						text: modelData.text
 						checked: !!modelData.checked
-						onClicked: { M.close(); if (modelData.run) modelData.run() }
+						onClicked: { menu.close(); if (modelData.run) modelData.run() }
 					}
 				}
 			}

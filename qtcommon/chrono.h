@@ -23,6 +23,10 @@ class Chrono : public QObject
 	Q_PROPERTY(QVariantMap theme READ theme NOTIFY themeChanged)
 	Q_PROPERTY(QVariantList themes READ themes NOTIFY themesChanged)
 	Q_PROPERTY(QString version READ version CONSTANT)
+	Q_PROPERTY(QVariantMap config READ readConfig NOTIFY configChanged)
+	// where the panel actually is ("top"/"bottom") and whether the dock is on, from config + theme
+	Q_PROPERTY(QString panelPosition READ panelPosition NOTIFY panelChanged)
+	Q_PROPERTY(bool dockEnabled READ dockEnabled NOTIFY panelChanged)
 
 public:
 	explicit Chrono(QObject *parent = nullptr);
@@ -42,6 +46,8 @@ public:
 	QVariantMap theme() const { return m_theme; }
 	QVariantList themes() const { return m_themes; }
 	QString version() const;
+	QString panelPosition() const;
+	bool dockEnabled() const;
 
 	// Send one command line; callback(reply) runs when the JSON answer arrives.
 	Q_INVOKABLE void command(const QString &line, const QJSValue &callback = QJSValue());
@@ -66,6 +72,7 @@ signals:
 	void themeChanged();
 	void themesChanged();
 	void configChanged();
+	void panelChanged();
 	void launcherRequested();
 	void powerMenuRequested();
 	void notificationsRequested();

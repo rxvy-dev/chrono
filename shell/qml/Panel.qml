@@ -6,8 +6,8 @@ Window {
 	id: panel
 	property var shell
 	readonly property var t: Chrono.theme
-	readonly property bool dockMode: t.panelDock
-	readonly property string pos: dockMode ? "top" : (t.panelPosition === "top" ? "top" : "bottom")
+	readonly property bool dockMode: Chrono.dockEnabled
+	readonly property string pos: Chrono.panelPosition
 	readonly property bool floating: t.panelStyle === "floating" && !dockMode
 	readonly property int barHeight: Math.max(20, t.panelHeight)
 	readonly property int margin: floating ? 8 : 0
@@ -30,7 +30,34 @@ Window {
 	onFloatingChanged: { visible = false; configure(); visible = true }
 	onBarHeightChanged: Layer.setExclusive(panel, barHeight + margin)
 
-	readonly property var windowsHere: Chrono.windows.filter(w => w.workspace === Chrono.workspace || w.workspace === 0)
+	readonly property var windowsHere: Chrono.windows.filter(w => w.workspace === Chrono.workspace || w.workspace === 0 || panel.allWorkspaces)
+	readonly property var cfg: Chrono.config
+	readonly property bool labels: (cfg["panel.labels"] || "true") !== "false"
+	readonly property bool allWorkspaces: cfg["panel.all_workspaces"] === "true"
+	// [{appId, icon, name, win}] — one entry per pinned app without windows, one per window otherwise
+	readonly property var taskItems: {
+		const out = []
+		const used = {}
+		const showPinned = (cfg["panel.pinned"] || "true") !== "false"
+		const wins = panel.windowsHere
+		const appOf = {}
+		for (const w of wins) appOf[w.id] = Apps.forAppId(w.app_id)
+		if (showPinned) {
+			for (const id of Apps.pinned) {
+				const a = Apps.app(id)
+				if (!a.id) continue
+				const mine = wins.filter(w => appOf[w.id].id === id)
+				if (mine.length === 0) out.push({ appId: id, icon: a.icon, name: a.name, win: null })
+				for (const w of mine) { out.push({ appId: id, icon: a.icon, name: a.name, win: w }); used[w.id] = true }
+			}
+		}
+		for (const w of wins) {
+			if (used[w.id]) continue
+			const a = appOf[w.id]
+			out.push({ appId: a.id || "", icon: a.icon || w.app_id || "application-x-executable", name: a.name || w.title, win: w })
+		}
+		return out
+	}
 	readonly property var focusedWindow: { const f = Chrono.windows.filter(w => w.focused); return f.length ? f[0] : null }
 
 	function popupAt(item, popup) {
@@ -129,30 +156,45 @@ Window {
 			}
 		}
 
-		// ----- taskbar
+		// ----- taskbar: pinned apps first (icon only until they run), then other running windows
 		Row {
 			id: tasks
 			visible: !panel.dockMode
 			anchors { left: left.right; leftMargin: 6; right: right.left; rightMargin: 6; verticalCenter: parent.verticalCenter }
 			anchors.verticalCenterOffset: left.anchors.verticalCenterOffset
 			spacing: t.panelStyle === "bevel" ? 3 : 4
-			readonly property int count: Math.max(1, panel.windowsHere.length)
-			readonly property real each: Math.min(t.retro ? 160 : 200, (width - spacing * (count - 1)) / count)
+			readonly property int iconCount: panel.taskItems.filter(i => !i.win).length
+			readonly property int winCount: Math.max(1, panel.taskItems.filter(i => i.win).length)
+			readonly property real iconW: bar.bh + 6
+			readonly property real each: Math.max(bar.bh + 6, Math.min(panel.labels ? (t.retro ? 160 : 200) : bar.bh + 10,
+							(width - iconCount * (iconW + spacing) - spacing * winCount) / winCount))
 			Repeater {
-				model: panel.windowsHere
+				model: panel.taskItems
 				PanelButton {
+					id: tb
 					required property var modelData
-					readonly property var appInfo: Apps.forAppId(modelData.app_id)
+					readonly property var w: modelData.win
 					height: bar.bh
-					width: tasks.each
-					maxWidth: tasks.each
-					icon: appInfo.icon || modelData.app_id || "application-x-executable"
-					text: t.panelStyle === "floating" && tasks.each < 60 ? "" : modelData.title
-					checked: modelData.focused && !modelData.minimized
-					opacity: modelData.minimized ? 0.6 : 1
-					onClicked: Chrono.windowCommand("toggle", modelData.id)
-					onMiddleClicked: Chrono.windowCommand("close", modelData.id)
-					onRightClicked: (m) => panel.shell.openWindowMenu(panel.screen, mapToItem(null, m.x, 0).x, modelData)
+					width: w ? tasks.each : tasks.iconW
+					maxWidth: width
+					padding: w && panel.labels && tasks.each > 70 ? 6 : (width - iconSize) / 2
+					iconSize: Math.min(20, bar.bh - 6)
+					icon: modelData.icon
+					text: w && panel.labels && tasks.each > 70 ? w.title : ""
+					checked: !!w && w.focused && !w.minimized
+					opacity: w && w.minimized ? 0.6 : 1
+					onClicked: w ? Chrono.windowCommand("toggle", w.id) : Apps.launch(modelData.appId)
+					onMiddleClicked: modelData.appId ? Apps.launch(modelData.appId) : (w && Chrono.windowCommand("close", w.id))
+					onRightClicked: (m) => panel.shell.openTaskMenu(panel.screen, mapToItem(null, m.x, 0).x, modelData)
+					// running indicator for modern bars
+					Rectangle {
+						visible: !!tb.w && !t.retro && !tb.checked
+						parent: tb
+						anchors.horizontalCenter: parent.horizontalCenter
+						anchors.bottom: parent.bottom; anchors.bottomMargin: 1
+						width: 6; height: 2; radius: 1
+						color: t.panelFg; opacity: 0.6
+					}
 				}
 			}
 		}
@@ -217,14 +259,18 @@ Window {
 		property string text: ""
 		function update() {
 			const d = new Date()
-			const tf = Qt.locale().timeFormat(Locale.ShortFormat)
+			const c = Chrono.config
+			const fmt = c["clock.format"] || "auto"          // auto | 12h | 24h
+			const secs = c["clock.seconds"] === "true"
+			let tf = fmt === "24h" ? "HH:mm" : fmt === "12h" ? "h:mm AP" : Qt.locale().timeFormat(Locale.ShortFormat)
+			if (secs) tf = tf.replace("mm", "mm:ss")
 			const time = Qt.formatTime(d, tf)
+			const showDate = (c["clock.date"] || (t.retro ? "false" : "true")) === "true"
 			text = panel.dockMode ? Qt.formatDate(d, "ddd d MMM") + "  " + time
-			     : t.retro ? time : Qt.formatDate(d, "ddd d") + "  " + time
+			     : showDate ? Qt.formatDate(d, c["clock.date_format"] || "ddd d") + "  " + time : time
 		}
 		Component.onCompleted: update()
 	}
-	Timer { interval: 1000 * (60 - new Date().getSeconds()) + 50; running: true; repeat: false
-		onTriggered: { clock.update(); interval = 60000; repeat = true; restart() } }
-	Connections { target: Chrono; function onThemeChanged() { clock.update() } }
+	Timer { interval: 1000; running: true; repeat: true; onTriggered: clock.update() }
+	Connections { target: Chrono; function onThemeChanged() { clock.update() } function onConfigChanged() { clock.update() } }
 }
