@@ -85,7 +85,7 @@ SettingsPage {
 		columnSpacing: 14
 		rowSpacing: 14
 		Repeater {
-			model: Chrono.themes.filter(t => p.filter === "all" || t.era === p.filter)
+			model: Chrono.themes.filter(t => p.filter === "all" || t.era === p.filter).slice().sort((a, b) => a.era === b.era ? a.name.localeCompare(b.name) : (a.era === "modern" ? -1 : 1))
 			Item {
 				required property var modelData
 				readonly property bool current: Chrono.selectedTheme === modelData.id
