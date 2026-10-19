@@ -89,7 +89,8 @@ Item {
 	Item {
 		anchors.fill: parent
 		visible: skin.bevel
-		readonly property color face: skin.kind === "field" ? t.windowBg : (skin.kind === "panel" ? t.panelBg : t.buttonBg)
+		// classic 3D UIs paint menus and buttons in the window colour (button_bg is the title-button colour)
+		readonly property color face: skin.kind === "field" ? t.windowBg : (skin.kind === "panel" ? t.panelBg : t.bg)
 		readonly property color light: skin.sunken ? t.bevelShadow : t.bevelLight
 		readonly property color dark: skin.sunken ? t.bevelLight : t.bevelShadow
 		readonly property color mid: skin.sunken ? t.bevelDark : t.bevelDark
