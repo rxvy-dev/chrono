@@ -1,0 +1,163 @@
+00:00:00.001 [INFO] [backend/backend.c:342] Loading user-specified backends due to WLR_BACKENDS: headless
+00:00:00.001 [INFO] [backend/headless/backend.c:60] Creating headless backend
+00:00:00.001 [INFO] [util/env.c:25] Loading WLR_RENDERER option: pixman
+00:00:00.001 [INFO] [render/pixman/renderer.c:328] Creating pixman renderer
+00:00:00.001 [DEBUG] [render/allocator/allocator.c:132] Trying to create shm allocator
+00:00:00.001 [DEBUG] [render/allocator/shm.c:119] Created shm allocator
+00:00:00.014 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:00.016 [INFO] [backend/headless/backend.c:17] Starting headless backend
+00:00:00.016 [DEBUG] [types/output/render.c:123] Attaching empty buffer to output for modeset
+00:00:00.016 [DEBUG] [types/output/swapchain.c:27] Choosing primary buffer format XR24 (0x34325258) for output 'HEADLESS-1'
+00:00:00.016 [DEBUG] [types/output/swapchain.c:96] Testing swapchain for output 'HEADLESS-1'
+00:00:00.016 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.016 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 1280x720
+00:00:00.022 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.022 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:00.026 [INFO] [/__w/chrono/chrono/compositor/main.c:367] Chrono 0.1.0 running on WAYLAND_DISPLAY=wayland-0 (theme: Midnight)
+00:00:00.035 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out enabled
+qrc:/qml/Panel.qml:173:5: QML PanelButton: Binding loop detected for property "implicitWidth":
+qrc:/qml/PanelButton.qml:27:2
+qrc:/qml/Panel.qml:173:5: QML PanelButton: Binding loop detected for property "implicitWidth":
+qrc:/qml/PanelButton.qml:27:2
+qrc:/qml/Launcher.qml:120:99: Unable to assign [undefined] to QColor
+qrc:/qml/Launcher.qml:126:7: Unable to assign [undefined] to QColor
+qrc:/qml/Panel.qml:102:6: Unable to assign [undefined] to bool
+qrc:/qml/Panel.qml:229:6: Unable to assign [undefined] to bool
+qrc:/qml/Panel.qml:249:6: Unable to assign [undefined] to bool
+00:00:00.350 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347be3280 (res 0x7be347bede40)
+00:00:00.350 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347be8440 (res 0x7be347bee200)
+00:00:00.353 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out disabled
+00:00:01.260 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347c2a180 (res 0x7be347bf0e40)
+00:00:01.260 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7c5347be7040 (res 0x7be347bf1140)
+00:00:01.260 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7c3347bfcb00 (res 0x7be347bf1680)
+00:00:01.260 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347c2a680 (res 0x7be347bf1740)
+00:00:02.760 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cb1180 (res 0x7be347bfdb00)
+00:00:02.760 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7c5347c0a3c0 (res 0x7be347bfde00)
+00:00:02.760 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7c3347c6b000 (res 0x7be347bfe340)
+00:00:02.760 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cb1680 (res 0x7be347bfe400)
+00:00:04.768 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:04.768 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:04.768 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:04.833 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c1b140 (res 0x7be347c0de80)
+00:00:05.385 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:05.419 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:05.441 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:05.486 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c2dbc0 (res 0x7be347c1b2c0)
+00:00:06.052 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.088 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.112 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:06.156 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c458c0 (res 0x7be347c2e100)
+00:00:06.728 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.764 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.784 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:06.896 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cc8880 (res 0x7be347c3b840)
+00:00:06.896 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c69d40 (res 0x7be347c3ba80)
+00:00:06.896 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c6a040 (res 0x7be347c3bcc0)
+00:00:07.474 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:07.571 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:07.591 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:07.750 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c7fdc0 (res 0x7be347c4a780)
+00:00:08.317 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:08.378 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:08.399 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:08.438 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347c9a7c0 (res 0x7be347c58100)
+00:00:09.011 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:09.047 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:09.076 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:09.213 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347ccc480 (res 0x7be347c63740)
+00:00:09.213 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347ca82c0 (res 0x7be347c63980)
+00:00:09.213 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347ca85c0 (res 0x7be347c63bc0)
+00:00:09.213 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347ca8740 (res 0x7be347c63e00)
+00:00:09.793 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:09.883 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:09.904 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:09.951 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347cb30c0 (res 0x7be347c71a80)
+00:00:10.515 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:10.550 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:10.569 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:11.187 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.223 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.241 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:11.851 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.890 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.918 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:12.529 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:12.565 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:12.586 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:12.707 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cd3280 (res 0x7be347ca8440)
+00:00:12.707 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347cfeb40 (res 0x7be347ca8680)
+00:00:12.707 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347cfee40 (res 0x7be347ca88c0)
+00:00:13.285 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:13.363 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:13.386 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:13.437 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347d0fac0 (res 0x7be347cb6840)
+00:00:14.013 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.046 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.066 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:14.109 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347d676c0 (res 0x7be347cc3c80)
+00:00:14.682 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.720 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.742 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:14.778 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347d80440 (res 0x7be347cd1300)
+00:00:15.357 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:15.396 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:15.415 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:16.029 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.065 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:16.084 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:16.693 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.728 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:16.749 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:16.789 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347db29c0 (res 0x7be347cfe780)
+00:00:17.774 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cda080 (res 0x7be347cff2c0)
+00:00:17.775 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347db5b40 (res 0x7be347cff500)
+00:00:18.580 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:18.617 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:18.638 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+qrc:/qml/Launcher.qml:120:99: Unable to assign [undefined] to QColor
+qrc:/qml/Launcher.qml:126:7: Unable to assign [undefined] to QColor
+00:00:19.857 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cdc880 (res 0x7be347d0d540)
+00:00:19.857 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347dc91c0 (res 0x7be347d0d780)
+00:00:21.057 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:21.095 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:21.522 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:21.564 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347de0740 (res 0x7be347d1c180)
+00:00:22.736 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347de3440 (res 0x7be347d1d2c0)
+00:00:23.941 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:23.977 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:24.413 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:24.529 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347ceb880 (res 0x7be347d292c0)
+00:00:24.530 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e07140 (res 0x7be347d29500)
+00:00:24.530 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e07440 (res 0x7be347d29740)
+00:00:25.708 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e0b7c0 (res 0x7be347d2a7c0)
+00:00:26.914 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:27.007 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:27.437 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:27.577 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e225c0 (res 0x7be347d38d40)
+00:00:28.753 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e261c0 (res 0x7be347d39ac0)
+00:00:29.958 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:30.019 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:30.456 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:31.671 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e3a2c0 (res 0x7be347d48ac0)
+00:00:32.877 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:32.918 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:33.348 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:33.390 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e58d40 (res 0x7be347d57040)
+00:00:34.367 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347ceef80 (res 0x7be347d57b80)
+00:00:34.367 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e5ff40 (res 0x7be347d57dc0)
+00:00:35.369 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:35.408 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:35.822 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cef480 (res 0x7be347d59e00)
+00:00:35.822 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e6a2c0 (res 0x7be347d5a040)
+00:00:36.827 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:36.864 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:36.879 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb347cef980 (res 0x7be347d5bf00)
+00:00:36.879 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7c4347e72cc0 (res 0x7be347d5c140)
+/bin/sh: line 1: wpctl: command not found
+00:00:37.384 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:37.421 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:37.868 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:37.905 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:38.318 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:38.355 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+chrono: types/wlr_cursor.c:250: wlr_cursor_destroy: Assertion `wl_list_empty(&cur->events.motion.listener_list)' failed.
