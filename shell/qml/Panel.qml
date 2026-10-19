@@ -208,6 +208,7 @@ Window {
 					readonly property var w: modelData.win
 					height: bar.bh
 					width: w ? tasks.each : tasks.iconW
+					implicitWidth: width   // size comes from the taskbar, not the content (avoids a binding loop)
 					maxWidth: width
 					padding: w && panel.labels && tasks.each > 70 ? 6 : (width - iconSize) / 2
 					iconSize: Math.min(20, bar.bh - 6)
