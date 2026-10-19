@@ -1,0 +1,140 @@
+00:00:00.001 [INFO] [backend/backend.c:342] Loading user-specified backends due to WLR_BACKENDS: headless
+00:00:00.001 [INFO] [backend/headless/backend.c:60] Creating headless backend
+00:00:00.001 [INFO] [util/env.c:25] Loading WLR_RENDERER option: pixman
+00:00:00.001 [INFO] [render/pixman/renderer.c:328] Creating pixman renderer
+00:00:00.001 [DEBUG] [render/allocator/allocator.c:132] Trying to create shm allocator
+00:00:00.001 [DEBUG] [render/allocator/shm.c:119] Created shm allocator
+00:00:00.010 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:00.012 [INFO] [backend/headless/backend.c:17] Starting headless backend
+00:00:00.012 [DEBUG] [types/output/render.c:123] Attaching empty buffer to output for modeset
+00:00:00.012 [DEBUG] [types/output/swapchain.c:27] Choosing primary buffer format XR24 (0x34325258) for output 'HEADLESS-1'
+00:00:00.012 [DEBUG] [types/output/swapchain.c:96] Testing swapchain for output 'HEADLESS-1'
+00:00:00.012 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.012 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 1280x720
+00:00:00.016 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.017 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:00.020 [INFO] [/__w/chrono/chrono/compositor/main.c:367] Chrono 0.1.0 running on WAYLAND_DISPLAY=wayland-0 (theme: Midnight)
+00:00:00.030 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out enabled
+QQmlApplicationEngine failed to load component
+qrc:/qml/main.qml:59:28: Type Launcher unavailable
+qrc:/qml/Launcher.qml:6:6: IDs cannot start with an uppercase letter
+chrono-shell: the QML failed to load (see the errors above)
+00:00:00.192 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+QQmlApplicationEngine failed to load component
+qrc:/qml/main.qml:59:28: Type Launcher unavailable
+qrc:/qml/Launcher.qml:6:6: IDs cannot start with an uppercase letter
+chrono-shell: the QML failed to load (see the errors above)
+00:00:00.309 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+QQmlApplicationEngine failed to load component
+qrc:/qml/main.qml:59:28: Type Launcher unavailable
+qrc:/qml/Launcher.qml:6:6: IDs cannot start with an uppercase letter
+chrono-shell: the QML failed to load (see the errors above)
+00:00:00.421 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+QQmlApplicationEngine failed to load component
+qrc:/qml/main.qml:59:28: Type Launcher unavailable
+qrc:/qml/Launcher.qml:6:6: IDs cannot start with an uppercase letter
+chrono-shell: the QML failed to load (see the errors above)
+00:00:00.521 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+QQmlApplicationEngine failed to load component
+qrc:/qml/main.qml:59:28: Type Launcher unavailable
+qrc:/qml/Launcher.qml:6:6: IDs cannot start with an uppercase letter
+chrono-shell: the QML failed to load (see the errors above)
+00:00:00.621 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+QQmlApplicationEngine failed to load component
+qrc:/qml/main.qml:59:28: Type Launcher unavailable
+qrc:/qml/Launcher.qml:6:6: IDs cannot start with an uppercase letter
+chrono-shell: the QML failed to load (see the errors above)
+00:00:00.734 [ERROR] [/__w/chrono/chrono/compositor/main.c:93] chrono-shell keeps exiting; not restarting it again
+00:00:01.239 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb7b5a29c80 (res 0x7be7b59f4a40)
+00:00:01.239 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7c57b59e6b00 (res 0x7be7b59f4d40)
+00:00:01.239 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7c37b5a15380 (res 0x7be7b59f5280)
+00:00:01.239 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb7b5a2a180 (res 0x7be7b59f5340)
+00:00:01.261 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out disabled
+00:00:02.740 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb7b5ab0c80 (res 0x7be7b5a01b80)
+00:00:02.740 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7c57b59eb480 (res 0x7be7b5a01e80)
+00:00:02.741 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7c37b5a86300 (res 0x7be7b5a023c0)
+00:00:02.741 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb7b5ab1180 (res 0x7be7b5a02480)
+00:00:04.749 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:04.749 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:04.749 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:05.360 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:05.379 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:05.397 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:06.005 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.024 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.042 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:06.655 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.674 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.690 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:07.341 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:07.406 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:07.422 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:08.083 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:08.122 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:08.137 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:08.746 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:08.766 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:08.782 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:09.433 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:09.494 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:09.509 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:10.116 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:10.135 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:10.149 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:10.761 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:10.781 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:10.796 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:11.404 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.423 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.441 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:12.049 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:12.070 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:12.088 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:12.749 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:12.801 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:12.815 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:13.432 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:13.450 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:13.466 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:14.076 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.097 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.113 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:14.723 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.745 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.760 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:15.369 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:15.387 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:15.402 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:16.008 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.027 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:16.045 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:17.061 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:17.080 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:17.099 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:19.513 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:19.532 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:19.981 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:22.394 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:22.414 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:22.839 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:25.302 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:25.369 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:25.794 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:28.259 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:28.299 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:28.722 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:31.138 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:31.157 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:31.579 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:33.594 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:33.614 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:35.028 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:35.047 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+/bin/sh: line 1: wpctl: command not found
+00:00:35.561 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:35.581 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:36.011 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:36.030 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:36.438 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:36.456 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+chrono: xwayland/xwayland.c:81: wlr_xwayland_destroy: Assertion `wl_list_empty(&xwayland->events.new_surface.listener_list)' failed.
