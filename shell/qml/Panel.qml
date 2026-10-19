@@ -27,7 +27,7 @@ Window {
 			exclusive: barHeight + margin,
 		})
 	}
-	Component.onCompleted: { configure(); visible = true }
+	Component.onCompleted: { console.info("chrono-shell: panel on", screen ? screen.name : "(no screen)"); configure(); visible = true }
 	onPosChanged: { visible = false; configure(); visible = true }
 	onFloatingChanged: { visible = false; configure(); visible = true }
 	onBarHeightChanged: Layer.setExclusive(panel, barHeight + margin)

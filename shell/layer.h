@@ -5,6 +5,7 @@
 #include <QVariantMap>
 
 class QWindow;
+class QScreen;
 
 class Layer : public QObject
 {
@@ -21,4 +22,5 @@ public:
 	Q_INVOKABLE void setAnchors(QWindow *w, int anchors);
 	Q_INVOKABLE void setMargins(QWindow *w, int top, int right, int bottom, int left);
 	Q_INVOKABLE void setKeyboard(QWindow *w, const QString &mode);
+	static QScreen *toScreen(const QVariant &v);
 };

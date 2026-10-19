@@ -29,6 +29,28 @@ export WAYLAND_DISPLAY=$(basename "$sock")
 sleep 1
 fail=0
 chronoctl ping >"$OUT/ping.json" || { echo "::error::chronoctl ping failed"; fail=1; }
+# Firefox: a big real-world client (popups, subsurfaces, dmabuf/shm, activation, cursor shapes...)
+if command -v firefox >/dev/null; then
+    MOZ_ENABLE_WAYLAND=1 firefox --no-remote --new-instance --profile "$(mktemp -d)" "data:text/html,<h1>Chrono</h1><select><option>a</option><option>b</option></select>" >"$OUT/firefox.log" 2>&1 &
+    FF=$!
+    for i in $(seq 40); do chronoctl windows | grep -qi firefox && break; sleep 0.5; done
+    sleep 3
+    grim "$OUT/firefox.png"
+    kill -0 $PID 2>/dev/null || { echo "::error::chrono crashed while Firefox started"; tail -60 "$OUT/chrono.log"; exit 1; }
+    chronoctl windows > "$OUT/windows-firefox.json"
+    FID=$(python3 -c 'import json,sys; w=[x for x in json.load(open(sys.argv[1])) if "irefox" in x["app_id"]]; print(w[0]["id"] if w else "")' "$OUT/windows-firefox.json")
+    if [ -n "$FID" ]; then
+        chronoctl maximize "$FID" >/dev/null; sleep 1; chronoctl maximize "$FID" >/dev/null; sleep 1
+        chronoctl fullscreen "$FID" >/dev/null; sleep 1; chronoctl fullscreen "$FID" >/dev/null; sleep 1
+        chronoctl minimize "$FID" >/dev/null; sleep 0.5; chronoctl focus "$FID" >/dev/null; sleep 0.5
+        chronoctl close "$FID" >/dev/null; sleep 3
+    else
+        echo "::warning::Firefox didn't map a window"
+    fi
+    kill $FF 2>/dev/null; sleep 1
+    kill -0 $PID 2>/dev/null || { echo "::error::chrono crashed with Firefox"; tail -60 "$OUT/chrono.log"; exit 1; }
+fi
+
 # a realistic 1080p screen for the screenshots
 chronoctl output HEADLESS-1 mode=1920x1080 >/dev/null; sleep 1
 chronoctl outputs >"$OUT/outputs.json"

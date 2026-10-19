@@ -28,6 +28,8 @@ QtObject {
 		return [named || biggestScreen()]
 	}
 	function primaryScreen() { return panelScreens.length ? panelScreens[0] : null }
+	Component.onCompleted: console.info("chrono-shell: screens", Qt.application.screens.map(s => s.name + " " + s.width + "x" + s.height + "+" + s.virtualX + "+" + s.virtualY).join(", "),
+					   "| panel setting:", screenCfg)
 	function openPanelMenu(scr, x) {
 		const items = [
 			{ glyph: "down", text: qsTr("Panel at the bottom"), checked: Chrono.panelPosition === "bottom", run: () => Chrono.setConfig("panel", "position", "bottom") },

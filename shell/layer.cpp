@@ -2,6 +2,7 @@
 
 #include <LayerShellQt/Window>
 #include <QMargins>
+#include <QGuiApplication>
 #include <QScreen>
 #include <QWindow>
 
@@ -16,6 +17,27 @@ static LSW::KeyboardInteractivity kbd(const QString &m)
 	return LSW::KeyboardInteractivityNone;
 }
 
+// QML hands us screens as QQuickScreenInfo (Qt.application.screens) or as QScreen (Window.screen);
+// find the real QScreen by name, then by position.
+QScreen *Layer::toScreen(const QVariant &v)
+{
+	QObject *obj = v.value<QObject *>();
+	if (!obj)
+		return nullptr;
+	if (auto *s = qobject_cast<QScreen *>(obj))
+		return s;
+	const QString name = obj->property("name").toString();
+	const QPoint pos(obj->property("virtualX").toInt(), obj->property("virtualY").toInt());
+	const auto screens = QGuiApplication::screens();
+	for (QScreen *s : screens)
+		if (!name.isEmpty() && s->name() == name)
+			return s;
+	for (QScreen *s : screens)
+		if (s->geometry().topLeft() == pos)
+			return s;
+	return nullptr;
+}
+
 void Layer::setup(QWindow *w, const QVariantMap &o)
 {
 	if (!w)
@@ -24,7 +46,7 @@ void Layer::setup(QWindow *w, const QVariantMap &o)
 	if (!l)
 		return;
 	// put the surface on the right monitor (otherwise the compositor picks the one under the mouse)
-	if (auto *scr = qobject_cast<QScreen *>(o.value(QStringLiteral("screen")).value<QObject *>())) {
+	if (QScreen *scr = toScreen(o.value(QStringLiteral("screen")))) {
 		w->setScreen(scr);
 #ifdef CHRONO_LSQ_SET_SCREEN
 		l->setScreen(scr);

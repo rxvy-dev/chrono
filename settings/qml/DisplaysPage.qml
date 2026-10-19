@@ -24,8 +24,20 @@ SettingsPage {
 
 	function update(fn) {
 		const copy = JSON.parse(JSON.stringify(outs))
+		const before = rectOf(copy[sel])
 		fn(copy[sel])
-		outs = copy
+		const after = rectOf(copy[sel])
+		// a new size (resolution, scale, rotation) must not leave gaps or overlaps: close them up
+		if (before.w !== after.w || before.h !== after.h) {
+			const order = copy.filter(o => o.enabled).sort((a, b) => a.x - b.x || a.y - b.y)
+			const sideBySide = order.every(o => Math.abs(o.y - order[0].y) < 4)
+			const stacked = order.every(o => Math.abs(o.x - order[0].x) < 4)
+			if (sideBySide) { let x = order[0].x; for (const o of order) { o.x = x; x += logicalSize(o).w } }
+			else if (stacked) { order.sort((a, b) => a.y - b.y); let y = order[0].y; for (const o of order) { o.y = y; y += logicalSize(o).h } }
+			else for (let i = 0; i < copy.length; i++) if (i !== sel && copy[i].enabled && overlaps(rectOf(copy[i]), after)) {
+				const sp = snap(i, copy[i].x, copy[i].y); copy[i].x = sp.x; copy[i].y = sp.y }
+		}
+		outs = normalize(copy)
 		dirty = true
 	}
 	function logicalSize(o) {
@@ -59,21 +71,68 @@ SettingsPage {
 	}
 
 	// ----- arrangement
+	// ----- arrangement: drag a screen; it snaps edge-to-edge against the others (never overlapping,
+	// never floating apart), and the whole layout is kept starting at 0,0 like the compositor expects.
+	property int dragIndex: -1
+	property point dragPos: Qt.point(0, 0)
+
+	function rectOf(o) { const s = logicalSize(o); return { x: o.x, y: o.y, w: s.w, h: s.h } }
+	function overlaps(a, b) { return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h }
+	// best position for screen `i` near layout point (nx, ny): touching another screen, aligned when close
+	function snap(i, nx, ny) {
+		const me = logicalSize(outs[i])
+		const others = []
+		for (let j = 0; j < outs.length; j++) if (j !== i && outs[j].enabled) others.push(rectOf(outs[j]))
+		if (!others.length) return { x: 0, y: 0 }
+		const cands = []
+		for (const o of others) {
+			// along a vertical edge (left/right of o): x fixed, try aligning tops, bottoms, centres, or keep y
+			for (const x of [o.x + o.w, o.x - me.w])
+				for (const y of [o.y, o.y + o.h - me.h, o.y + (o.h - me.h) / 2, Math.max(o.y - me.h + 1, Math.min(o.y + o.h - 1, ny))])
+					cands.push({ x: x, y: y })
+			// along a horizontal edge (above/below o)
+			for (const y of [o.y + o.h, o.y - me.h])
+				for (const x of [o.x, o.x + o.w - me.w, o.x + (o.w - me.w) / 2, Math.max(o.x - me.w + 1, Math.min(o.x + o.w - 1, nx))])
+					cands.push({ x: x, y: y })
+		}
+		let best = null
+		for (const c of cands) {
+			const r = { x: c.x, y: c.y, w: me.w, h: me.h }
+			if (others.some(o => overlaps(r, o))) continue
+			// prefer aligned edges: a small bonus when the candidate lines up with the free position
+			const d = Math.hypot(c.x - nx, c.y - ny)
+			if (!best || d < best.d) best = { x: Math.round(c.x), y: Math.round(c.y), d: d }
+		}
+		return best || { x: Math.round(nx), y: Math.round(ny) }
+	}
+	// shift everything so the top-left corner of the layout is 0,0
+	function normalize(list) {
+		let x0 = 1e9, y0 = 1e9
+		for (const o of list) if (o.enabled) { x0 = Math.min(x0, o.x); y0 = Math.min(y0, o.y) }
+		if (x0 === 1e9) return list
+		for (const o of list) { o.x -= x0; o.y -= y0 }
+		return list
+	}
+
 	Frame {
 		Layout.fillWidth: true
-		Layout.preferredHeight: 280
+		Layout.preferredHeight: 300
 		padding: 0
+		background: Rectangle { color: Qt.darker(palette.window, 1.12); radius: 8; border.color: palette.mid }
 		Item {
 			id: arena
 			anchors.fill: parent
 			clip: true
+			// scale is fixed while dragging so the picture doesn't jump around under the mouse
+			property var frozen: null
 			readonly property var box: {
+				if (frozen) return frozen
 				let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9
 				for (const o of page.outs) { const s = page.logicalSize(o); x0 = Math.min(x0, o.x); y0 = Math.min(y0, o.y); x1 = Math.max(x1, o.x + s.w); y1 = Math.max(y1, o.y + s.h) }
 				if (x0 > x1) return { x: 0, y: 0, w: 1920, h: 1080 }
 				return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }
 			}
-			readonly property real k: Math.min((width - 60) / Math.max(1, box.w), (height - 60) / Math.max(1, box.h), 0.25)
+			readonly property real k: Math.min((width - 80) / Math.max(1, box.w), (height - 80) / Math.max(1, box.h), 0.2)
 			readonly property real ox: (width - box.w * k) / 2 - box.x * k
 			readonly property real oy: (height - box.h * k) / 2 - box.y * k
 			Repeater {
@@ -83,53 +142,92 @@ SettingsPage {
 					required property var modelData
 					required property int index
 					readonly property var size: page.logicalSize(modelData)
-					x: arena.ox + modelData.x * arena.k
-					y: arena.oy + modelData.y * arena.k
+					readonly property bool dragging: page.dragIndex === index
+					readonly property real lx: dragging ? page.dragPos.x : modelData.x
+					readonly property real ly: dragging ? page.dragPos.y : modelData.y
+					x: arena.ox + lx * arena.k
+					y: arena.oy + ly * arena.k
+					z: dragging ? 2 : 1
 					width: size.w * arena.k
 					height: size.h * arena.k
-					radius: 4
-					opacity: modelData.enabled ? 1 : 0.4
-					color: index === page.sel ? Qt.rgba(palette.highlight.r, palette.highlight.g, palette.highlight.b, 0.35) : palette.button
+					radius: 6
+					opacity: modelData.enabled ? 1 : 0.35
+					color: index === page.sel ? Qt.rgba(palette.highlight.r, palette.highlight.g, palette.highlight.b, 0.30) : palette.base
 					border.width: index === page.sel ? 2 : 1
-					border.color: index === page.sel ? palette.highlight : palette.mid
+					border.color: index === page.sel ? palette.highlight : Qt.rgba(palette.windowText.r, palette.windowText.g, palette.windowText.b, 0.35)
+					Behavior on x { enabled: !scr.dragging; NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
+					Behavior on y { enabled: !scr.dragging; NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
+					Rectangle {   // the screen's number, like a sticker on the monitor
+						x: 8; y: 8; width: 22; height: 22; radius: 11
+						color: palette.highlight
+						Label { anchors.centerIn: parent; text: scr.index + 1; color: palette.highlightedText; font.bold: true }
+					}
+					Rectangle {   // where the panel is
+						visible: (Chrono.config["panel.screen"] || "auto") === scr.modelData.name
+						anchors { left: parent.left; right: parent.right; bottom: Chrono.panelPosition === "top" ? undefined : parent.bottom; top: Chrono.panelPosition === "top" ? parent.top : undefined; margins: 3 }
+						height: 5; radius: 2; color: palette.highlight; opacity: 0.7
+					}
 					Column {
 						anchors.centerIn: parent
 						Label { anchors.horizontalCenter: parent.horizontalCenter; text: scr.modelData.name; font.bold: true }
-						Label { anchors.horizontalCenter: parent.horizontalCenter; text: scr.modelData.mode.width + "×" + scr.modelData.mode.height; opacity: 0.7; font.pointSize: 8 }
+						Label { anchors.horizontalCenter: parent.horizontalCenter; opacity: 0.7; font.pointSize: 8
+							text: scr.modelData.mode.width + "×" + scr.modelData.mode.height + (scr.modelData.mode.refresh > 0 ? " @ " + Math.round(scr.modelData.mode.refresh) + " Hz" : "") }
+						Label { anchors.horizontalCenter: parent.horizontalCenter; opacity: 0.6; font.pointSize: 8; visible: scr.modelData.scale !== 1
+							text: Math.round(scr.modelData.scale * 100) + "%" }
 					}
 					MouseArea {
 						anchors.fill: parent
-						drag.target: page.outs.length > 1 ? scr : null
-						drag.threshold: 2
-						onPressed: page.sel = scr.index
+						cursorShape: page.outs.length > 1 ? (pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor) : Qt.ArrowCursor
+						property point grab
+						property bool moved: false
+						onPressed: (m) => { page.sel = scr.index; grab = Qt.point(m.x, m.y); moved = false }
+						onPositionChanged: (m) => {
+							if (!pressed || page.outs.length < 2) return
+							const p = mapToItem(arena, m.x, m.y)
+							const nx = (p.x - grab.x - arena.ox) / arena.k, ny = (p.y - grab.y - arena.oy) / arena.k
+							if (!moved && Math.hypot(nx - scr.modelData.x, ny - scr.modelData.y) < 20 / arena.k) return
+							if (!moved) { arena.frozen = arena.box; moved = true; page.dragIndex = scr.index }
+							const sp = page.snap(scr.index, nx, ny)
+							page.dragPos = Qt.point(sp.x, sp.y)
+						}
 						onReleased: {
-							if (!drag.active && Math.abs(scr.x - (arena.ox + scr.modelData.x * arena.k)) < 1) return
-							// back to layout coordinates, then snap to the nearest edge of another screen
-							let nx = (scr.x - arena.ox) / arena.k, ny = (scr.y - arena.oy) / arena.k
-							const me = scr.size
-							let best = null
-							for (let i = 0; i < page.outs.length; i++) {
-								if (i === scr.index) continue
-								const o = page.outs[i], s = page.logicalSize(o)
-								const cands = [
-									{ x: o.x + s.w, y: ny }, { x: o.x - me.w, y: ny },
-									{ x: nx, y: o.y + s.h }, { x: nx, y: o.y - me.h },
-								]
-								for (const c of cands) {
-									// align edges when close
-									if (Math.abs(c.y - o.y) < 120) c.y = o.y
-									if (Math.abs(c.x - o.x) < 120) c.x = o.x
-									const d = Math.hypot(c.x - nx, c.y - ny)
-									if (!best || d < best.d) best = { x: c.x, y: c.y, d: d }
-								}
+							if (moved) {
+								const sp = page.dragPos
+								const copy = JSON.parse(JSON.stringify(page.outs))
+								copy[scr.index].x = sp.x; copy[scr.index].y = sp.y
+								page.outs = page.normalize(copy)
+								page.dirty = true
 							}
-							if (best) { nx = best.x; ny = best.y }
-							page.update(o => { o.x = Math.round(nx); o.y = Math.round(ny) })
+							page.dragIndex = -1
+							arena.frozen = null
+							moved = false
 						}
 					}
 				}
 			}
+			Label {
+				anchors { left: parent.left; bottom: parent.bottom; margins: 10 }
+				opacity: 0.6; font.pointSize: 8
+				text: page.outs.length > 1 ? qsTr("Drag screens to match your desk — they snap together. Then press Apply.") : ""
+			}
 		}
+	}
+	RowLayout {
+		visible: page.outs.length > 1
+		Button { text: qsTr("Line up side by side"); onClicked: {
+			// left to right in the current order, tops aligned
+			const copy = JSON.parse(JSON.stringify(page.outs)).sort((a, b) => a.x - b.x)
+			let x = 0
+			for (const o of copy) { if (!o.enabled) continue; o.x = x; o.y = 0; x += page.logicalSize(o).w }
+			const byName = {}; for (const o of copy) byName[o.name] = o
+			page.outs = page.outs.map(o => byName[o.name]); page.dirty = true } }
+		Button { text: qsTr("Stack top to bottom"); onClicked: {
+			const copy = JSON.parse(JSON.stringify(page.outs)).sort((a, b) => a.y - b.y)
+			let y = 0
+			for (const o of copy) { if (!o.enabled) continue; o.x = 0; o.y = y; y += page.logicalSize(o).h }
+			const byName = {}; for (const o of copy) byName[o.name] = o
+			page.outs = page.outs.map(o => byName[o.name]); page.dirty = true } }
+		Item { Layout.fillWidth: true }
 	}
 
 	// ----- selected screen
