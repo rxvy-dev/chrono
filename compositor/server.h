@@ -161,6 +161,7 @@ struct lock_state {
 
 struct chrono_server {
 	bool binds_inhibited;                  /* set over IPC while a shortcut is being recorded */
+	bool super_tap;                        /* Super is down and nothing else happened yet */
 	struct wl_display *display;
 	struct wl_event_loop *loop;
 	struct wlr_backend *backend;

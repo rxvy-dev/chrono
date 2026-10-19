@@ -15,7 +15,7 @@ public:
 	using QObject::QObject;
 
 	// opts: layer ("background"|"bottom"|"top"|"overlay"), anchors (bitmask), exclusive (int),
-	//       keyboard ("none"|"exclusive"|"ondemand"), scope (string), margins ([t, r, b, l])
+	//       keyboard ("none"|"exclusive"|"ondemand"), scope (string), margins ([t, r, b, l]), screen (QScreen)
 	Q_INVOKABLE void setup(QWindow *w, const QVariantMap &opts);
 	Q_INVOKABLE void setExclusive(QWindow *w, int zone);
 	Q_INVOKABLE void setAnchors(QWindow *w, int anchors);

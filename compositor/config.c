@@ -19,7 +19,6 @@ static const char *default_binds[][2] = {
 	{"Super+B", "exec browser"},
 	{"Super+Space", "launcher"},
 	{"Alt+F1", "launcher"},
-	{"Super+D", "launcher"},
 	{"Super+I", "settings"},
 	{"Super+L", "lock"},
 	{"Super+Q", "close"},
@@ -44,6 +43,7 @@ static const char *default_binds[][2] = {
 	{"Super+Shift+5", "move-to-workspace 5"}, {"Super+Shift+6", "move-to-workspace 6"},
 	{"Super+Shift+7", "move-to-workspace 7"}, {"Super+Shift+8", "move-to-workspace 8"},
 	{"Super+Shift+9", "move-to-workspace 9"},
+	{"Super+S", "screenshot"},
 	{"Print", "screenshot"},
 	{"Shift+Print", "screenshot area"},
 	{"Super+Shift+S", "screenshot area"},
@@ -187,6 +187,7 @@ void config_load(struct chrono_config *c)
 	STR(c->appearance_mode, "appearance.mode", "theme");
 	STR(c->accent, "appearance.accent", "theme");
 	c->reduce_motion = chrono_ini_bool(&ini, "appearance.reduce_motion", false);
+	c->super_opens_launcher = chrono_ini_bool(&ini, "general.super_opens_launcher", true);
 	STR(c->terminal, "general.terminal", "");
 	if (!c->terminal[0])
 		snprintf(c->terminal, sizeof c->terminal, "%s", config_default_terminal());

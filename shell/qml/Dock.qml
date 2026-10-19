@@ -16,7 +16,7 @@ Window {
 	height: iconSize + pad * 2 + 12
 
 	Component.onCompleted: {
-		Layer.setup(dock, { layer: "top", scope: "chrono-dock", keyboard: "none",
+		Layer.setup(dock, { screen: dock.screen, layer: "top", scope: "chrono-dock", keyboard: "none",
 				   anchors: 2 | 4 | 8, exclusive: height - 4 })
 		visible = true
 	}

@@ -10,7 +10,42 @@ QtObject {
 	property alias quick: quick
 	property alias calendar: calendar
 
-	function primaryScreen() { return Qt.application.screens.length ? Qt.application.screens[0] : null }
+	// Which monitor(s) get the panel: [panel] screen = auto (the biggest), all, or an output name like DP-1
+	readonly property string screenCfg: Chrono.config["panel.screen"] || "auto"
+	function biggestScreen() {
+		let best = null, bestArea = -1
+		for (const s of Qt.application.screens) {
+			const a = s.width * s.height * s.devicePixelRatio * s.devicePixelRatio   // real pixels
+			if (a > bestArea) { best = s; bestArea = a }
+		}
+		return best
+	}
+	readonly property var panelScreens: {
+		const all = Qt.application.screens
+		if (!all.length) return []
+		if (screenCfg === "all") return all
+		const named = all.find(s => s.name === screenCfg)
+		return [named || biggestScreen()]
+	}
+	function primaryScreen() { return panelScreens.length ? panelScreens[0] : null }
+	function openPanelMenu(scr, x) {
+		const items = [
+			{ glyph: "down", text: qsTr("Panel at the bottom"), checked: Chrono.panelPosition === "bottom", run: () => Chrono.setConfig("panel", "position", "bottom") },
+			{ glyph: "up", text: qsTr("Panel at the top"), checked: Chrono.panelPosition === "top", run: () => Chrono.setConfig("panel", "position", "top") },
+			{ separator: true },
+			{ glyph: "desktop", text: qsTr("On the biggest screen"), checked: screenCfg === "auto", run: () => Chrono.setConfig("panel", "screen", "auto") },
+			{ glyph: "desktop", text: qsTr("On every screen"), checked: screenCfg === "all", run: () => Chrono.setConfig("panel", "screen", "all") },
+		]
+		if (Qt.application.screens.length > 1)
+			for (const s of Qt.application.screens)
+				items.push({ glyph: "desktop", text: qsTr("Only on %1").arg(s.name + (s.model ? " (" + s.model + ")" : "")), checked: screenCfg === s.name,
+					     run: () => Chrono.setConfig("panel", "screen", s.name) })
+		items.push({ separator: true })
+		items.push({ glyph: "apps", text: Chrono.dockEnabled ? qsTr("Hide the dock") : qsTr("Show a dock"), run: () => Chrono.setConfig("panel", "dock", Chrono.dockEnabled ? "false" : "true") })
+		items.push({ glyph: "settings", text: qsTr("Panel settings…"), run: () => Chrono.spawn("chrono-settings panel") })
+		items.push({ glyph: "desktop", text: qsTr("Display settings…"), run: () => Chrono.spawn("chrono-settings displays") })
+		menu.show(scr, x, items, qsTr("Panel"))
+	}
 	function toggleLauncher(scr, x) { launcher.toggle(scr || primaryScreen(), x) }
 	function openPowerMenu() { power.open(primaryScreen()) }
 	function showOsd(kind) { osd.show(kind) }
@@ -76,11 +111,11 @@ QtObject {
 	}
 
 	property var panels: Instantiator {
-		model: Qt.application.screens
+		model: shell.panelScreens
 		delegate: Panel { required property var modelData; screen: modelData; shell: shell }
 	}
 	property var docks: Instantiator {
-		model: Chrono.dockEnabled ? Qt.application.screens : []
+		model: Chrono.dockEnabled ? shell.panelScreens : []
 		delegate: Dock { required property var modelData; screen: modelData; shell: shell }
 	}
 
@@ -89,8 +124,8 @@ QtObject {
 	property var calendarPopup: Calendar { id: calendar }
 	property var menuPopup: Menu { id: menu }
 	property var powerPopup: PowerMenu { id: power }
-	property var osdWindow: Osd { id: osd }
-	property var notes: NotificationPopups { }
+	property var osdWindow: Osd { id: osd; screen: shell.primaryScreen() }
+	property var notes: NotificationPopups { screen: shell.primaryScreen() }
 
 	property var conn: Connections {
 		target: Chrono

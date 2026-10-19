@@ -14,7 +14,7 @@ Window {
 	function show(k) {
 		kind = k
 		if (!visible) {
-			Layer.setup(osd, { layer: "overlay", anchors: 2, exclusive: -1, keyboard: "none", scope: "chrono-osd", margins: [0, 0, 120, 0] })
+			Layer.setup(osd, { screen: osd.screen, layer: "overlay", anchors: 2, exclusive: -1, keyboard: "none", scope: "chrono-osd", margins: [0, 0, 120, 0] })
 			visible = true
 		}
 		hide.restart()

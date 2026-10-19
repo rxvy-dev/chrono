@@ -24,7 +24,7 @@ Window {
 			else cards.setProperty(at, "json", JSON.stringify(want[i]))
 		}
 		if (cards.count > 0 && !visible) {
-			Layer.setup(np, { layer: "overlay", anchors: 1 | 8, exclusive: 0, keyboard: "none",
+			Layer.setup(np, { screen: np.screen, layer: "overlay", anchors: 1 | 8, exclusive: 0, keyboard: "none",
 					 scope: "chrono-notifications", margins: [4, 4, 0, 0] })
 			visible = true
 		}

@@ -136,6 +136,16 @@ SettingsPage {
 	Section {
 		visible: page.cur !== null
 		title: page.cur ? page.cur.name + (page.cur.description ? " — " + page.cur.description : "") : ""
+		SettingRow {
+			label: qsTr("Panel")
+			description: qsTr("Put the panel on this screen.")
+			Button {
+				readonly property string cfg: Chrono.config["panel.screen"] || "auto"
+				text: page.cur && cfg === page.cur.name ? qsTr("Panel is here") : qsTr("Move panel here")
+				enabled: page.cur && cfg !== page.cur.name
+				onClicked: Chrono.setConfig("panel", "screen", page.cur.name)
+			}
+		}
 		SettingRow { label: qsTr("Enabled")
 			Switch { checked: page.cur ? page.cur.enabled : false; onToggled: page.update(o => o.enabled = checked) } }
 		SettingRow {

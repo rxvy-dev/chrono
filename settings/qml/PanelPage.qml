@@ -10,6 +10,10 @@ SettingsPage {
 		title: qsTr("Bar")
 		ConfigCombo { label: qsTr("Position"); section: "panel"; key: "position"; defaultValue: "bottom"
 			options: [{ value: "bottom", text: qsTr("Bottom") }, { value: "top", text: qsTr("Top") }, { value: "theme", text: qsTr("Wherever the theme puts it") }] }
+		ConfigCombo { label: qsTr("Show on"); description: qsTr("Which monitor gets the panel. Right-click the panel to change this quickly.")
+			section: "panel"; key: "screen"; defaultValue: "auto"; comboWidth: 280
+			options: [{ value: "auto", text: qsTr("The biggest screen") }, { value: "all", text: qsTr("Every screen") }]
+				.concat(Chrono.outputs.map(o => ({ value: o.name, text: o.name + (o.description ? " — " + o.description : "") }))) }
 		ConfigSwitch { label: qsTr("Show pinned apps"); description: qsTr("Pinned apps stay on the bar even when they're closed. Right-click an app to pin it.")
 			section: "panel"; key: "pinned"; defaultValue: true }
 		ConfigSwitch { label: qsTr("Show window titles"); description: qsTr("Off: icons only, like a dock.")

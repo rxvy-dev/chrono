@@ -32,18 +32,18 @@ ApplicationWindow {
 	font.pointSize: Math.max(9, t.fontUi.size)
 
 	readonly property var pages: [
-		{ id: "themes", name: qsTr("Themes"), icon: "preferences-desktop-theme", file: "AppearancePage.qml", keys: "appearance look colours colors style retro modern cursor icons wallpaper" },
-		{ id: "panel", name: qsTr("Panel & Dock"), icon: "preferences-desktop", file: "PanelPage.qml", keys: "taskbar bar bottom top pin pinned dock launcher" },
-		{ id: "displays", name: qsTr("Displays"), icon: "preferences-desktop-display", file: "DisplaysPage.qml", keys: "monitor screen resolution refresh hz scale rotation vrr freesync night light" },
-		{ id: "time", name: qsTr("Time & Date"), icon: "preferences-system-time", file: "TimePage.qml", keys: "clock timezone ntp 24 hour 12 date format seconds" },
-		{ id: "keyboard", name: qsTr("Keyboard"), icon: "preferences-desktop-keyboard", file: "KeyboardPage.qml", keys: "layout language repeat caps numlock" },
-		{ id: "mouse", name: qsTr("Mouse & Touchpad"), icon: "input-mouse", file: "MousePage.qml", keys: "pointer speed acceleration scroll tap natural left handed" },
-		{ id: "windows", name: qsTr("Windows"), icon: "preferences-system-windows", file: "WindowsPage.qml", keys: "focus snap gaps workspaces placement title double click" },
-		{ id: "shortcuts", name: qsTr("Shortcuts"), icon: "preferences-desktop-keyboard-shortcuts", file: "ShortcutsPage.qml", keys: "keybinds hotkeys keys bindings" },
-		{ id: "sound", name: qsTr("Sound"), icon: "audio-volume-high", file: "SoundPage.qml", keys: "audio volume speakers headphones microphone output input" },
-		{ id: "power", name: qsTr("Power & Lock"), icon: "system-shutdown", file: "PowerPage.qml", keys: "idle lock screen off sleep suspend" },
-		{ id: "apps", name: qsTr("Apps & Startup"), icon: "preferences-desktop-default-applications", file: "AppsPage.qml", keys: "default terminal browser file manager autostart startup" },
-		{ id: "about", name: qsTr("About"), icon: "help-about", file: "AboutPage.qml", keys: "system info version hardware cpu gpu memory" },
+		{ id: "themes", name: qsTr("Themes"), icon: "palette", tile: "#e5484d", file: "AppearancePage.qml", keys: "appearance look colours colors style retro modern cursor icons wallpaper" },
+		{ id: "panel", name: qsTr("Panel & Dock"), icon: "panel", tile: "#3b82f6", file: "PanelPage.qml", keys: "taskbar bar bottom top pin pinned dock launcher" },
+		{ id: "displays", name: qsTr("Displays"), icon: "desktop", tile: "#0ea5e9", file: "DisplaysPage.qml", keys: "monitor screen resolution refresh hz scale rotation vrr freesync night light" },
+		{ id: "time", name: qsTr("Time & Date"), icon: "chrono", tile: "#f59e0b", file: "TimePage.qml", keys: "clock timezone ntp 24 hour 12 date format seconds" },
+		{ id: "keyboard", name: qsTr("Keyboard"), icon: "keyboard", tile: "#64748b", file: "KeyboardPage.qml", keys: "layout language repeat caps numlock" },
+		{ id: "mouse", name: qsTr("Mouse & Touchpad"), icon: "mouse", tile: "#8b5cf6", file: "MousePage.qml", keys: "pointer speed acceleration scroll tap natural left handed" },
+		{ id: "windows", name: qsTr("Windows"), icon: "windows", tile: "#14b8a6", file: "WindowsPage.qml", keys: "focus snap gaps workspaces placement title double click" },
+		{ id: "shortcuts", name: qsTr("Shortcuts"), icon: "command", tile: "#6366f1", file: "ShortcutsPage.qml", keys: "keybinds hotkeys keys bindings" },
+		{ id: "sound", name: qsTr("Sound"), icon: "volume", tile: "#ec4899", file: "SoundPage.qml", keys: "audio volume speakers headphones microphone output input" },
+		{ id: "power", name: qsTr("Power & Lock"), icon: "power", tile: "#22c55e", file: "PowerPage.qml", keys: "idle lock screen off sleep suspend" },
+		{ id: "apps", name: qsTr("Apps & Startup"), icon: "apps", tile: "#f97316", file: "AppsPage.qml", keys: "default terminal browser file manager autostart startup" },
+		{ id: "about", name: qsTr("About"), icon: "info", tile: "#71717a", file: "AboutPage.qml", keys: "system info version hardware cpu gpu memory" },
 	]
 	property string current: pages.some(p => p.id === startPage) ? startPage : "themes"   // "colors" opens Themes with the colour editor
 
@@ -74,7 +74,11 @@ ApplicationWindow {
 						onClicked: win.current = modelData.id
 						contentItem: RowLayout {
 							spacing: 10
-							Image { source: "image://icon/" + encodeURIComponent(modelData.icon); sourceSize: Qt.size(22, 22); Layout.preferredWidth: 22; Layout.preferredHeight: 22 }
+							Rectangle {
+								Layout.preferredWidth: 26; Layout.preferredHeight: 26; radius: 7
+								color: modelData.tile
+								Glyph { anchors.centerIn: parent; width: 16; height: 16; name: modelData.icon; color: "white" }
+							}
 							Label { text: modelData.name; Layout.fillWidth: true; color: highlighted ? win.palette.highlightedText : win.palette.windowText }
 						}
 					}

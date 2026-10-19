@@ -21,6 +21,7 @@ Window {
 
 	function configure() {
 		Layer.setup(panel, {
+			screen: panel.screen,
 			layer: "top", scope: "chrono-panel", keyboard: "none",
 			anchors: (pos === "top" ? 1 : 2) | 4 | 8,
 			exclusive: barHeight + margin,
@@ -66,6 +67,11 @@ Window {
 		popup.toggle(panel.screen, p.x)
 	}
 
+	MouseArea {   // right-click on empty panel space: where the panel goes, which screens, settings
+		anchors.fill: bg
+		acceptedButtons: Qt.RightButton
+		onClicked: (m) => panel.shell.openPanelMenu(panel.screen, m.x + bg.x)
+	}
 	Skin {
 		id: bg
 		kind: "panel"

@@ -39,7 +39,7 @@ Then pick **Chrono** in your login manager, or run `chrono-session` from a TTY.
 
 | Keys | Does |
 | --- | --- |
-| Super+Space / Super+D | App menu |
+| Super (tap it on its own), Super+Space | App menu |
 | Super+Return | Terminal (Interstellar if installed) |
 | Super+E / Super+B | Files / browser |
 | Super+Q, Alt+F4 | Close window |
@@ -48,9 +48,13 @@ Then pick **Chrono** in your login manager, or run `chrono-session` from a TTY.
 | Alt+Tab | Switch windows |
 | Super+L | Lock |
 | Super+I | Settings |
-| Print, Super+Shift+S | Screenshot, area screenshot |
+| Super+S, Print | Screenshot of the monitor you're on — saved to Pictures/Screenshots and copied to the clipboard |
+| Super+Shift+S | Screenshot of an area |
 
 Everything is changeable in **Settings → Shortcuts**.
+
+The panel goes on your biggest monitor by default. **Right-click empty panel space** to move it to the
+top or bottom, put it on another monitor or on every monitor, or open panel and display settings.
 
 Right-click any app in the app menu or on the bar to **pin it to the bar**. Pinned apps stay on the bar;
 running apps appear next to them.
@@ -67,6 +71,7 @@ workspaces = 4
 
 [panel]
 position = bottom      ; bottom | top | theme
+screen = auto          ; auto (biggest monitor) | all | an output name like DP-1
 pinned = true
 labels = true
 dock = theme           ; theme | true | false

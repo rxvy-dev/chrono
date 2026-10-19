@@ -23,5 +23,6 @@
     <file>qml/TimePage.qml</file>
     <file>qml/WindowsPage.qml</file>
     <file>qml/main.qml</file>
+    <file alias="qml/Glyph.qml">../shell/qml/Glyph.qml</file>
   </qresource>
 </RCC>

@@ -11,4 +11,8 @@ add_executable(chrono-shell
   shell.qrc)
 target_link_libraries(chrono-shell PRIVATE
   chrono-qtcommon Qt6::DBus LayerShellQt::Interface)
+# layer-shell-qt 6.6+ wants the output set on its Window, not only on the QWindow
+if(LayerShellQt_VERSION VERSION_GREATER_EQUAL 6.6)
+  target_compile_definitions(chrono-shell PRIVATE CHRONO_LSQ_SET_SCREEN)
+endif()
 install(TARGETS chrono-shell DESTINATION ${CMAKE_INSTALL_BINDIR})

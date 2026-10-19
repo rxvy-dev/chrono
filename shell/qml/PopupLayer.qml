@@ -29,7 +29,7 @@ Window {
 		targetX = x === undefined ? (pop.screen ? pop.screen.width / 2 : 0) : x
 		targetY = y === undefined ? -1 : y
 		if (!visible) {
-			Layer.setup(pop, { layer: layerName, anchors: 15, exclusive: 0, keyboard: keyboard, scope: "chrono-popup" })
+			Layer.setup(pop, { screen: pop.screen, layer: layerName, anchors: 15, exclusive: 0, keyboard: keyboard, scope: "chrono-popup" })
 			visible = true
 		}
 		holder.forceActiveFocus()

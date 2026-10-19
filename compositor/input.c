@@ -161,7 +161,13 @@ bool run_action(struct chrono_server *s, const char *action)
 		server_apply_theme(s, arg);
 	} else if (!strcmp(verb, "screenshot")) {
 		char cmd[300];
-		snprintf(cmd, sizeof cmd, "chrono-screenshot %s", arg[0] ? arg : "screen");
+		if (arg[0]) {
+			snprintf(cmd, sizeof cmd, "chrono-screenshot %s", arg);
+		} else {
+			/* the monitor under the pointer, saved and copied to the clipboard */
+			struct chrono_output *o = output_at(s, s->cursor->x, s->cursor->y);
+			snprintf(cmd, sizeof cmd, "chrono-screenshot output '%s'", o ? o->wlr_output->name : "");
+		}
 		server_spawn(s, cmd);
 	} else if (!strcmp(verb, "volume")) {
 		const char *c = !strcmp(arg, "up") ? "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
@@ -284,6 +290,20 @@ static void kb_key(struct wl_listener *l, void *data)
 				goto consumed;
 			}
 		}
+	}
+
+	/* tapping Super on its own (no other key or click while it's held) opens the app menu */
+	bool is_super = false;
+	for (int i = 0; i < nraw; i++)
+		if (raw[i] == XKB_KEY_Super_L || raw[i] == XKB_KEY_Super_R)
+			is_super = true;
+	if (pressed) {
+		s->super_tap = is_super && !(mods & BIND_MODS & ~WLR_MODIFIER_LOGO);
+	} else if (is_super) {
+		bool tap = s->super_tap;
+		s->super_tap = false;
+		if (tap && s->config.super_opens_launcher && !s->binds_inhibited && !s->switcher.active)
+			run_action(s, "launcher");
 	}
 
 	if (pressed) {
@@ -673,6 +693,7 @@ static void cursor_button(struct wl_listener *l, void *data)
 	struct wlr_pointer_button_event *e = data;
 	input_activity(s);
 	bool pressed = e->state == WL_POINTER_BUTTON_STATE_PRESSED;
+	s->super_tap = false;   /* Super+click / Super+drag is not a tap */
 
 	if (lock_active(s) && !s->lock.ext_locked)
 		return;

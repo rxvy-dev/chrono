@@ -22,6 +22,7 @@ struct chrono_config {
 	char appearance_mode[16];   /* theme | light | dark */
 	char accent[32];            /* theme | #rrggbb | wallpaper */
 	bool reduce_motion;
+	bool super_opens_launcher;  /* tap Super to open the app menu */
 	char terminal[256];
 	char file_manager[256];
 	char browser[256];

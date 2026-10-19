@@ -2,6 +2,7 @@
 
 #include <LayerShellQt/Window>
 #include <QMargins>
+#include <QScreen>
 #include <QWindow>
 
 using LSW = LayerShellQt::Window;
@@ -22,6 +23,13 @@ void Layer::setup(QWindow *w, const QVariantMap &o)
 	LSW *l = LSW::get(w);
 	if (!l)
 		return;
+	// put the surface on the right monitor (otherwise the compositor picks the one under the mouse)
+	if (auto *scr = qobject_cast<QScreen *>(o.value(QStringLiteral("screen")).value<QObject *>())) {
+		w->setScreen(scr);
+#ifdef CHRONO_LSQ_SET_SCREEN
+		l->setScreen(scr);
+#endif
+	}
 	const QString layer = o.value(QStringLiteral("layer"), QStringLiteral("top")).toString();
 	l->setLayer(layer == QLatin1String("background") ? LSW::LayerBackground
 		    : layer == QLatin1String("bottom")   ? LSW::LayerBottom

@@ -129,6 +129,33 @@ Canvas {
 			c.beginPath(); c.arc(8, 8, 6, Math.PI * 0.35, Math.PI * 1.65); c.arc(10.5, 6.5, 4.5, Math.PI * 1.3, Math.PI * 0.6, true); c.closePath(); c.fill(); break
 		case "trash":
 			line([2.5, 4, 13.5, 4]); line([6, 4, 6.5, 2, 9.5, 2, 10, 4]); c.strokeRect(4, 4, 8, 10); break
+		case "palette":
+			c.beginPath(); c.arc(8, 8, 6.3, 0, Math.PI * 2); c.stroke()
+			for (const p of [[5.3, 6], [8.2, 4.4], [11, 6.2], [10.6, 9.6]]) { c.beginPath(); c.arc(p[0], p[1], 1.25, 0, Math.PI * 2); c.fill() }
+			c.beginPath(); c.arc(6, 10.5, 1.7, 0, Math.PI * 2); c.fill(); break
+		case "panel":
+			c.strokeRect(1.5, 2.5, 13, 11); c.fillRect(1.5, 10.5, 13, 3); break
+		case "keyboard":
+			c.lineWidth = 1.4; c.strokeRect(1, 4, 14, 8.5)
+			for (let x = 0; x < 5; x++) { c.fillRect(2.6 + x * 2.3, 5.6, 1.3, 1.3); c.fillRect(2.6 + x * 2.3, 7.9, 1.3, 1.3) }
+			c.fillRect(4.5, 10.2, 7, 1.2); break
+		case "mouse":
+			c.beginPath(); c.moveTo(4, 6); c.arc(8, 6, 4, Math.PI, 0); c.lineTo(12, 10.5); c.arc(8, 10.5, 4, 0, Math.PI); c.closePath(); c.stroke()
+			line([8, 2, 8, 6.5]); line([4, 6.5, 12, 6.5]); break
+		case "windows":   // overlapping window frames (not a logo)
+			c.lineWidth = 1.4; c.strokeRect(1.5, 2.5, 9, 7); c.fillRect(1.5, 2.5, 9, 2)
+			c.clearRect(5.5, 6.5, 9, 7); c.strokeRect(5.5, 6.5, 9, 7); c.fillRect(5.5, 6.5, 9, 2); break
+		case "command":
+			c.lineWidth = 1.5
+			c.beginPath(); c.arc(4.5, 4.5, 2, 0, Math.PI * 1.5); c.arc(11.5, 4.5, 2, Math.PI * 0.5, Math.PI * 2) ; c.stroke()
+			c.beginPath(); c.arc(4.5, 11.5, 2, Math.PI * 1.5, Math.PI * 1); c.stroke(); c.beginPath(); c.arc(11.5, 11.5, 2, Math.PI, Math.PI * 0.5); c.stroke()
+			c.strokeRect(6.5, 6.5, 3, 3); break
+		case "info":
+			c.beginPath(); c.arc(8, 8, 6.4, 0, Math.PI * 2); c.stroke()
+			c.beginPath(); c.arc(8, 4.9, 1.1, 0, Math.PI * 2); c.fill(); c.fillRect(7.1, 7, 1.8, 5); break
+		case "camera":
+			c.lineWidth = 1.4; c.strokeRect(1.5, 4.5, 13, 9); c.fillRect(5, 2.5, 6, 2)
+			c.beginPath(); c.arc(8, 9, 2.7, 0, Math.PI * 2); c.stroke(); break
 		default:
 			c.beginPath(); c.arc(8, 8, 5, 0, Math.PI * 2); c.stroke()
 		}
