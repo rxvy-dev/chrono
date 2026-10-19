@@ -1,0 +1,2 @@
+[2138] Sandbox: CanCreateUserNamespace() clone() failure: EPERM
+WARNING: Glycin running without sandbox. Bubblewrap (bwrap) doesn't work in the environment.
