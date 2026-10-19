@@ -1,0 +1,25 @@
+<RCC>
+  <qresource prefix="/">
+    <file>qml/AboutPage.qml</file>
+    <file>qml/AppearancePage.qml</file>
+    <file>qml/AppsPage.qml</file>
+    <file>qml/ConfigCombo.qml</file>
+    <file>qml/ConfigSlider.qml</file>
+    <file>qml/ConfigSpin.qml</file>
+    <file>qml/ConfigSwitch.qml</file>
+    <file>qml/ConfigText.qml</file>
+    <file>qml/DisplaysPage.qml</file>
+    <file>qml/KeyboardPage.qml</file>
+    <file>qml/MousePage.qml</file>
+    <file>qml/PanelPage.qml</file>
+    <file>qml/PowerPage.qml</file>
+    <file>qml/Section.qml</file>
+    <file>qml/SettingRow.qml</file>
+    <file>qml/SettingsPage.qml</file>
+    <file>qml/ShortcutsPage.qml</file>
+    <file>qml/SoundPage.qml</file>
+    <file>qml/TimePage.qml</file>
+    <file>qml/WindowsPage.qml</file>
+    <file>qml/main.qml</file>
+  </qresource>
+</RCC>

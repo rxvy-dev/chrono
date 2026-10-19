@@ -190,6 +190,8 @@ bool run_action(struct chrono_server *s, const char *action)
 static bool handle_bind(struct chrono_server *s, uint32_t mods, const xkb_keysym_t *syms, int n)
 {
 	mods &= BIND_MODS;
+	if (s->binds_inhibited)
+		return false;             /* the settings app is recording a shortcut */
 	for (int i = 0; i < n; i++) {
 		xkb_keysym_t sym = xkb_keysym_to_lower(syms[i]);
 		for (int b = 0; b < s->config.nbinds; b++) {

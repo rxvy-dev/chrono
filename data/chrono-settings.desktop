@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Chrono Settings
+GenericName=System Settings
+Comment=Themes, displays, time, keyboard, mouse, shortcuts and more
+Exec=chrono-settings %U
+Icon=preferences-system
+Categories=Settings;DesktopSettings;Qt;
+Keywords=theme;display;monitor;resolution;time;date;clock;keyboard;mouse;touchpad;shortcut;sound;power;
+OnlyShowIn=Chrono;

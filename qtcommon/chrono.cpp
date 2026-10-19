@@ -191,6 +191,8 @@ Chrono::Chrono(QObject *parent) : QObject(parent)
 	connect(this, &Chrono::configChanged, this, &Chrono::panelChanged);
 	connect(this, &Chrono::themeChanged, this, &Chrono::panelChanged);
 	m_theme = themeToMap(configValue(QStringLiteral("general.theme"), QStringLiteral("midnight")));
+	if (!configValue(QStringLiteral("icons.theme")).isEmpty())
+		m_theme[QStringLiteral("iconTheme")] = configValue(QStringLiteral("icons.theme"));
 	m_themeId = m_theme.value(QStringLiteral("id")).toString();
 	connectNow();
 }
@@ -312,6 +314,9 @@ void Chrono::refreshTheme()
 		if (id.isEmpty())
 			return;
 		m_theme = themeToMap(path.isEmpty() ? id : path);
+		const QString icons = configValue(QStringLiteral("icons.theme"));
+		if (!icons.isEmpty())
+			m_theme[QStringLiteral("iconTheme")] = icons;
 		m_themeId = id;
 		emit themeChanged();
 	});

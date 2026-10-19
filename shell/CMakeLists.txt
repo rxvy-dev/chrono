@@ -6,7 +6,6 @@ set(CMAKE_AUTORCC ON)
 add_executable(chrono-shell
   main.cpp
   layer.cpp layer.h
-  apps.cpp apps.h
   notifications.cpp notifications.h
   system.cpp system.h
   shell.qrc)

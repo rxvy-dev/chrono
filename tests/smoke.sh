@@ -49,6 +49,7 @@ chronoctl theme midnight >/dev/null; sleep 1
 command -v notify-send >/dev/null && notify-send -a "Smoke test" "Hello from CI" "This is a <b>Chrono</b> notification." && sleep 0.8
 grim "$OUT/shell-notification.png"
 for t in midnight ninety-five liquid-glass meadow topaz; do
+    chronoctl set panel pinned true >/dev/null
     chronoctl theme $t >/dev/null; sleep 1.2
     chronoctl action launcher >/dev/null; sleep 1.2
     grim "$OUT/shell-launcher-$t.png"
@@ -57,6 +58,14 @@ done
 chronoctl theme midnight >/dev/null; sleep 1
 chronoctl action notifications >/dev/null; sleep 1; grim "$OUT/shell-calendar.png"; chronoctl action notifications >/dev/null; sleep 0.4
 chronoctl action power-menu >/dev/null; sleep 1; grim "$OUT/shell-power.png"
+chronoctl action power-menu >/dev/null; sleep 0.3
+# the settings app, a couple of pages
+if command -v chrono-settings >/dev/null; then
+    for p in themes displays time; do
+        chrono-settings $p >"$OUT/settings-$p.log" 2>&1 & SP=$!; sleep 2.5; grim "$OUT/settings-$p.png"; kill $SP 2>/dev/null; wait $SP 2>/dev/null
+    done
+    grep -h "qrc:" "$OUT"/settings-*.log | sort -u | head -20 | sed 's/^/::warning::/'
+fi
 chronoctl action "volume up" >/dev/null; sleep 0.5; grim "$OUT/shell-osd.png"
 pgrep -x chrono-shell >/dev/null || { echo "::error::chrono-shell is not running"; fail=1; }
 grep -q "Assertion" "$OUT/chrono.log" && { echo "::error::an assertion failed"; fail=1; }

@@ -9,6 +9,7 @@
  *   subscribe                            (the connection then receives {"event":...} lines)
  * The socket is $CHRONO_SOCK, i.e. $XDG_RUNTIME_DIR/chrono-<WAYLAND_DISPLAY>.sock */
 #define _GNU_SOURCE
+#include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdarg.h>
@@ -22,6 +23,8 @@
 #include <wlr/util/log.h>
 
 #include "../common/ini.h"
+#include <wlr/types/wlr_keyboard.h>
+
 #include "server.h"
 
 struct ipc_client {
@@ -32,6 +35,7 @@ struct ipc_client {
 	char in[8192];
 	size_t inlen;
 	bool subscribed;
+	bool inhibits_binds;
 };
 
 /* ------------------------------------------------------------------------------- JSON helpers */
@@ -71,6 +75,8 @@ void jbuf_string(char **buf, size_t *len, const char *s)
 /* ------------------------------------------------------------------------------- clients */
 static void client_close(struct ipc_client *c)
 {
+	if (c->inhibits_binds)
+		c->server->binds_inhibited = false;
 	wl_event_source_remove(c->src);
 	close(c->fd);
 	wl_list_remove(&c->link);
@@ -198,6 +204,32 @@ static void handle(struct ipc_client *c, char *line)
 		jbuf_append(&b, &n, ",\"terminal\":");
 		jbuf_string(&b, &n, s->config.terminal);
 		jbuf_append(&b, &n, ",\"workspaces\":%d}", s->config.workspaces);
+		reply(c, b, n);
+	} else if (!strcmp(cmd, "inhibit-binds")) {
+		/* "inhibit-binds on|off": while on (and while this client stays connected) shortcuts reach apps */
+		c->inhibits_binds = strcmp(rest, "off") != 0;
+		s->binds_inhibited = c->inhibits_binds;
+		reply_ok(c);
+	} else if (!strcmp(cmd, "keybinds")) {
+		jbuf_append(&b, &n, "[");
+		for (int i = 0; i < s->config.nbinds; i++) {
+			const struct chrono_bind *kb = &s->config.binds[i];
+			char combo[160] = "", key[64] = "";
+			if (kb->mods & WLR_MODIFIER_CTRL) strcat(combo, "Ctrl+");
+			if (kb->mods & WLR_MODIFIER_ALT) strcat(combo, "Alt+");
+			if (kb->mods & WLR_MODIFIER_SHIFT) strcat(combo, "Shift+");
+			if (kb->mods & WLR_MODIFIER_LOGO) strcat(combo, "Super+");
+			if (kb->mods & WLR_MODIFIER_MOD5) strcat(combo, "AltGr+");
+			xkb_keysym_get_name(kb->sym, key, sizeof key);
+			if (strlen(key) == 1) key[0] = (char)toupper((unsigned char)key[0]);
+			strncat(combo, key, sizeof combo - strlen(combo) - 1);
+			jbuf_append(&b, &n, "%s{\"keys\":", i ? "," : "");
+			jbuf_string(&b, &n, combo);
+			jbuf_append(&b, &n, ",\"action\":");
+			jbuf_string(&b, &n, kb->action);
+			jbuf_append(&b, &n, "}");
+		}
+		jbuf_append(&b, &n, "]");
 		reply(c, b, n);
 	} else if (!strcmp(cmd, "reload")) {
 		server_reload(s);

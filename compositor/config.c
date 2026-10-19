@@ -199,6 +199,13 @@ void config_load(struct chrono_config *c)
 	STR(c->kb_variant, "keyboard.variant", "");
 	STR(c->kb_options, "keyboard.options", "");
 	STR(c->kb_model, "keyboard.model", "");
+	/* the settings app keeps the Caps Lock choice separate from the layout-switch option */
+	const char *caps = chrono_ini_get(&ini, "keyboard.caps", "");
+	if (caps[0] && strlen(c->kb_options) + strlen(caps) + 2 < sizeof c->kb_options) {
+		if (c->kb_options[0])
+			strcat(c->kb_options, ",");
+		strcat(c->kb_options, caps);
+	}
 	c->repeat_rate = (int)chrono_ini_num(&ini, "keyboard.repeat_rate", 30);
 	c->repeat_delay = (int)chrono_ini_num(&ini, "keyboard.repeat_delay", 300);
 	c->numlock = chrono_ini_bool(&ini, "keyboard.numlock", true);

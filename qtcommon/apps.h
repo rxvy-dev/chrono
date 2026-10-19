@@ -41,6 +41,6 @@ private:
 	QHash<QString, int> m_index;
 	QHash<QString, int> m_usage;
 	QStringList m_pinned;
-	QFileSystemWatcher m_watch;
+	QFileSystemWatcher m_watch, m_prefsWatch;
 	QTimer m_rescan;
 };

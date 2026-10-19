@@ -1,6 +1,6 @@
 find_package(Qt6 6.4 REQUIRED COMPONENTS Core Gui Qml Quick)
 set(CMAKE_AUTOMOC ON)
-add_library(chrono-qtcommon STATIC chrono.cpp chrono.h icons.cpp icons.h preview.cpp preview.h)
+add_library(chrono-qtcommon STATIC chrono.cpp chrono.h icons.cpp icons.h preview.cpp preview.h apps.cpp apps.h)
 target_include_directories(chrono-qtcommon PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_definitions(chrono-qtcommon PRIVATE CHRONO_VERSION="${PROJECT_VERSION}")
 target_link_libraries(chrono-qtcommon PUBLIC chrono-common Qt6::Core Qt6::Gui Qt6::Qml Qt6::Quick)

@@ -3,6 +3,7 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QFile>
+#include <QFileInfo>
 #include <QLocale>
 #include <QProcess>
 #include <QSettings>
@@ -104,6 +105,17 @@ Apps::Apps(QObject *parent) : QObject(parent)
 	connect(&m_watch, &QFileSystemWatcher::directoryChanged, this, [this] { m_rescan.start(); });
 	loadPrefs();
 	scan();
+	// another process (chrono-settings, or the other app) may change pinned apps
+	const QString p = prefsPath();
+	QDir().mkpath(QFileInfo(p).absolutePath());
+	m_prefsWatch.addPath(QFileInfo(p).absolutePath());
+	connect(&m_prefsWatch, &QFileSystemWatcher::directoryChanged, this, [this] {
+		const QStringList before = m_pinned;
+		QSettings(prefsPath(), QSettings::IniFormat).sync();
+		loadPrefs();
+		if (before != m_pinned)
+			emit pinnedChanged();
+	});
 }
 
 void Apps::scan()
