@@ -102,7 +102,12 @@ bool chrono_parse_color(const char *s, struct chrono_rgba *out);
 /* Load a theme the way the user's preferences ask for it:
  *   mode   "theme" (or NULL) | "light" | "dark" — switches to the theme's pair when the variant differs
  *   accent NULL/"" /"theme" | "#rrggbb" | "wallpaper" (derived from the theme's wallpaper colours) */
-bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char *mode, const char *accent);
+bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char *mode, const char *accent,
+			     const char *config_path);
+/* The user's own colours: [colors] and [desktop] in chrono.conf, applied on top of any theme. */
+void chrono_theme_apply_overrides(struct chrono_theme *t, const char *config_path);
+/* Write the theme (with whatever overrides it carries) as a .theme file named `name`. */
+bool chrono_theme_save(const struct chrono_theme *t, const char *path, const char *name);
 void chrono_theme_apply_accent(struct chrono_theme *t, const char *accent);
 
 /* WCAG 2 contrast ratio between two colours (alpha is ignored), 1..21 */

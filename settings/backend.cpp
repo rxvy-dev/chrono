@@ -12,6 +12,13 @@
 #include <QSysInfo>
 #include <QTextStream>
 #include <QtGlobal>
+#include <QRegularExpression>
+
+#include "chrono.h"
+extern "C" {
+#include "ini.h"
+#include "theme.h"
+}
 
 static QString readFile(const QString &p)
 {
@@ -327,6 +334,56 @@ void Backend::setAutostart(const QString &file, bool enabled)
 	QFile f(user);
 	if (f.open(QIODevice::WriteOnly | QIODevice::Truncate))
 		f.write(lines.join(QLatin1Char('\n')).toUtf8());
+}
+
+// ------------------------------------------------------------------------------ your own colours
+static const char *custom_keys[] = {"colors.accent", "colors.bg", "colors.fg", "colors.window_bg", "colors.window_fg",
+	"colors.title_active", "colors.title_active_fg", "colors.title_inactive", "colors.title_inactive_fg",
+	"colors.border_active", "colors.border_inactive", "colors.button_bg", "colors.button_fg", "colors.close_bg",
+	"colors.panel_bg", "colors.panel_fg", "colors.panel_border", "colors.selection", "colors.accent_fg",
+	"desktop.wallpaper", "desktop.color1", "desktop.color2"};
+
+QStringList Backend::customColorKeys() const
+{
+	QStringList out;
+	for (const char *k : custom_keys)
+		out << QLatin1String(k);
+	return out;
+}
+
+void Backend::clearCustomColors()
+{
+	const QByteArray cfg = Chrono::configPath().toLocal8Bit();
+	for (const char *k : custom_keys) {
+		const QString key = QLatin1String(k);
+		const QByteArray sec = key.section(QLatin1Char('.'), 0, 0).toUtf8(), name = key.section(QLatin1Char('.'), 1).toUtf8();
+		chrono_ini_set_in_file(cfg.constData(), sec.constData(), name.constData(), "");
+	}
+}
+
+QString Backend::saveTheme(const QString &name)
+{
+	QString slug = name.trimmed().toLower();
+	slug.replace(QRegularExpression(QStringLiteral("[^a-z0-9]+")), QStringLiteral("-"));
+	slug.remove(QRegularExpression(QStringLiteral("^-+|-+$")));
+	if (slug.isEmpty())
+		return {};
+	const QString dir = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + QStringLiteral("/chrono/themes");
+	QDir().mkpath(dir);
+	chrono_ini ini = {};
+	const QByteArray cfg = Chrono::configPath().toLocal8Bit();
+	chrono_ini_load(&ini, cfg.constData());
+	const QByteArray id = QByteArray(chrono_ini_get(&ini, "general.theme", "midnight"));
+	const QByteArray mode = QByteArray(chrono_ini_get(&ini, "appearance.mode", "theme"));
+	const QByteArray accent = QByteArray(chrono_ini_get(&ini, "appearance.accent", "theme"));
+	chrono_ini_free(&ini);
+	chrono_theme t;
+	chrono_theme_load_prefs(&t, id.constData(), mode.constData(), accent.constData(), cfg.constData());
+	const QByteArray path = (dir + QLatin1Char('/') + slug + QStringLiteral(".theme")).toLocal8Bit();
+	const QByteArray nm = name.trimmed().toUtf8();
+	if (!chrono_theme_save(&t, path.constData(), nm.constData()))
+		return {};
+	return slug;
 }
 
 // ------------------------------------------------------------------------------ about

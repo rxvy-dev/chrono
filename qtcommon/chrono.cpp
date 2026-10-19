@@ -74,9 +74,11 @@ QVariantMap Chrono::themeToMap(const QString &pathOrId, const QString &mode, con
 	chrono_theme t;
 	const QByteArray p = pathOrId.toUtf8(), md = mode.toUtf8(), ac = accent.toUtf8();
 	bool ok = pathOrId.contains(QLatin1Char('/')) ? chrono_theme_load_file(&t, p.constData())
-						      : chrono_theme_load_prefs(&t, p.constData(), md.constData(), nullptr);
+						      : chrono_theme_load_prefs(&t, p.constData(), md.constData(), nullptr, nullptr);
 	if (!ok)
 		chrono_theme_defaults(&t);
+	const QByteArray cfg = configPath().toLocal8Bit();
+	chrono_theme_apply_overrides(&t, cfg.constData());
 	chrono_theme_apply_accent(&t, ac.constData());
 	QVariantMap m;
 #define S(k, v) m[QStringLiteral(k)] = QString::fromUtf8(v)

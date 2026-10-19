@@ -164,6 +164,44 @@ void chrono_theme_defaults(struct chrono_theme *t)
 	snprintf(t->icon_theme, sizeof t->icon_theme, "Adwaita");
 }
 
+/* Read every [colors] key that is set (and parseable). With `derive`, unset window/title colours
+ * follow bg/fg like a theme file expects; user overrides pass false so only what's named changes. */
+static void apply_colors(const struct chrono_ini *ini, struct chrono_theme *t, bool derive)
+{
+	col(ini, "colors.bg", &t->bg);
+	col(ini, "colors.fg", &t->fg);
+	col(ini, "colors.accent", &t->accent);
+	col(ini, "colors.accent_fg", &t->accent_fg);
+	col(ini, "colors.selection", &t->selection);
+	if (derive) {
+		t->window_bg = t->bg;
+		t->window_fg = t->fg;
+	}
+	col(ini, "colors.window_bg", &t->window_bg);
+	col(ini, "colors.window_fg", &t->window_fg);
+	col(ini, "colors.title_active", &t->title_active);
+	if (derive || chrono_ini_get(ini, "colors.title_active", NULL))
+		t->title_active2 = t->title_active;
+	col(ini, "colors.title_active2", &t->title_active2);
+	col(ini, "colors.title_active_fg", &t->title_active_fg);
+	col(ini, "colors.title_inactive", &t->title_inactive);
+	if (derive || chrono_ini_get(ini, "colors.title_inactive", NULL))
+		t->title_inactive2 = t->title_inactive;
+	col(ini, "colors.title_inactive2", &t->title_inactive2);
+	col(ini, "colors.title_inactive_fg", &t->title_inactive_fg);
+	col(ini, "colors.border_active", &t->border_active);
+	col(ini, "colors.border_inactive", &t->border_inactive);
+	col(ini, "colors.bevel_light", &t->bevel_light);
+	col(ini, "colors.bevel_dark", &t->bevel_dark);
+	col(ini, "colors.bevel_shadow", &t->bevel_shadow);
+	col(ini, "colors.button_bg", &t->button_bg);
+	col(ini, "colors.button_fg", &t->button_fg);
+	col(ini, "colors.close_bg", &t->close_bg);
+	col(ini, "colors.panel_bg", &t->panel_bg);
+	col(ini, "colors.panel_fg", &t->panel_fg);
+	col(ini, "colors.panel_border", &t->panel_border);
+}
+
 bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 {
 	struct chrono_ini ini = {0};
@@ -181,35 +219,8 @@ bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 	str(&ini, "theme.variant", t->variant, sizeof t->variant);
 	str(&ini, "theme.pair", t->pair, sizeof t->pair);
 
-	col(&ini, "colors.bg", &t->bg);
-	col(&ini, "colors.fg", &t->fg);
-	col(&ini, "colors.accent", &t->accent);
+	apply_colors(&ini, t, true);
 	bool accent_from_wallpaper = !strcasecmp(chrono_ini_get(&ini, "colors.accent", ""), "wallpaper");
-	col(&ini, "colors.accent_fg", &t->accent_fg);
-	col(&ini, "colors.selection", &t->selection);
-	t->window_bg = t->bg;
-	t->window_fg = t->fg;
-	col(&ini, "colors.window_bg", &t->window_bg);
-	col(&ini, "colors.window_fg", &t->window_fg);
-	col(&ini, "colors.title_active", &t->title_active);
-	t->title_active2 = t->title_active;
-	col(&ini, "colors.title_active2", &t->title_active2);
-	col(&ini, "colors.title_active_fg", &t->title_active_fg);
-	col(&ini, "colors.title_inactive", &t->title_inactive);
-	t->title_inactive2 = t->title_inactive;
-	col(&ini, "colors.title_inactive2", &t->title_inactive2);
-	col(&ini, "colors.title_inactive_fg", &t->title_inactive_fg);
-	col(&ini, "colors.border_active", &t->border_active);
-	col(&ini, "colors.border_inactive", &t->border_inactive);
-	col(&ini, "colors.bevel_light", &t->bevel_light);
-	col(&ini, "colors.bevel_dark", &t->bevel_dark);
-	col(&ini, "colors.bevel_shadow", &t->bevel_shadow);
-	col(&ini, "colors.button_bg", &t->button_bg);
-	col(&ini, "colors.button_fg", &t->button_fg);
-	col(&ini, "colors.close_bg", &t->close_bg);
-	col(&ini, "colors.panel_bg", &t->panel_bg);
-	col(&ini, "colors.panel_fg", &t->panel_fg);
-	col(&ini, "colors.panel_border", &t->panel_border);
 
 	const char *st = chrono_ini_get(&ini, "decor.style", NULL);
 	for (size_t i = 0; st && i < sizeof styles / sizeof *styles; i++)
@@ -443,7 +454,8 @@ void chrono_theme_apply_accent(struct chrono_theme *t, const char *accent)
 		t->border_active = (struct chrono_rgba){a.r, a.g, a.b, t->border_active.a};
 }
 
-bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char *mode, const char *accent)
+bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char *mode, const char *accent,
+			     const char *config_path)
 {
 	bool ok = chrono_theme_load(t, id);
 	if (ok && mode && (!strcmp(mode, "light") || !strcmp(mode, "dark")) && strcmp(t->variant, mode) && t->pair[0]) {
@@ -453,6 +465,75 @@ bool chrono_theme_load_prefs(struct chrono_theme *t, const char *id, const char 
 		if (chrono_theme_load(&other, pair) && !strcmp(other.variant, mode))
 			*t = other;
 	}
+	chrono_theme_apply_overrides(t, config_path);
 	chrono_theme_apply_accent(t, accent);
 	return ok;
+}
+
+void chrono_theme_apply_overrides(struct chrono_theme *t, const char *config_path)
+{
+	if (!config_path || !*config_path)
+		return;
+	struct chrono_ini ini = {0};
+	if (!chrono_ini_load(&ini, config_path))
+		return;
+	apply_colors(&ini, t, false);
+	/* [desktop] in chrono.conf overrides the theme's wallpaper */
+	const char *wp = chrono_ini_get(&ini, "desktop.wallpaper", NULL);
+	if (wp && *wp)
+		snprintf(t->wallpaper, sizeof t->wallpaper, "%s", wp);
+	col(&ini, "desktop.color1", &t->desktop1);
+	col(&ini, "desktop.color2", &t->desktop2);
+	chrono_ini_free(&ini);
+}
+
+static void put_color(FILE *f, const char *k, struct chrono_rgba c)
+{
+	int r = (int)lround(c.r * 255), g = (int)lround(c.g * 255), b = (int)lround(c.b * 255), a = (int)lround(c.a * 255);
+	if (a >= 255)
+		fprintf(f, "%s = #%02x%02x%02x\n", k, r, g, b);
+	else
+		fprintf(f, "%s = #%02x%02x%02x%02x\n", k, r, g, b, a);
+}
+
+bool chrono_theme_save(const struct chrono_theme *t, const char *path, const char *name)
+{
+	FILE *f = fopen(path, "w");
+	if (!f)
+		return false;
+	static const char *decor_names[] = {"flat", "bevel", "platinum", "pixel", "tab", "motif", "cube", "meadow", "pinstripe", "glass", "neon"};
+	static const char *shape_names[] = {"flat", "bevel", "circle", "gel", "square", "roundrect"};
+	static const char *btn_names[] = {"", "close", "maximize", "minimize", "menu"};
+	fprintf(f, "# Chrono theme — saved from Settings (based on %s)\n[theme]\nname = %s\nera = %s\ndescription = %s\nvariant = %s\n\n[colors]\n",
+		t->name, name, t->era, t->description, t->variant);
+	put_color(f, "bg", t->bg); put_color(f, "fg", t->fg); put_color(f, "accent", t->accent);
+	put_color(f, "accent_fg", t->accent_fg); put_color(f, "selection", t->selection);
+	put_color(f, "window_bg", t->window_bg); put_color(f, "window_fg", t->window_fg);
+	put_color(f, "title_active", t->title_active); put_color(f, "title_active2", t->title_active2);
+	put_color(f, "title_active_fg", t->title_active_fg); put_color(f, "title_inactive", t->title_inactive);
+	put_color(f, "title_inactive2", t->title_inactive2); put_color(f, "title_inactive_fg", t->title_inactive_fg);
+	put_color(f, "border_active", t->border_active); put_color(f, "border_inactive", t->border_inactive);
+	put_color(f, "bevel_light", t->bevel_light); put_color(f, "bevel_dark", t->bevel_dark);
+	put_color(f, "bevel_shadow", t->bevel_shadow); put_color(f, "button_bg", t->button_bg);
+	put_color(f, "button_fg", t->button_fg); put_color(f, "close_bg", t->close_bg);
+	put_color(f, "panel_bg", t->panel_bg); put_color(f, "panel_fg", t->panel_fg); put_color(f, "panel_border", t->panel_border);
+	char lay[128] = "";
+	for (int i = 0; i < CHRONO_MAX_BUTTONS && t->buttons_left[i]; i++)
+		snprintf(lay + strlen(lay), sizeof lay - strlen(lay), "%s%s", i ? "," : "", btn_names[t->buttons_left[i]]);
+	strncat(lay, ":", sizeof lay - strlen(lay) - 1);
+	for (int i = 0; i < CHRONO_MAX_BUTTONS && t->buttons_right[i]; i++)
+		snprintf(lay + strlen(lay), sizeof lay - strlen(lay), "%s%s", i ? "," : "", btn_names[t->buttons_right[i]]);
+	fprintf(f, "\n[decor]\nstyle = %s\ntitle_height = %d\nborder_width = %d\ncorner_radius = %d\ntitle_center = %s\n"
+		   "title_bold = %s\nbuttons = %s\nbutton_shape = %s\nbutton_size = %d\nshadow = %s\nshadow_size = %d\nshadow_alpha = %.2f\n",
+		decor_names[t->decor], t->title_height, t->border_width, t->corner_radius, t->title_center ? "true" : "false",
+		t->title_bold ? "true" : "false", lay, shape_names[t->button_shape], t->button_size, t->shadow ? "true" : "false",
+		t->shadow_size, t->shadow_alpha);
+	fprintf(f, "\n[fonts]\nui = %s\ntitle = %s\nmono = %s\n", t->font_ui, t->font_title, t->font_mono);
+	fprintf(f, "\n[panel]\nposition = %s\nheight = %d\nstyle = %s\nlauncher_label = %s\ndock = %s\n", t->panel_position,
+		t->panel_height, t->panel_style, t->launcher_label, t->panel_dock ? "true" : "false");
+	fprintf(f, "\n[desktop]\nwallpaper = %s\n", t->wallpaper);
+	put_color(f, "color1", t->desktop1);
+	put_color(f, "color2", t->desktop2);
+	fprintf(f, "\n[cursor]\ntheme = %s\nsize = %d\n\n[icons]\ntheme = %s\n", t->cursor_theme, t->cursor_size, t->icon_theme);
+	return fclose(f) == 0;
 }

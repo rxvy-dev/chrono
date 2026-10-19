@@ -45,7 +45,7 @@ ApplicationWindow {
 		{ id: "apps", name: qsTr("Apps & Startup"), icon: "preferences-desktop-default-applications", file: "AppsPage.qml", keys: "default terminal browser file manager autostart startup" },
 		{ id: "about", name: qsTr("About"), icon: "help-about", file: "AboutPage.qml", keys: "system info version hardware cpu gpu memory" },
 	]
-	property string current: pages.some(p => p.id === startPage) ? startPage : "themes"
+	property string current: pages.some(p => p.id === startPage) ? startPage : "themes"   // "colors" opens Themes with the colour editor
 
 	RowLayout {
 		anchors.fill: parent

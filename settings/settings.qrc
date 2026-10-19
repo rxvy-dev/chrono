@@ -3,6 +3,8 @@
     <file>qml/AboutPage.qml</file>
     <file>qml/AppearancePage.qml</file>
     <file>qml/AppsPage.qml</file>
+    <file>qml/ColorPicker.qml</file>
+    <file>qml/ColorsSection.qml</file>
     <file>qml/ConfigCombo.qml</file>
     <file>qml/ConfigSlider.qml</file>
     <file>qml/ConfigSpin.qml</file>

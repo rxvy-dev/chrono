@@ -140,7 +140,7 @@ static void reload_cursor_theme(struct chrono_server *s)
 
 static void load_theme(struct chrono_server *s, const char *id)
 {
-	if (!chrono_theme_load_prefs(&s->theme, id, s->config.appearance_mode, s->config.accent))
+	if (!chrono_theme_load_prefs(&s->theme, id, s->config.appearance_mode, s->config.accent, s->config.path))
 		wlr_log(WLR_ERROR, "theme '%s' not found, using the built-in default", id);
 	s->theme_gen++;
 	decor_rebuild_shadow_templates(s);
@@ -293,7 +293,7 @@ int main(int argc, char **argv)
 	config_load(&s->config);
 	if (no_shell)
 		s->config.start_shell = false;
-	chrono_theme_load_prefs(&s->theme, s->config.theme, s->config.appearance_mode, s->config.accent);
+	chrono_theme_load_prefs(&s->theme, s->config.theme, s->config.appearance_mode, s->config.accent, s->config.path);
 	s->theme_gen = 1;
 	s->ipc_fd = -1;
 	wl_list_init(&s->views);

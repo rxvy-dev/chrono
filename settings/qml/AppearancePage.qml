@@ -12,6 +12,7 @@ SettingsPage {
 	readonly property string mode: Chrono.config["appearance.mode"] || "theme"
 	readonly property string accent: Chrono.config["appearance.accent"] || "theme"
 	property int gen: 0
+	property bool showColors: startPage === "colors"
 	Connections { target: Chrono; function onThemeChanged() { p.gen++ } function onConfigChanged() { p.gen++ } }
 
 	// ----- live preview + appearance controls
@@ -21,7 +22,7 @@ SettingsPage {
 		Image {
 			Layout.preferredWidth: 400
 			Layout.preferredHeight: 250
-			source: "image://preview/" + encodeURIComponent(Chrono.selectedTheme + "?mode=" + p.mode + "&accent=" + p.accent) + "#" + p.gen
+			source: "image://preview/" + encodeURIComponent(Chrono.selectedTheme + "?mode=" + p.mode + "&accent=" + p.accent + "&custom=1") + "#" + p.gen
 			sourceSize: Qt.size(800, 500)
 			asynchronous: true
 			cache: false
@@ -65,9 +66,12 @@ SettingsPage {
 					validator: RegularExpressionValidator { regularExpression: /#[0-9a-fA-F]{6}/ }
 					onEditingFinished: if (acceptableInput) Chrono.setConfig("appearance", "accent", text) }
 			}
+			Button { text: p.showColors ? qsTr("Hide colour editor") : qsTr("Customize colours…"); onClicked: p.showColors = !p.showColors }
 			ConfigSwitch { label: qsTr("Reduce motion"); description: qsTr("Turn off animations everywhere."); section: "appearance"; key: "reduce_motion"; defaultValue: false }
 		}
 	}
+
+	ColorsSection { visible: p.showColors }
 
 	RowLayout {
 		spacing: 6

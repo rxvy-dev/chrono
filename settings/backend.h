@@ -39,6 +39,11 @@ public:
 	Q_INVOKABLE QVariantList autostart() const;                      // [{file, name, enabled, user}]
 	Q_INVOKABLE void setAutostart(const QString &file, bool enabled);
 
+	// your own colours
+	Q_INVOKABLE QString saveTheme(const QString &name);      // returns the new theme id, "" on failure
+	Q_INVOKABLE void clearCustomColors();
+	Q_INVOKABLE QStringList customColorKeys() const;
+
 	// about
 	Q_INVOKABLE QVariantMap systemInfo() const;
 	Q_INVOKABLE bool has(const QString &program) const;
