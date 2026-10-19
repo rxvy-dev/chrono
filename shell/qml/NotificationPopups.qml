@@ -7,7 +7,7 @@ Window {
 	color: "transparent"
 	flags: Qt.FramelessWindowHint
 	width: 380
-	height: Math.max(1, list.contentHeight + 24)
+	height: Math.max(1, list.contentItem.childrenRect.height + 24)
 	visible: false
 
 	// keep a ListModel in step with Notifications.popups so add/remove can animate
@@ -37,7 +37,7 @@ Window {
 		id: list
 		x: 12; y: 12
 		width: np.width - 24
-		height: contentHeight
+		height: Math.max(1, contentItem.childrenRect.height)
 		spacing: 10
 		interactive: false
 		model: cards

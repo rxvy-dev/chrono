@@ -48,11 +48,16 @@ done
 chronoctl theme midnight >/dev/null; sleep 1
 command -v notify-send >/dev/null && notify-send -a "Smoke test" "Hello from CI" "This is a <b>Chrono</b> notification." && sleep 0.8
 grim "$OUT/shell-notification.png"
-for t in midnight ninety-five liquid-glass meadow topaz; do
-    chronoctl set panel pinned true >/dev/null
+# every theme: launcher open, two windows, a notification -> docs/screenshots material
+NID=""
+for t in $(cd themes && ls *.theme | sed 's/\.theme$//'); do
     chronoctl theme $t >/dev/null; sleep 1.2
-    chronoctl action launcher >/dev/null; sleep 1.2
-    grim "$OUT/shell-launcher-$t.png"
+    if command -v notify-send >/dev/null; then
+        NID=$(notify-send -p ${NID:+-r $NID} -t 30000 -a "Mail" -A open=Open -A later=Later "Lunch on Friday?" "Sam: the new place by the river, 12:30 works for everyone?" 2>/dev/null || true)
+    fi
+    sleep 0.6
+    chronoctl action launcher >/dev/null; sleep 1.0
+    grim "$OUT/theme-$t.png"
     chronoctl action launcher >/dev/null; sleep 0.4
 done
 chronoctl theme midnight >/dev/null; sleep 1
@@ -74,6 +79,7 @@ chronoctl action "snap left" >/dev/null; sleep 0.4
 grim "$OUT/shot-snap.png"
 chronoctl action "maximize" >/dev/null; sleep 0.4
 grim "$OUT/shot-maximize.png"
+chronoctl lock >/dev/null; sleep 1; grim "$OUT/shell-lock.png"
 kill -0 $PID 2>/dev/null || { echo "::error::chrono crashed during the test"; fail=1; }
 chronoctl quit >/dev/null 2>&1; sleep 1; kill $PID 2>/dev/null
 grep -E "\[ERROR\]|AddressSanitizer|runtime error" "$OUT/chrono.log" | head -20 | sed 's/^/::warning::/'

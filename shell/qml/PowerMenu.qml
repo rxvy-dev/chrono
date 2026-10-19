@@ -8,7 +8,7 @@ PopupLayer {
 	keyboard: "exclusive"
 	center: true
 	contentWidth: row.implicitWidth + 40
-	contentHeight: 170
+	contentHeight: 186
 	property int current: 0
 	readonly property var entries: [
 		{ glyph: "power", text: qsTr("Shut down"), run: () => System.power("shutdown") },
@@ -17,7 +17,7 @@ PopupLayer {
 		{ glyph: "logout", text: qsTr("Log out"), run: () => Chrono.command("quit") },
 		{ glyph: "lock", text: qsTr("Lock"), run: () => Chrono.command("lock") },
 	]
-	onOpened: current = 0
+	onOpened: { current = 4; anim.restart() }   // Lock is the safe default for Enter
 
 	Rectangle {
 		parent: pm.contentItem
@@ -25,8 +25,13 @@ PopupLayer {
 		z: -1
 		color: Qt.rgba(0, 0, 0, 0.45)
 	}
+	ParallelAnimation {
+		id: anim
+		NumberAnimation { target: pm.box; property: "opacity"; from: Chrono.motion ? 0 : 1; to: 1; duration: 180 * Chrono.motion }
+		NumberAnimation { target: pm.box; property: "scale"; from: Chrono.motion ? 0.95 : 1; to: 1; duration: 200 * Chrono.motion; easing.type: Easing.OutCubic }
+	}
 	Skin { anchors.fill: parent; kind: "popup" }
-	Text { id: head; anchors.horizontalCenter: parent.horizontalCenter; y: 14; text: qsTr("Goodbye, %1").arg(System.userName)
+	Text { id: head; anchors.horizontalCenter: parent.horizontalCenter; y: 20; text: qsTr("Goodbye, %1").arg(System.userName)
 		color: t.panelFg; font.family: t.fontUi.family; font.pointSize: t.fontUi.size + 2; font.bold: true }
 	Row {
 		id: row
