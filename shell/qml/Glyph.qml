@@ -30,8 +30,16 @@ Canvas {
 		c.lineJoin = "round"
 		const line = (pts) => { c.beginPath(); c.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) c.lineTo(pts[i], pts[i + 1]); c.stroke() }
 		switch (g.name) {
-		case "start":
-			for (let x = 0; x < 2; x++) for (let y = 0; y < 2; y++) c.fillRect(2 + x * 6.5, 2 + y * 6.5, 5.5, 5.5)
+		case "chrono":
+			// the Chrono mark: a dial with two hands
+			c.lineWidth = 1.7
+			c.beginPath(); c.arc(8, 8, 6.4, 0, Math.PI * 2); c.stroke()
+			c.lineWidth = 1.9
+			line([8, 8, 8, 3.9]); line([8, 8, 11.2, 9.8])
+			c.beginPath(); c.arc(8, 8, 1.3, 0, Math.PI * 2); c.fill()
+			break
+		case "apps":
+			for (let x = 0; x < 3; x++) for (let y = 0; y < 3; y++) { c.beginPath(); c.arc(3.5 + x * 4.5, 3.5 + y * 4.5, 1.35, 0, Math.PI * 2); c.fill() }
 			break
 		case "search":
 			c.beginPath(); c.arc(7, 7, 4.5, 0, Math.PI * 2); c.stroke(); line([10.5, 10.5, 14, 14]); break

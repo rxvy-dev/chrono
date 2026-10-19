@@ -13,7 +13,7 @@ that lets you change everything without touching a config file.
   resolution, refresh rate, fractional scale, rotation, VRR, auto-revert), time & date, keyboard
   layouts, mouse & touchpad, windows & workspaces, shortcuts (with a key recorder), sound, power &
   lock, default apps & autostart, about.
-- **17 themes**: retro — Ninety-Five, Platinum, Topaz, Yellow Tab, Motif, Cube, Meadow, Pinstripe;
+- **17 themes**: retro — Classic Bevel, Platinum, Topaz, Yellow Tab, Motif, Cube, Meadow, Pinstripe;
   modern — Midnight (default), Daylight, Liquid Glass, Nord, Mocha, Synthwave, Gruvbox, Starfield, Mono.
 
 ## Install

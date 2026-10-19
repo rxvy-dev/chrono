@@ -86,7 +86,7 @@ PopupLayer {
 			width: visible ? 140 : 0
 			spacing: 2
 			PanelButton { width: parent.width; height: 26; glyph: "pin"; text: qsTr("Pinned"); checked: launcher.category === "__pinned"; onClicked: launcher.category = "__pinned" }
-			PanelButton { width: parent.width; height: 26; glyph: "start"; text: qsTr("All apps"); checked: launcher.category === ""; onClicked: launcher.category = "" }
+			PanelButton { width: parent.width; height: 26; glyph: "apps"; text: qsTr("All apps"); checked: launcher.category === ""; onClicked: launcher.category = "" }
 			Repeater {
 				model: Apps.categories
 				PanelButton { required property var modelData; width: cats.width; height: 26

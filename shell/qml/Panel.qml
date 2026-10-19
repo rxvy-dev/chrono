@@ -96,7 +96,7 @@ Window {
 					height: parent.height
 					visible: t.decor !== "meadow"
 					text: t.launcherLabel
-					glyph: t.launcherLabel === "" ? "start" : ""
+					glyph: "chrono"
 					bold: t.retro
 					padding: t.launcherLabel === "" ? 7 : 8
 					checked: !!panel.shell && panel.shell.launcherOpen
@@ -105,7 +105,7 @@ Window {
 				// 2000s-style green pill start button
 				Rectangle {
 					visible: t.decor === "meadow"
-					height: bar.height; width: meadowText.implicitWidth + 44
+					height: bar.height; width: meadowText.implicitWidth + 52
 					y: -(bar.height - bar.bh) / 2
 					x: -2
 					radius: 12
@@ -114,7 +114,9 @@ Window {
 						GradientStop { position: 0.45; color: meadowMa.pressed ? "#226322" : "#3c9a3c" }
 						GradientStop { position: 1; color: "#2f7d2f" }
 					}
-					Text { id: meadowText; anchors.centerIn: parent; anchors.horizontalCenterOffset: 4
+					Glyph { id: meadowMark; name: "chrono"; color: "white"; width: 18; height: 18
+						anchors.verticalCenter: parent.verticalCenter; x: 12 }
+					Text { id: meadowText; anchors.verticalCenter: parent.verticalCenter; anchors.left: meadowMark.right; anchors.leftMargin: 6
 						text: t.launcherLabel || "start"; color: "white"; font.italic: true; font.bold: true
 						font.family: t.fontTitle.family; font.pointSize: t.fontUi.size + 3
 						style: Text.Raised; styleColor: "#1a4d1a" }

@@ -64,7 +64,7 @@ Window {
 		spacing: 6
 		Item {
 			width: dock.iconSize; height: dock.iconSize
-			Glyph { anchors.centerIn: parent; name: "start"; width: 26; height: 26; color: Chrono.theme.panelFg }
+			Glyph { anchors.centerIn: parent; name: "chrono"; width: 26; height: 26; color: Chrono.theme.panelFg }
 			MouseArea { anchors.fill: parent; onClicked: dock.shell.toggleLauncher(dock.screen, dock.width / 2) }
 		}
 		Rectangle { width: 1; height: dock.iconSize - 10; anchors.verticalCenter: parent.verticalCenter; color: t.panelBorder }
