@@ -1,0 +1,716 @@
+00:00:00.001 [INFO] [backend/backend.c:342] Loading user-specified backends due to WLR_BACKENDS: headless
+00:00:00.001 [INFO] [backend/headless/backend.c:60] Creating headless backend
+00:00:00.001 [INFO] [util/env.c:25] Loading WLR_RENDERER option: pixman
+00:00:00.001 [INFO] [render/pixman/renderer.c:328] Creating pixman renderer
+00:00:00.001 [DEBUG] [render/allocator/allocator.c:132] Trying to create shm allocator
+00:00:00.001 [DEBUG] [render/allocator/shm.c:119] Created shm allocator
+00:00:00.013 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:00.015 [INFO] [backend/headless/backend.c:17] Starting headless backend
+00:00:00.015 [DEBUG] [types/output/render.c:123] Attaching empty buffer to output for modeset
+00:00:00.015 [DEBUG] [types/output/swapchain.c:27] Choosing primary buffer format XR24 (0x34325258) for output 'HEADLESS-1'
+00:00:00.015 [DEBUG] [types/output/swapchain.c:96] Testing swapchain for output 'HEADLESS-1'
+00:00:00.015 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.015 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 1280x720
+00:00:00.021 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.021 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:00.024 [INFO] [/__w/chrono/chrono/compositor/main.c:367] Chrono 0.1.0 running on WAYLAND_DISPLAY=wayland-0 (theme: Midnight)
+00:00:00.034 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out enabled
+=================================================================
+==1420==ERROR: AddressSanitizer: heap-use-after-free on address 0x7cde36645800 at pc 0x561a87912768 bp 0x7ffe5a3ca240 sp 0x7ffe5a3ca230
+READ of size 4 at 0x7cde36645800 thread T0
+    #0 0x561a87912767 in std::__atomic_base<int>::load(std::memory_order) const /usr/include/c++/16/bits/atomic_base.h:518
+    #1 0x561a87912767 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&) /usr/include/qt6/QtCore/qatomic_cxx11.h:203
+    #2 0x561a8790ca76 in QBasicAtomicInteger<int>::loadRelaxed() const /usr/include/qt6/QtCore/qbasicatomic.h:48
+    #3 0x561a879060c1 in QArrayData::needsDetach() /usr/include/qt6/QtCore/qarraydata.h:92
+    #4 0x561a87a3b33e in QArrayDataPointer<std::function<void (QVariant const&)> >::needsDetach() const /usr/include/qt6/QtCore/qarraydatapointer.h:356
+    #5 0x561a87a38360 in QList<std::function<void (QVariant const&)> >::clear() /usr/include/qt6/QtCore/qlist.h:503
+    #6 0x561a87a1103d in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:162
+    #7 0x561a87a3347d in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #8 0x561a87a33b7a in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #9 0x561a87a335d0 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #10 0x561a87a31d19 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #11 0x561a87a303c8 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #12 0x7fce3c5bacc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #13 0x7fce3c5baee3  (/usr/lib/libQt6Core.so.6+0x1f6ee3) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #14 0x7fce3cb4f8a6 in QAbstractSocket::disconnectFromHost() (/usr/lib/libQt6Network.so.6+0xc78a6) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #15 0x7fce3cbf8c96 in QLocalSocket::~QLocalSocket() (/usr/lib/libQt6Network.so.6+0x170c96) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #16 0x561a87924910 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b910) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #17 0x561a8791daa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #18 0x7fce3b69f780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #19 0x7fce3b69f8b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #20 0x561a878f9bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+0x7cde36645800 is located 0 bytes inside of 240-byte region [0x7cde36645800,0x7cde366458f0)
+freed by thread T0 here:
+    #0 0x7fce3eab3e91  (/usr/lib/libasan.so.8+0x12ae91) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x561a879271b3 in QTypedArrayData<std::function<void (QVariant const&)> >::deallocate(QArrayData*) /usr/include/qt6/QtCore/qarraydata.h:177
+    #2 0x561a87925e38 in QArrayDataPointer<std::function<void (QVariant const&)> >::~QArrayDataPointer() /usr/include/qt6/QtCore/qarraydatapointer.h:102
+    #3 0x561a87923feb in QList<std::function<void (QVariant const&)> >::~QList() /usr/include/qt6/QtCore/qlist.h:78
+    #4 0x561a87924059 in QQueue<std::function<void (QVariant const&)> >::~QQueue() /usr/include/qt6/QtCore/qqueue.h:14
+    #5 0x561a87924578 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b578) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #6 0x561a8791daa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #7 0x7fce3b69f780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #8 0x7fce3b69f8b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #9 0x561a878f9bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+previously allocated by thread T0 here:
+    #0 0x7fce3eab50c1 in malloc (/usr/lib/libasan.so.8+0x12c0c1) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x7fce3c6a07cd in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption) (/usr/lib/libQt6Core.so.6+0x2dc7cd) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #2 0x561a87a3e6bf in QTypedArrayData<std::function<void (QVariant const&)> >::allocate(long long, QArrayData::AllocationOption) /usr/include/qt6/QtCore/qarraydata.h:156
+    #3 0x561a87a49d8e in QArrayDataPointer<std::function<void (QVariant const&)> >::allocateGrow(QArrayDataPointer<std::function<void (QVariant const&)> > const&, long long, QArrayData::GrowthPosition) /usr/include/qt6/QtCore/qarraydatapointer.h:392
+    #4 0x561a87a477b2 in QArrayDataPointer<std::function<void (QVariant const&)> >::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:220
+    #5 0x561a87a44847 in QArrayDataPointer<std::function<void (QVariant const&)> >::detachAndGrow(QArrayData::GrowthPosition, long long, std::function<void (QVariant const&)> const**, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:201
+    #6 0x561a87a4279f in void QtPrivate::QGenericArrayOps<std::function<void (QVariant const&)> >::emplace<std::function<void (QVariant const&)> >(long long, std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qarraydataops.h:568
+    #7 0x561a87a3fd33 in std::function<void (QVariant const&)>& QList<std::function<void (QVariant const&)> >::emplaceBack<std::function<void (QVariant const&)> >(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:975
+    #8 0x561a87a3c3c4 in QList<std::function<void (QVariant const&)> >::append(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:531
+    #9 0x561a87a38ca9 in QQueue<std::function<void (QVariant const&)> >::enqueue(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qqueue.h:20
+    #10 0x561a87a177a7 in Chrono::request(QString const&, std::function<void (QVariant const&)>) /__w/chrono/chrono/qtcommon/chrono.cpp:234
+    #11 0x561a87a1d2bb in Chrono::refreshTheme() /__w/chrono/chrono/qtcommon/chrono.cpp:282
+    #12 0x561a87a1c115 in Chrono::refreshAll() /__w/chrono/chrono/qtcommon/chrono.cpp:277
+    #13 0x561a87a10e1a in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:157
+    #14 0x561a87a33231 in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #15 0x561a87a33ad9 in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #16 0x561a87a33384 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #17 0x561a87a31c87 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #18 0x561a87a30238 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #19 0x7fce3c5bacc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #20 0x7fce3cbf3ba2  (/usr/lib/libQt6Network.so.6+0x16bba2) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #21 0x561a87a150cc in Chrono::connectNow() /__w/chrono/chrono/qtcommon/chrono.cpp:187
+    #22 0x561a87a13896 in Chrono::Chrono(QObject*) /__w/chrono/chrono/qtcommon/chrono.cpp:177
+    #23 0x561a8791bc2e in main /__w/chrono/chrono/shell/main.cpp:30
+    #24 0x7fce3b69f780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #25 0x7fce3b69f8b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #26 0x561a878f9bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /usr/include/qt6/QtCore/qatomic_cxx11.h:203 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&)
+Shadow bytes around the buggy address:
+  0x7cde36645580: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cde36645600: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x7cde36645680: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cde36645700: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cde36645780: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+=>0x7cde36645800:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cde36645880: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x7cde36645900: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cde36645980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cde36645a00: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x7cde36645a80: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1420==ABORTING
+00:00:00.287 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+=================================================================
+==1433==ERROR: AddressSanitizer: heap-use-after-free on address 0x7cd4e8845800 at pc 0x557e4f60a768 bp 0x7ffc3b707a10 sp 0x7ffc3b707a00
+READ of size 4 at 0x7cd4e8845800 thread T0
+    #0 0x557e4f60a767 in std::__atomic_base<int>::load(std::memory_order) const /usr/include/c++/16/bits/atomic_base.h:518
+    #1 0x557e4f60a767 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&) /usr/include/qt6/QtCore/qatomic_cxx11.h:203
+    #2 0x557e4f604a76 in QBasicAtomicInteger<int>::loadRelaxed() const /usr/include/qt6/QtCore/qbasicatomic.h:48
+    #3 0x557e4f5fe0c1 in QArrayData::needsDetach() /usr/include/qt6/QtCore/qarraydata.h:92
+    #4 0x557e4f73333e in QArrayDataPointer<std::function<void (QVariant const&)> >::needsDetach() const /usr/include/qt6/QtCore/qarraydatapointer.h:356
+    #5 0x557e4f730360 in QList<std::function<void (QVariant const&)> >::clear() /usr/include/qt6/QtCore/qlist.h:503
+    #6 0x557e4f70903d in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:162
+    #7 0x557e4f72b47d in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #8 0x557e4f72bb7a in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #9 0x557e4f72b5d0 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #10 0x557e4f729d19 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #11 0x557e4f7283c8 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #12 0x7fc4ee94acc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #13 0x7fc4ee94aee3  (/usr/lib/libQt6Core.so.6+0x1f6ee3) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #14 0x7fc4eeedf8a6 in QAbstractSocket::disconnectFromHost() (/usr/lib/libQt6Network.so.6+0xc78a6) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #15 0x7fc4eef88c96 in QLocalSocket::~QLocalSocket() (/usr/lib/libQt6Network.so.6+0x170c96) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #16 0x557e4f61c910 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b910) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #17 0x557e4f615aa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #18 0x7fc4eda2f780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #19 0x7fc4eda2f8b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #20 0x557e4f5f1bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+0x7cd4e8845800 is located 0 bytes inside of 240-byte region [0x7cd4e8845800,0x7cd4e88458f0)
+freed by thread T0 here:
+    #0 0x7fc4f0e43e91  (/usr/lib/libasan.so.8+0x12ae91) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x557e4f61f1b3 in QTypedArrayData<std::function<void (QVariant const&)> >::deallocate(QArrayData*) /usr/include/qt6/QtCore/qarraydata.h:177
+    #2 0x557e4f61de38 in QArrayDataPointer<std::function<void (QVariant const&)> >::~QArrayDataPointer() /usr/include/qt6/QtCore/qarraydatapointer.h:102
+    #3 0x557e4f61bfeb in QList<std::function<void (QVariant const&)> >::~QList() /usr/include/qt6/QtCore/qlist.h:78
+    #4 0x557e4f61c059 in QQueue<std::function<void (QVariant const&)> >::~QQueue() /usr/include/qt6/QtCore/qqueue.h:14
+    #5 0x557e4f61c578 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b578) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #6 0x557e4f615aa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #7 0x7fc4eda2f780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #8 0x7fc4eda2f8b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #9 0x557e4f5f1bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+previously allocated by thread T0 here:
+    #0 0x7fc4f0e450c1 in malloc (/usr/lib/libasan.so.8+0x12c0c1) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x7fc4eea307cd in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption) (/usr/lib/libQt6Core.so.6+0x2dc7cd) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #2 0x557e4f7366bf in QTypedArrayData<std::function<void (QVariant const&)> >::allocate(long long, QArrayData::AllocationOption) /usr/include/qt6/QtCore/qarraydata.h:156
+    #3 0x557e4f741d8e in QArrayDataPointer<std::function<void (QVariant const&)> >::allocateGrow(QArrayDataPointer<std::function<void (QVariant const&)> > const&, long long, QArrayData::GrowthPosition) /usr/include/qt6/QtCore/qarraydatapointer.h:392
+    #4 0x557e4f73f7b2 in QArrayDataPointer<std::function<void (QVariant const&)> >::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:220
+    #5 0x557e4f73c847 in QArrayDataPointer<std::function<void (QVariant const&)> >::detachAndGrow(QArrayData::GrowthPosition, long long, std::function<void (QVariant const&)> const**, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:201
+    #6 0x557e4f73a79f in void QtPrivate::QGenericArrayOps<std::function<void (QVariant const&)> >::emplace<std::function<void (QVariant const&)> >(long long, std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qarraydataops.h:568
+    #7 0x557e4f737d33 in std::function<void (QVariant const&)>& QList<std::function<void (QVariant const&)> >::emplaceBack<std::function<void (QVariant const&)> >(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:975
+    #8 0x557e4f7343c4 in QList<std::function<void (QVariant const&)> >::append(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:531
+    #9 0x557e4f730ca9 in QQueue<std::function<void (QVariant const&)> >::enqueue(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qqueue.h:20
+    #10 0x557e4f70f7a7 in Chrono::request(QString const&, std::function<void (QVariant const&)>) /__w/chrono/chrono/qtcommon/chrono.cpp:234
+    #11 0x557e4f7152bb in Chrono::refreshTheme() /__w/chrono/chrono/qtcommon/chrono.cpp:282
+    #12 0x557e4f714115 in Chrono::refreshAll() /__w/chrono/chrono/qtcommon/chrono.cpp:277
+    #13 0x557e4f708e1a in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:157
+    #14 0x557e4f72b231 in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #15 0x557e4f72bad9 in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #16 0x557e4f72b384 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #17 0x557e4f729c87 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #18 0x557e4f728238 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #19 0x7fc4ee94acc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #20 0x7fc4eef83ba2  (/usr/lib/libQt6Network.so.6+0x16bba2) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #21 0x557e4f70d0cc in Chrono::connectNow() /__w/chrono/chrono/qtcommon/chrono.cpp:187
+    #22 0x557e4f70b896 in Chrono::Chrono(QObject*) /__w/chrono/chrono/qtcommon/chrono.cpp:177
+    #23 0x557e4f613c2e in main /__w/chrono/chrono/shell/main.cpp:30
+    #24 0x7fc4eda2f780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #25 0x7fc4eda2f8b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #26 0x557e4f5f1bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /usr/include/qt6/QtCore/qatomic_cxx11.h:203 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&)
+Shadow bytes around the buggy address:
+  0x7cd4e8845580: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd4e8845600: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x7cd4e8845680: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cd4e8845700: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd4e8845780: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+=>0x7cd4e8845800:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd4e8845880: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x7cd4e8845900: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cd4e8845980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd4e8845a00: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x7cd4e8845a80: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1433==ABORTING
+00:00:00.479 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+=================================================================
+==1438==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c6777e45800 at pc 0x562b61bd1768 bp 0x7fffe47c5240 sp 0x7fffe47c5230
+READ of size 4 at 0x7c6777e45800 thread T0
+    #0 0x562b61bd1767 in std::__atomic_base<int>::load(std::memory_order) const /usr/include/c++/16/bits/atomic_base.h:518
+    #1 0x562b61bd1767 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&) /usr/include/qt6/QtCore/qatomic_cxx11.h:203
+    #2 0x562b61bcba76 in QBasicAtomicInteger<int>::loadRelaxed() const /usr/include/qt6/QtCore/qbasicatomic.h:48
+    #3 0x562b61bc50c1 in QArrayData::needsDetach() /usr/include/qt6/QtCore/qarraydata.h:92
+    #4 0x562b61cfa33e in QArrayDataPointer<std::function<void (QVariant const&)> >::needsDetach() const /usr/include/qt6/QtCore/qarraydatapointer.h:356
+    #5 0x562b61cf7360 in QList<std::function<void (QVariant const&)> >::clear() /usr/include/qt6/QtCore/qlist.h:503
+    #6 0x562b61cd003d in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:162
+    #7 0x562b61cf247d in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #8 0x562b61cf2b7a in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #9 0x562b61cf25d0 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #10 0x562b61cf0d19 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #11 0x562b61cef3c8 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #12 0x7f577dd7ecc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #13 0x7f577dd7eee3  (/usr/lib/libQt6Core.so.6+0x1f6ee3) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #14 0x7f577e3138a6 in QAbstractSocket::disconnectFromHost() (/usr/lib/libQt6Network.so.6+0xc78a6) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #15 0x7f577e3bcc96 in QLocalSocket::~QLocalSocket() (/usr/lib/libQt6Network.so.6+0x170c96) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #16 0x562b61be3910 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b910) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #17 0x562b61bdcaa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #18 0x7f577ce63780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #19 0x7f577ce638b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #20 0x562b61bb8bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+0x7c6777e45800 is located 0 bytes inside of 240-byte region [0x7c6777e45800,0x7c6777e458f0)
+freed by thread T0 here:
+    #0 0x7f5780277e91  (/usr/lib/libasan.so.8+0x12ae91) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x562b61be61b3 in QTypedArrayData<std::function<void (QVariant const&)> >::deallocate(QArrayData*) /usr/include/qt6/QtCore/qarraydata.h:177
+    #2 0x562b61be4e38 in QArrayDataPointer<std::function<void (QVariant const&)> >::~QArrayDataPointer() /usr/include/qt6/QtCore/qarraydatapointer.h:102
+    #3 0x562b61be2feb in QList<std::function<void (QVariant const&)> >::~QList() /usr/include/qt6/QtCore/qlist.h:78
+    #4 0x562b61be3059 in QQueue<std::function<void (QVariant const&)> >::~QQueue() /usr/include/qt6/QtCore/qqueue.h:14
+    #5 0x562b61be3578 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b578) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #6 0x562b61bdcaa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #7 0x7f577ce63780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #8 0x7f577ce638b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #9 0x562b61bb8bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+previously allocated by thread T0 here:
+    #0 0x7f57802790c1 in malloc (/usr/lib/libasan.so.8+0x12c0c1) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x7f577de647cd in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption) (/usr/lib/libQt6Core.so.6+0x2dc7cd) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #2 0x562b61cfd6bf in QTypedArrayData<std::function<void (QVariant const&)> >::allocate(long long, QArrayData::AllocationOption) /usr/include/qt6/QtCore/qarraydata.h:156
+    #3 0x562b61d08d8e in QArrayDataPointer<std::function<void (QVariant const&)> >::allocateGrow(QArrayDataPointer<std::function<void (QVariant const&)> > const&, long long, QArrayData::GrowthPosition) /usr/include/qt6/QtCore/qarraydatapointer.h:392
+    #4 0x562b61d067b2 in QArrayDataPointer<std::function<void (QVariant const&)> >::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:220
+    #5 0x562b61d03847 in QArrayDataPointer<std::function<void (QVariant const&)> >::detachAndGrow(QArrayData::GrowthPosition, long long, std::function<void (QVariant const&)> const**, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:201
+    #6 0x562b61d0179f in void QtPrivate::QGenericArrayOps<std::function<void (QVariant const&)> >::emplace<std::function<void (QVariant const&)> >(long long, std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qarraydataops.h:568
+    #7 0x562b61cfed33 in std::function<void (QVariant const&)>& QList<std::function<void (QVariant const&)> >::emplaceBack<std::function<void (QVariant const&)> >(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:975
+    #8 0x562b61cfb3c4 in QList<std::function<void (QVariant const&)> >::append(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:531
+    #9 0x562b61cf7ca9 in QQueue<std::function<void (QVariant const&)> >::enqueue(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qqueue.h:20
+    #10 0x562b61cd67a7 in Chrono::request(QString const&, std::function<void (QVariant const&)>) /__w/chrono/chrono/qtcommon/chrono.cpp:234
+    #11 0x562b61cdc2bb in Chrono::refreshTheme() /__w/chrono/chrono/qtcommon/chrono.cpp:282
+    #12 0x562b61cdb115 in Chrono::refreshAll() /__w/chrono/chrono/qtcommon/chrono.cpp:277
+    #13 0x562b61ccfe1a in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:157
+    #14 0x562b61cf2231 in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #15 0x562b61cf2ad9 in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #16 0x562b61cf2384 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #17 0x562b61cf0c87 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #18 0x562b61cef238 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #19 0x7f577dd7ecc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #20 0x7f577e3b7ba2  (/usr/lib/libQt6Network.so.6+0x16bba2) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #21 0x562b61cd40cc in Chrono::connectNow() /__w/chrono/chrono/qtcommon/chrono.cpp:187
+    #22 0x562b61cd2896 in Chrono::Chrono(QObject*) /__w/chrono/chrono/qtcommon/chrono.cpp:177
+    #23 0x562b61bdac2e in main /__w/chrono/chrono/shell/main.cpp:30
+    #24 0x7f577ce63780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #25 0x7f577ce638b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #26 0x562b61bb8bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /usr/include/qt6/QtCore/qatomic_cxx11.h:203 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&)
+Shadow bytes around the buggy address:
+  0x7c6777e45580: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c6777e45600: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x7c6777e45680: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7c6777e45700: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c6777e45780: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+=>0x7c6777e45800:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c6777e45880: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x7c6777e45900: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7c6777e45980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7c6777e45a00: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x7c6777e45a80: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1438==ABORTING
+00:00:00.680 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+=================================================================
+==1443==ERROR: AddressSanitizer: heap-use-after-free on address 0x7ccc72c45800 at pc 0x5604e1626768 bp 0x7fffbb580c70 sp 0x7fffbb580c60
+READ of size 4 at 0x7ccc72c45800 thread T0
+    #0 0x5604e1626767 in std::__atomic_base<int>::load(std::memory_order) const /usr/include/c++/16/bits/atomic_base.h:518
+    #1 0x5604e1626767 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&) /usr/include/qt6/QtCore/qatomic_cxx11.h:203
+    #2 0x5604e1620a76 in QBasicAtomicInteger<int>::loadRelaxed() const /usr/include/qt6/QtCore/qbasicatomic.h:48
+    #3 0x5604e161a0c1 in QArrayData::needsDetach() /usr/include/qt6/QtCore/qarraydata.h:92
+    #4 0x5604e174f33e in QArrayDataPointer<std::function<void (QVariant const&)> >::needsDetach() const /usr/include/qt6/QtCore/qarraydatapointer.h:356
+    #5 0x5604e174c360 in QList<std::function<void (QVariant const&)> >::clear() /usr/include/qt6/QtCore/qlist.h:503
+    #6 0x5604e172503d in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:162
+    #7 0x5604e174747d in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #8 0x5604e1747b7a in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #9 0x5604e17475d0 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #10 0x5604e1745d19 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #11 0x5604e17443c8 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #12 0x7fbc78d4ecc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #13 0x7fbc78d4eee3  (/usr/lib/libQt6Core.so.6+0x1f6ee3) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #14 0x7fbc792e38a6 in QAbstractSocket::disconnectFromHost() (/usr/lib/libQt6Network.so.6+0xc78a6) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #15 0x7fbc7938cc96 in QLocalSocket::~QLocalSocket() (/usr/lib/libQt6Network.so.6+0x170c96) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #16 0x5604e1638910 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b910) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #17 0x5604e1631aa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #18 0x7fbc77e33780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #19 0x7fbc77e338b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #20 0x5604e160dbd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+0x7ccc72c45800 is located 0 bytes inside of 240-byte region [0x7ccc72c45800,0x7ccc72c458f0)
+freed by thread T0 here:
+    #0 0x7fbc7b247e91  (/usr/lib/libasan.so.8+0x12ae91) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x5604e163b1b3 in QTypedArrayData<std::function<void (QVariant const&)> >::deallocate(QArrayData*) /usr/include/qt6/QtCore/qarraydata.h:177
+    #2 0x5604e1639e38 in QArrayDataPointer<std::function<void (QVariant const&)> >::~QArrayDataPointer() /usr/include/qt6/QtCore/qarraydatapointer.h:102
+    #3 0x5604e1637feb in QList<std::function<void (QVariant const&)> >::~QList() /usr/include/qt6/QtCore/qlist.h:78
+    #4 0x5604e1638059 in QQueue<std::function<void (QVariant const&)> >::~QQueue() /usr/include/qt6/QtCore/qqueue.h:14
+    #5 0x5604e1638578 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b578) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #6 0x5604e1631aa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #7 0x7fbc77e33780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #8 0x7fbc77e338b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #9 0x5604e160dbd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+previously allocated by thread T0 here:
+    #0 0x7fbc7b2490c1 in malloc (/usr/lib/libasan.so.8+0x12c0c1) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x7fbc78e347cd in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption) (/usr/lib/libQt6Core.so.6+0x2dc7cd) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #2 0x5604e17526bf in QTypedArrayData<std::function<void (QVariant const&)> >::allocate(long long, QArrayData::AllocationOption) /usr/include/qt6/QtCore/qarraydata.h:156
+    #3 0x5604e175dd8e in QArrayDataPointer<std::function<void (QVariant const&)> >::allocateGrow(QArrayDataPointer<std::function<void (QVariant const&)> > const&, long long, QArrayData::GrowthPosition) /usr/include/qt6/QtCore/qarraydatapointer.h:392
+    #4 0x5604e175b7b2 in QArrayDataPointer<std::function<void (QVariant const&)> >::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:220
+    #5 0x5604e1758847 in QArrayDataPointer<std::function<void (QVariant const&)> >::detachAndGrow(QArrayData::GrowthPosition, long long, std::function<void (QVariant const&)> const**, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:201
+    #6 0x5604e175679f in void QtPrivate::QGenericArrayOps<std::function<void (QVariant const&)> >::emplace<std::function<void (QVariant const&)> >(long long, std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qarraydataops.h:568
+    #7 0x5604e1753d33 in std::function<void (QVariant const&)>& QList<std::function<void (QVariant const&)> >::emplaceBack<std::function<void (QVariant const&)> >(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:975
+    #8 0x5604e17503c4 in QList<std::function<void (QVariant const&)> >::append(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:531
+    #9 0x5604e174cca9 in QQueue<std::function<void (QVariant const&)> >::enqueue(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qqueue.h:20
+    #10 0x5604e172b7a7 in Chrono::request(QString const&, std::function<void (QVariant const&)>) /__w/chrono/chrono/qtcommon/chrono.cpp:234
+    #11 0x5604e17312bb in Chrono::refreshTheme() /__w/chrono/chrono/qtcommon/chrono.cpp:282
+    #12 0x5604e1730115 in Chrono::refreshAll() /__w/chrono/chrono/qtcommon/chrono.cpp:277
+    #13 0x5604e1724e1a in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:157
+    #14 0x5604e1747231 in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #15 0x5604e1747ad9 in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #16 0x5604e1747384 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #17 0x5604e1745c87 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #18 0x5604e1744238 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #19 0x7fbc78d4ecc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #20 0x7fbc79387ba2  (/usr/lib/libQt6Network.so.6+0x16bba2) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #21 0x5604e17290cc in Chrono::connectNow() /__w/chrono/chrono/qtcommon/chrono.cpp:187
+    #22 0x5604e1727896 in Chrono::Chrono(QObject*) /__w/chrono/chrono/qtcommon/chrono.cpp:177
+    #23 0x5604e162fc2e in main /__w/chrono/chrono/shell/main.cpp:30
+    #24 0x7fbc77e33780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #25 0x7fbc77e338b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #26 0x5604e160dbd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /usr/include/qt6/QtCore/qatomic_cxx11.h:203 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&)
+Shadow bytes around the buggy address:
+  0x7ccc72c45580: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7ccc72c45600: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x7ccc72c45680: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7ccc72c45700: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7ccc72c45780: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+=>0x7ccc72c45800:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7ccc72c45880: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x7ccc72c45900: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7ccc72c45980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7ccc72c45a00: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x7ccc72c45a80: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1443==ABORTING
+00:00:00.871 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+=================================================================
+==1448==ERROR: AddressSanitizer: heap-use-after-free on address 0x7cd035245800 at pc 0x55abd12a9768 bp 0x7ffe78e5c970 sp 0x7ffe78e5c960
+READ of size 4 at 0x7cd035245800 thread T0
+    #0 0x55abd12a9767 in std::__atomic_base<int>::load(std::memory_order) const /usr/include/c++/16/bits/atomic_base.h:518
+    #1 0x55abd12a9767 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&) /usr/include/qt6/QtCore/qatomic_cxx11.h:203
+    #2 0x55abd12a3a76 in QBasicAtomicInteger<int>::loadRelaxed() const /usr/include/qt6/QtCore/qbasicatomic.h:48
+    #3 0x55abd129d0c1 in QArrayData::needsDetach() /usr/include/qt6/QtCore/qarraydata.h:92
+    #4 0x55abd13d233e in QArrayDataPointer<std::function<void (QVariant const&)> >::needsDetach() const /usr/include/qt6/QtCore/qarraydatapointer.h:356
+    #5 0x55abd13cf360 in QList<std::function<void (QVariant const&)> >::clear() /usr/include/qt6/QtCore/qlist.h:503
+    #6 0x55abd13a803d in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:162
+    #7 0x55abd13ca47d in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #8 0x55abd13cab7a in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #9 0x55abd13ca5d0 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #10 0x55abd13c8d19 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #11 0x55abd13c73c8 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #12 0x7fc03b25ecc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #13 0x7fc03b25eee3  (/usr/lib/libQt6Core.so.6+0x1f6ee3) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #14 0x7fc03b7f38a6 in QAbstractSocket::disconnectFromHost() (/usr/lib/libQt6Network.so.6+0xc78a6) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #15 0x7fc03b89cc96 in QLocalSocket::~QLocalSocket() (/usr/lib/libQt6Network.so.6+0x170c96) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #16 0x55abd12bb910 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b910) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #17 0x55abd12b4aa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #18 0x7fc03a343780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #19 0x7fc03a3438b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #20 0x55abd1290bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+0x7cd035245800 is located 0 bytes inside of 240-byte region [0x7cd035245800,0x7cd0352458f0)
+freed by thread T0 here:
+    #0 0x7fc03d757e91  (/usr/lib/libasan.so.8+0x12ae91) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x55abd12be1b3 in QTypedArrayData<std::function<void (QVariant const&)> >::deallocate(QArrayData*) /usr/include/qt6/QtCore/qarraydata.h:177
+    #2 0x55abd12bce38 in QArrayDataPointer<std::function<void (QVariant const&)> >::~QArrayDataPointer() /usr/include/qt6/QtCore/qarraydatapointer.h:102
+    #3 0x55abd12bafeb in QList<std::function<void (QVariant const&)> >::~QList() /usr/include/qt6/QtCore/qlist.h:78
+    #4 0x55abd12bb059 in QQueue<std::function<void (QVariant const&)> >::~QQueue() /usr/include/qt6/QtCore/qqueue.h:14
+    #5 0x55abd12bb578 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b578) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #6 0x55abd12b4aa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #7 0x7fc03a343780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #8 0x7fc03a3438b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #9 0x55abd1290bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+previously allocated by thread T0 here:
+    #0 0x7fc03d7590c1 in malloc (/usr/lib/libasan.so.8+0x12c0c1) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x7fc03b3447cd in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption) (/usr/lib/libQt6Core.so.6+0x2dc7cd) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #2 0x55abd13d56bf in QTypedArrayData<std::function<void (QVariant const&)> >::allocate(long long, QArrayData::AllocationOption) /usr/include/qt6/QtCore/qarraydata.h:156
+    #3 0x55abd13e0d8e in QArrayDataPointer<std::function<void (QVariant const&)> >::allocateGrow(QArrayDataPointer<std::function<void (QVariant const&)> > const&, long long, QArrayData::GrowthPosition) /usr/include/qt6/QtCore/qarraydatapointer.h:392
+    #4 0x55abd13de7b2 in QArrayDataPointer<std::function<void (QVariant const&)> >::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:220
+    #5 0x55abd13db847 in QArrayDataPointer<std::function<void (QVariant const&)> >::detachAndGrow(QArrayData::GrowthPosition, long long, std::function<void (QVariant const&)> const**, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:201
+    #6 0x55abd13d979f in void QtPrivate::QGenericArrayOps<std::function<void (QVariant const&)> >::emplace<std::function<void (QVariant const&)> >(long long, std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qarraydataops.h:568
+    #7 0x55abd13d6d33 in std::function<void (QVariant const&)>& QList<std::function<void (QVariant const&)> >::emplaceBack<std::function<void (QVariant const&)> >(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:975
+    #8 0x55abd13d33c4 in QList<std::function<void (QVariant const&)> >::append(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:531
+    #9 0x55abd13cfca9 in QQueue<std::function<void (QVariant const&)> >::enqueue(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qqueue.h:20
+    #10 0x55abd13ae7a7 in Chrono::request(QString const&, std::function<void (QVariant const&)>) /__w/chrono/chrono/qtcommon/chrono.cpp:234
+    #11 0x55abd13b42bb in Chrono::refreshTheme() /__w/chrono/chrono/qtcommon/chrono.cpp:282
+    #12 0x55abd13b3115 in Chrono::refreshAll() /__w/chrono/chrono/qtcommon/chrono.cpp:277
+    #13 0x55abd13a7e1a in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:157
+    #14 0x55abd13ca231 in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #15 0x55abd13caad9 in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #16 0x55abd13ca384 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #17 0x55abd13c8c87 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #18 0x55abd13c7238 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #19 0x7fc03b25ecc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #20 0x7fc03b897ba2  (/usr/lib/libQt6Network.so.6+0x16bba2) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #21 0x55abd13ac0cc in Chrono::connectNow() /__w/chrono/chrono/qtcommon/chrono.cpp:187
+    #22 0x55abd13aa896 in Chrono::Chrono(QObject*) /__w/chrono/chrono/qtcommon/chrono.cpp:177
+    #23 0x55abd12b2c2e in main /__w/chrono/chrono/shell/main.cpp:30
+    #24 0x7fc03a343780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #25 0x7fc03a3438b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #26 0x55abd1290bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /usr/include/qt6/QtCore/qatomic_cxx11.h:203 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&)
+Shadow bytes around the buggy address:
+  0x7cd035245580: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd035245600: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x7cd035245680: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cd035245700: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd035245780: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+=>0x7cd035245800:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd035245880: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x7cd035245900: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cd035245980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd035245a00: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x7cd035245a80: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1448==ABORTING
+00:00:01.061 [INFO] [/__w/chrono/chrono/compositor/main.c:90] chrono-shell exited (status 256), restarting
+=================================================================
+==1453==ERROR: AddressSanitizer: heap-use-after-free on address 0x7cd2a6a45800 at pc 0x5562d0900768 bp 0x7ffe6e960ab0 sp 0x7ffe6e960aa0
+READ of size 4 at 0x7cd2a6a45800 thread T0
+    #0 0x5562d0900767 in std::__atomic_base<int>::load(std::memory_order) const /usr/include/c++/16/bits/atomic_base.h:518
+    #1 0x5562d0900767 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&) /usr/include/qt6/QtCore/qatomic_cxx11.h:203
+    #2 0x5562d08faa76 in QBasicAtomicInteger<int>::loadRelaxed() const /usr/include/qt6/QtCore/qbasicatomic.h:48
+    #3 0x5562d08f40c1 in QArrayData::needsDetach() /usr/include/qt6/QtCore/qarraydata.h:92
+    #4 0x5562d0a2933e in QArrayDataPointer<std::function<void (QVariant const&)> >::needsDetach() const /usr/include/qt6/QtCore/qarraydatapointer.h:356
+    #5 0x5562d0a26360 in QList<std::function<void (QVariant const&)> >::clear() /usr/include/qt6/QtCore/qlist.h:503
+    #6 0x5562d09ff03d in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:162
+    #7 0x5562d0a2147d in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #8 0x5562d0a21b7a in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #9 0x5562d0a215d0 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #10 0x5562d0a1fd19 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #11 0x5562d0a1e3c8 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #12 0x7fc2aca13cc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #13 0x7fc2aca13ee3  (/usr/lib/libQt6Core.so.6+0x1f6ee3) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #14 0x7fc2acfa88a6 in QAbstractSocket::disconnectFromHost() (/usr/lib/libQt6Network.so.6+0xc78a6) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #15 0x7fc2ad051c96 in QLocalSocket::~QLocalSocket() (/usr/lib/libQt6Network.so.6+0x170c96) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #16 0x5562d0912910 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b910) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #17 0x5562d090baa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #18 0x7fc2abaf8780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #19 0x7fc2abaf88b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #20 0x5562d08e7bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+0x7cd2a6a45800 is located 0 bytes inside of 240-byte region [0x7cd2a6a45800,0x7cd2a6a458f0)
+freed by thread T0 here:
+    #0 0x7fc2aef0ce91  (/usr/lib/libasan.so.8+0x12ae91) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x5562d09151b3 in QTypedArrayData<std::function<void (QVariant const&)> >::deallocate(QArrayData*) /usr/include/qt6/QtCore/qarraydata.h:177
+    #2 0x5562d0913e38 in QArrayDataPointer<std::function<void (QVariant const&)> >::~QArrayDataPointer() /usr/include/qt6/QtCore/qarraydatapointer.h:102
+    #3 0x5562d0911feb in QList<std::function<void (QVariant const&)> >::~QList() /usr/include/qt6/QtCore/qlist.h:78
+    #4 0x5562d0912059 in QQueue<std::function<void (QVariant const&)> >::~QQueue() /usr/include/qt6/QtCore/qqueue.h:14
+    #5 0x5562d0912578 in Chrono::~Chrono() (/__w/chrono/chrono/build/shell/chrono-shell+0x33b578) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+    #6 0x5562d090baa0 in main /__w/chrono/chrono/shell/main.cpp:61
+    #7 0x7fc2abaf8780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #8 0x7fc2abaf88b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #9 0x5562d08e7bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+previously allocated by thread T0 here:
+    #0 0x7fc2aef0e0c1 in malloc (/usr/lib/libasan.so.8+0x12c0c1) (BuildId: b8a4241051a1621937fdc46e867ba7ecb56d96ea)
+    #1 0x7fc2acaf97cd in QArrayData::allocate(QArrayData**, long long, long long, long long, QArrayData::AllocationOption) (/usr/lib/libQt6Core.so.6+0x2dc7cd) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #2 0x5562d0a2c6bf in QTypedArrayData<std::function<void (QVariant const&)> >::allocate(long long, QArrayData::AllocationOption) /usr/include/qt6/QtCore/qarraydata.h:156
+    #3 0x5562d0a37d8e in QArrayDataPointer<std::function<void (QVariant const&)> >::allocateGrow(QArrayDataPointer<std::function<void (QVariant const&)> > const&, long long, QArrayData::GrowthPosition) /usr/include/qt6/QtCore/qarraydatapointer.h:392
+    #4 0x5562d0a357b2 in QArrayDataPointer<std::function<void (QVariant const&)> >::reallocateAndGrow(QArrayData::GrowthPosition, long long, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:220
+    #5 0x5562d0a32847 in QArrayDataPointer<std::function<void (QVariant const&)> >::detachAndGrow(QArrayData::GrowthPosition, long long, std::function<void (QVariant const&)> const**, QArrayDataPointer<std::function<void (QVariant const&)> >*) /usr/include/qt6/QtCore/qarraydatapointer.h:201
+    #6 0x5562d0a3079f in void QtPrivate::QGenericArrayOps<std::function<void (QVariant const&)> >::emplace<std::function<void (QVariant const&)> >(long long, std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qarraydataops.h:568
+    #7 0x5562d0a2dd33 in std::function<void (QVariant const&)>& QList<std::function<void (QVariant const&)> >::emplaceBack<std::function<void (QVariant const&)> >(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:975
+    #8 0x5562d0a2a3c4 in QList<std::function<void (QVariant const&)> >::append(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qlist.h:531
+    #9 0x5562d0a26ca9 in QQueue<std::function<void (QVariant const&)> >::enqueue(std::function<void (QVariant const&)>&&) /usr/include/qt6/QtCore/qqueue.h:20
+    #10 0x5562d0a057a7 in Chrono::request(QString const&, std::function<void (QVariant const&)>) /__w/chrono/chrono/qtcommon/chrono.cpp:234
+    #11 0x5562d0a0b2bb in Chrono::refreshTheme() /__w/chrono/chrono/qtcommon/chrono.cpp:282
+    #12 0x5562d0a0a115 in Chrono::refreshAll() /__w/chrono/chrono/qtcommon/chrono.cpp:277
+    #13 0x5562d09fee1a in operator() /__w/chrono/chrono/qtcommon/chrono.cpp:157
+    #14 0x5562d0a21231 in operator() /usr/include/qt6/QtCore/qobjectdefs_impl.h:117
+    #15 0x5562d0a21ad9 in call_internal<void, QtPrivate::FunctorCall<std::integer_sequence<long unsigned int>, QtPrivate::List<>, void, Chrono::Chrono(QObject*)::<lambda()> >::call(Chrono::Chrono(QObject*)::<lambda()>&, void**)::<lambda()> > /usr/include/qt6/QtCore/qobjectdefs_impl.h:66
+    #16 0x5562d0a21384 in call /usr/include/qt6/QtCore/qobjectdefs_impl.h:116
+    #17 0x5562d0a1fc87 in call<QtPrivate::List<>, void> /usr/include/qt6/QtCore/qobjectdefs_impl.h:338
+    #18 0x5562d0a1e238 in impl /usr/include/qt6/QtCore/qobjectdefs_impl.h:548
+    #19 0x7fc2aca13cc7  (/usr/lib/libQt6Core.so.6+0x1f6cc7) (BuildId: 431db715687f9ab0ce66ba4379d344d7b672b510)
+    #20 0x7fc2ad04cba2  (/usr/lib/libQt6Network.so.6+0x16bba2) (BuildId: d0a40a373480ec28a5a89c236725bdb6fe0e1298)
+    #21 0x5562d0a030cc in Chrono::connectNow() /__w/chrono/chrono/qtcommon/chrono.cpp:187
+    #22 0x5562d0a01896 in Chrono::Chrono(QObject*) /__w/chrono/chrono/qtcommon/chrono.cpp:177
+    #23 0x5562d0909c2e in main /__w/chrono/chrono/shell/main.cpp:30
+    #24 0x7fc2abaf8780  (/usr/lib/libc.so.6+0x27780) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #25 0x7fc2abaf88b8 in __libc_start_main (/usr/lib/libc.so.6+0x278b8) (BuildId: d320029ad1a23be2f4bce117fd321cbd23a2014b)
+    #26 0x5562d08e7bd4 in _start (/__w/chrono/chrono/build/shell/chrono-shell+0x310bd4) (BuildId: 568fd574669cd58c9e968d6c25774d77f2e8aa72)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /usr/include/qt6/QtCore/qatomic_cxx11.h:203 in int QAtomicOps<int>::loadRelaxed<int>(std::atomic<int> const&)
+Shadow bytes around the buggy address:
+  0x7cd2a6a45580: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd2a6a45600: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa
+  0x7cd2a6a45680: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cd2a6a45700: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd2a6a45780: fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa fa
+=>0x7cd2a6a45800:[fd]fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd2a6a45880: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fa fa
+  0x7cd2a6a45900: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+  0x7cd2a6a45980: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x7cd2a6a45a00: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
+  0x7cd2a6a45a80: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==1453==ABORTING
+00:00:01.265 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7d64c2c29c80 (res 0x7c94c2bf4a40)
+00:00:01.265 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7d04c2be6b00 (res 0x7c94c2bf4d40)
+00:00:01.265 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7ce4c2c15380 (res 0x7c94c2bf5280)
+00:00:01.265 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7d64c2c2a180 (res 0x7c94c2bf5340)
+00:00:01.302 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out disabled
+00:00:01.303 [ERROR] [/__w/chrono/chrono/compositor/main.c:93] chrono-shell keeps exiting; not restarting it again
+00:00:02.764 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7d64c2cb0c80 (res 0x7c94c2c01b80)
+00:00:02.764 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7d04c2beb480 (res 0x7c94c2c01e80)
+00:00:02.764 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7ce4c2c86300 (res 0x7c94c2c023c0)
+00:00:02.764 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7d64c2cb1180 (res 0x7c94c2c02480)
+00:00:04.776 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:04.776 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:04.776 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:05.393 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:05.429 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:05.450 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:06.059 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.095 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.120 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:06.735 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.771 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.793 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:07.483 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:07.580 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:07.606 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:08.326 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:08.388 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:08.409 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:09.019 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:09.055 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:09.083 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:09.781 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:09.879 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:09.910 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:10.519 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:10.554 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:10.578 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:11.196 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.234 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.252 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:11.862 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.898 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.919 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:12.529 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:12.566 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:12.594 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:13.292 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:13.370 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:13.391 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:14.016 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.049 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.075 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:14.689 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.726 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.753 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:15.364 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:15.403 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:15.429 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:16.043 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.077 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:16.095 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:16.704 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.739 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:16.761 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:17.782 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:17.819 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:17.841 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:20.257 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:20.293 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:20.728 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:23.147 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:23.181 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:23.616 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:26.115 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:26.212 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:26.647 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:29.173 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:29.233 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:29.667 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:32.088 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:32.124 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:32.553 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (63 available cursors)
+00:00:34.571 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:34.607 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:36.029 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:36.066 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+/bin/sh: line 1: wpctl: command not found
+00:00:36.584 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:36.620 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:37.059 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:37.095 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:37.508 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:37.543 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+chrono: types/wlr_foreign_toplevel_management_v1.c:456: wlr_foreign_toplevel_handle_v1_destroy: Assertion `wl_list_empty(&toplevel->events.request_maximize.listener_list)' failed.
