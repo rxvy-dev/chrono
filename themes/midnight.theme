@@ -2,12 +2,14 @@
 [theme]
 name = Midnight
 era = modern
+variant = dark
+pair = daylight
 description = The default: a calm dark desktop with rounded windows and a floating panel.
 
 [colors]
 bg = #1e2128
 fg = #e6e8ee
-accent = #5b9cff
+accent = #4a8ef5
 accent_fg = #ffffff
 selection = #5b9cff55
 window_bg = #191b21

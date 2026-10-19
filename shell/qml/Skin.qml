@@ -97,7 +97,7 @@ Item {
 		anchors.fill: parent
 		visible: skin.pixel
 		color: skin.kind === "button" && (skin.pressed || skin.checked) ? t.panelFg
-		     : skin.kind === "panel" ? t.panelBg : t.windowBg
+		     : skin.kind === "panel" ? t.panelBg : skin.kind === "button" ? t.buttonBg : t.windowBg
 		border.width: skin.kind === "panel" ? 0 : 1
 		border.color: t.panelBorder
 		Rectangle { visible: skin.kind === "panel"; color: t.panelBorder; height: 2

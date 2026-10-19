@@ -38,6 +38,9 @@ jobs:
             -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
             -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" 2>&1 | tee results/configure.log
           ninja -C build -k 0 2>&1 | tee results/build.log
+      - name: Theme contrast (WCAG)
+        if: always()
+        run: python3 tests/contrast.py | tee results/contrast.txt
       - name: Smoke test (headless)
         id: smoke
         if: always() && steps.build.outcome == 'success'

@@ -2,6 +2,8 @@
 [theme]
 name = Mocha
 era = modern
+variant = dark
+pair = latte
 description = Soothing pastels on a warm dark base.
 
 [colors]

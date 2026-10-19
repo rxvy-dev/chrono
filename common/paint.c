@@ -719,8 +719,135 @@ static double rnd(void)
 
 static void desktop_pattern(cairo_t *cr, const struct chrono_theme *t, const char *name, int w, int h)
 {
-	struct chrono_rgba a = t->desktop1, b = t->desktop2;
-	if (!strcmp(name, "checker")) {
+	struct chrono_rgba a = t->desktop1, b = t->desktop2, acc = t->accent;
+	double sc = fmax(w, h) / 1920.0;
+	if (!strcmp(name, "waves")) {
+		/* layered soft waves rising from the bottom, colour a at the top to b at the bottom */
+		vgrad(cr, 0, h, a, mix(a, b, 0.35));
+		cairo_paint(cr);
+		for (int i = 0; i < 6; i++) {
+			double base = h * (0.38 + i * 0.11), amp = h * (0.05 - i * 0.004), ph = i * 1.7;
+			struct chrono_rgba c = mix(mix(a, b, 0.25 + i * 0.14), acc, i == 5 ? 0.12 : 0.04 * i);
+			cairo_move_to(cr, 0, h);
+			for (int x = 0; x <= w; x += 8)
+				cairo_line_to(cr, x, base + sin(x / (w / (2.2 + i * 0.35)) * M_PI + ph) * amp + sin(x / (w / 7.0) + ph * 2) * amp * 0.25);
+			cairo_line_to(cr, w, h);
+			cairo_close_path(cr);
+			set(cr, &c);
+			cairo_fill(cr);
+		}
+	} else if (!strcmp(name, "topo")) {
+		/* contour lines of an imaginary landscape */
+		vgrad(cr, 0, h, a, mix(a, b, 0.5));
+		cairo_paint(cr);
+		cairo_set_line_width(cr, 1.2 * fmax(1, sc));
+		for (int k = 1; k < 22; k++) {
+			double lv = k / 22.0;
+			struct chrono_rgba c = mix(b, acc, k % 5 == 0 ? 0.5 : 0.0);
+			c.a = k % 5 == 0 ? 0.55 : 0.28;
+			set(cr, &c);
+			for (int ring = 0; ring < 3; ring++) {
+				double cx = w * (0.25 + 0.3 * ring), cy = h * (0.35 + 0.2 * ((ring + 1) % 2));
+				double R = fmax(w, h) * (0.06 + lv * 0.75) * (0.6 + 0.25 * ring);
+				for (int st = 0; st <= 180; st++) {
+					double th = st / 180.0 * 2 * M_PI;
+					double r = R * (1 + 0.12 * sin(3 * th + ring + k * 0.2) + 0.06 * sin(7 * th - k * 0.3));
+					double x = cx + cos(th) * r, y = cy + sin(th) * r * 0.75;
+					if (st == 0) cairo_move_to(cr, x, y); else cairo_line_to(cr, x, y);
+				}
+				cairo_close_path(cr);
+				cairo_stroke(cr);
+			}
+		}
+	} else if (!strcmp(name, "blobs") || !strcmp(name, "material")) {
+		/* big soft overlapping shapes; "material" uses crisp circles like a phone wallpaper */
+		bool crisp = !strcmp(name, "material");
+		rect(cr, 0, 0, w, h, &a);
+		struct { double x, y, r, f; } c[] = {
+			{0.15, 0.2, 0.42, 0.9}, {0.85, 0.15, 0.32, 0.5}, {0.7, 0.85, 0.48, 0.75}, {0.25, 0.95, 0.3, 0.35}, {0.5, 0.45, 0.2, 0.15},
+		};
+		for (size_t i = 0; i < sizeof c / sizeof *c; i++) {
+			struct chrono_rgba col = mix(mix(a, b, c[i].f), acc, crisp ? 0.25 * (i % 2) : 0.18 * (i % 3 == 0));
+			double R = c[i].r * fmax(w, h);
+			if (crisp) {
+				col.a = 0.9;
+				set(cr, &col);
+				cairo_arc(cr, c[i].x * w, c[i].y * h, R, 0, 2 * M_PI);
+				cairo_fill(cr);
+			} else {
+				cairo_pattern_t *g = cairo_pattern_create_radial(c[i].x * w, c[i].y * h, 0, c[i].x * w, c[i].y * h, R);
+				cairo_pattern_add_color_stop_rgba(g, 0, col.r, col.g, col.b, 0.85);
+				cairo_pattern_add_color_stop_rgba(g, 1, col.r, col.g, col.b, 0);
+				cairo_set_source(cr, g);
+				cairo_paint(cr);
+				cairo_pattern_destroy(g);
+			}
+		}
+	} else if (!strcmp(name, "scanlines")) {
+		/* a dark CRT: faint scanlines and a vignette */
+		rect(cr, 0, 0, w, h, &a);
+		cairo_set_antialias(cr, CAIRO_ANTIALIAS_NONE);
+		struct chrono_rgba l = b;
+		l.a = 0.35;
+		for (int y = 0; y < h; y += 3)
+			rect(cr, 0, y, w, 1, &l);
+		cairo_set_antialias(cr, CAIRO_ANTIALIAS_DEFAULT);
+		cairo_pattern_t *v = cairo_pattern_create_radial(w / 2.0, h / 2.0, fmin(w, h) * 0.3, w / 2.0, h / 2.0, fmax(w, h) * 0.75);
+		cairo_pattern_add_color_stop_rgba(v, 0, 0, 0, 0, 0);
+		cairo_pattern_add_color_stop_rgba(v, 1, 0, 0, 0, 0.6);
+		cairo_set_source(cr, v);
+		cairo_paint(cr);
+		cairo_pattern_destroy(v);
+	} else if (!strcmp(name, "circuit")) {
+		/* neon traces on a dark board */
+		vgrad(cr, 0, h, a, b);
+		cairo_paint(cr);
+		rng_state = 11;
+		double g = 32 * fmax(1, sc);
+		cairo_set_line_width(cr, 1.5 * fmax(1, sc));
+		for (int i = 0; i < 38; i++) {
+			double x = floor(rnd() * w / g) * g, y = floor(rnd() * h / g) * g;
+			struct chrono_rgba c = rnd() < 0.5 ? acc : mix(acc, b, 0.6);
+			c.a = 0.18 + rnd() * 0.35;
+			set(cr, &c);
+			cairo_move_to(cr, x, y);
+			for (int s2 = 0; s2 < 5; s2++) {
+				double d = g * (1 + floor(rnd() * 4));
+				if (rnd() < 0.5) x += rnd() < 0.5 ? d : -d; else y += rnd() < 0.5 ? d : -d;
+				cairo_line_to(cr, x, y);
+			}
+			cairo_stroke(cr);
+			cairo_arc(cr, x, y, 3 * fmax(1, sc), 0, 2 * M_PI);
+			cairo_fill(cr);
+		}
+	} else if (!strcmp(name, "dunes")) {
+		/* warm sand dunes under a pale sky */
+		vgrad(cr, 0, h * 0.6, b, mix(b, a, 0.3));
+		cairo_paint(cr);
+		for (int i = 0; i < 4; i++) {
+			struct chrono_rgba c = mix(a, mix(b, acc, 0.15), 0.15 + i * 0.12);
+			double base = h * (0.55 + i * 0.12);
+			cairo_move_to(cr, 0, h);
+			cairo_line_to(cr, 0, base);
+			cairo_curve_to(cr, w * 0.3, base - h * 0.12, w * 0.55, base + h * 0.08, w, base - h * (0.05 + 0.03 * i));
+			cairo_line_to(cr, w, h);
+			cairo_close_path(cr);
+			set(cr, &c);
+			cairo_fill(cr);
+		}
+	} else if (!strcmp(name, "rings")) {
+		/* concentric rings from a corner (Rosé Pine / soft themes) */
+		vgrad(cr, 0, h, a, mix(a, b, 0.4));
+		cairo_paint(cr);
+		cairo_set_line_width(cr, 2 * fmax(1, sc));
+		for (int i = 1; i < 26; i++) {
+			struct chrono_rgba c = mix(b, acc, (i % 4 == 0) ? 0.6 : 0.1);
+			c.a = 0.10 + 0.25 * (i % 4 == 0);
+			set(cr, &c);
+			cairo_arc(cr, w * 0.82, h * 0.92, i * 58 * fmax(1, sc), 0, 2 * M_PI);
+			cairo_stroke(cr);
+		}
+	} else if (!strcmp(name, "checker")) {
 		rect(cr, 0, 0, w, h, &a);
 		int s = 16;
 		set(cr, &b);

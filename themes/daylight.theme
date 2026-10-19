@@ -2,6 +2,8 @@
 [theme]
 name = Daylight
 era = modern
+variant = light
+pair = midnight
 description = Clean, bright and flat, with soft shadows and a floating panel.
 
 [colors]
@@ -17,7 +19,7 @@ title_active2 = #f6f7f9
 title_active_fg = #1d2026
 title_inactive = #fbfbfc
 title_inactive2 = #fbfbfc
-title_inactive_fg = #9aa0aa
+title_inactive_fg = #747a85
 border_active = #d4d7dd
 border_inactive = #e3e5e9
 button_bg = #e4e6ea

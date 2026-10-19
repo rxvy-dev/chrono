@@ -184,6 +184,7 @@ bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 	col(&ini, "colors.bg", &t->bg);
 	col(&ini, "colors.fg", &t->fg);
 	col(&ini, "colors.accent", &t->accent);
+	bool accent_from_wallpaper = !strcasecmp(chrono_ini_get(&ini, "colors.accent", ""), "wallpaper");
 	col(&ini, "colors.accent_fg", &t->accent_fg);
 	col(&ini, "colors.selection", &t->selection);
 	t->window_bg = t->bg;
@@ -250,6 +251,11 @@ bool chrono_theme_load_file(struct chrono_theme *t, const char *path)
 	t->cursor_size = (int)chrono_ini_num(&ini, "cursor.size", t->cursor_size);
 	str(&ini, "icons.theme", t->icon_theme, sizeof t->icon_theme);
 
+	if (accent_from_wallpaper) {
+		if (!t->variant[0])
+			snprintf(t->variant, sizeof t->variant, "%s", chrono_luminance(t->window_bg) < 0.35 ? "dark" : "light");
+		chrono_theme_apply_accent(t, "wallpaper");
+	}
 	if (!t->variant[0])
 		snprintf(t->variant, sizeof t->variant, "%s", chrono_luminance(t->window_bg) < 0.35 ? "dark" : "light");
 
