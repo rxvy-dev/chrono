@@ -1112,6 +1112,17 @@ void chrono_paint_preview(cairo_t *cr, const struct chrono_theme *t, int w, int 
 		rect(cr, px, pyy, pw, ph, &t->panel_bg);
 		rect(cr, px, top ? pyy + ph - 1 : pyy, pw, 1, &t->panel_border);
 	}
+	if (!strcmp(t->panel_style, "gloss")) {
+		cairo_pattern_t *g = cairo_pattern_create_linear(0, pyy, 0, pyy + ph);
+		cairo_pattern_add_color_stop_rgba(g, 0, 1, 1, 1, 0.32);
+		cairo_pattern_add_color_stop_rgba(g, 0.45, 1, 1, 1, 0.06);
+		cairo_pattern_add_color_stop_rgba(g, 0.55, 0, 0, 0, 0);
+		cairo_pattern_add_color_stop_rgba(g, 1, 0, 0, 0, 0.18);
+		cairo_rectangle(cr, px, pyy, pw, ph);
+		cairo_set_source(cr, g);
+		cairo_fill(cr);
+		cairo_pattern_destroy(g);
+	}
 	double cy = pyy + ph / 2;
 	double bx = px + 6 * s;
 	int lw = 0;

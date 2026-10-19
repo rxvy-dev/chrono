@@ -53,6 +53,18 @@ Item {
 		border.width: (skin.kind === "panel" || skin.kind === "popup") ? 1 : 0
 		border.color: t.panelBorder
 		Behavior on color { ColorAnimation { duration: 90 } }
+		// gloss (2000s taskbars): a bright top half and a darker bottom edge
+		Rectangle {
+			visible: skin.style === "gloss" && (skin.kind === "panel" || (skin.kind === "button" && (skin.checked || skin.hovered || skin.pressed)))
+			anchors.fill: parent
+			radius: skin.radius
+			gradient: Gradient {
+				GradientStop { position: 0.0; color: Qt.rgba(1, 1, 1, skin.pressed ? 0.05 : 0.32) }
+				GradientStop { position: 0.45; color: Qt.rgba(1, 1, 1, 0.06) }
+				GradientStop { position: 0.55; color: Qt.rgba(0, 0, 0, 0.0) }
+				GradientStop { position: 1.0; color: Qt.rgba(0, 0, 0, skin.pressed ? 0.25 : 0.18) }
+			}
+		}
 		// glass: a lit top edge
 		Rectangle {
 			visible: skin.style === "glass" && (skin.kind === "panel" || skin.kind === "popup")

@@ -13,7 +13,7 @@ that lets you change everything without touching a config file.
   resolution, refresh rate, fractional scale, rotation, VRR, auto-revert), time & date, keyboard
   layouts, mouse & touchpad, windows & workspaces, shortcuts (with a key recorder), sound, power &
   lock, default apps & autostart, about.
-- **29 themes**, each with its own generated wallpaper — see [Themes](#themes).
+- **32 themes**, each with its own generated wallpaper — see [Themes](#themes).
 
 ## Install
 
@@ -76,6 +76,12 @@ format = 24h           ; auto | 12h | 24h
 seconds = false
 date = true
 
+[colors]               ; your own colours, on top of any theme (any [colors] key from a theme file)
+accent = #e5484d
+
+[desktop]
+wallpaper = pattern:waves
+
 [appearance]
 mode = theme           ; theme | light | dark
 accent = theme         ; theme | #rrggbb | wallpaper
@@ -116,20 +122,25 @@ Super+F1 = none        ; turn a built-in shortcut off
 | Mono | modern | black and white only | |
 | Terminal | modern | flat, monospace, green on black, scanlines | |
 | High Contrast | modern | black/white/yellow, thick focus borders | |
-| Classic Bevel | retro | grey 3D bevels, navy title gradient | |
+| Classic Bevel | retro | mid-90s grey 3D bevels, solid navy titles | |
+| Ninety-Eight | retro | late-90s grey bevels, navy-to-sky title gradient | |
 | Platinum | retro | grey ridged title bars | |
 | Topaz | retro | 1-bit-era blue and white, pixel frames | |
 | Yellow Tab | retro | yellow title tabs | |
 | Motif | retro | chunky workstation bevels | |
 | Cube | retro | black titles on grey | |
-| Meadow | retro | glossy blue titles over green hills | |
+| Meadow | retro | early-2000s glossy blue titles and taskbar, green hills, start menu with you in the header | |
+| Meadow Olive | retro | Meadow in olive green | |
+| Meadow Silver | retro | Meadow in silver | |
 | Pinstripe | retro | pinstripes and gel buttons | |
 
 Per-theme screenshots (app menu open, two windows, a notification) are in
 [`docs/screenshots/`](docs/screenshots/).
 
 In **Settings → Themes** you get a live preview, a light/dark switch (for themes that have a twin),
-an accent colour picker (any colour, or one taken from the wallpaper) and a *Reduce motion* switch.
+an accent colour picker (any colour, or one taken from the wallpaper), a *Reduce motion* switch, and
+**Customize colours…**: change any of 14 colours and the wallpaper on top of whatever theme you use,
+reset them one by one, or *Save as my theme* to turn the result into your own theme file.
 
 ## Make a theme
 
@@ -188,7 +199,7 @@ mono = JetBrains Mono, DejaVu Sans Mono 10
 [panel]
 position = bottom         ; the user's Settings choice can override this
 height = 40
-style = floating          ; flat floating glass bevel pixel
+style = floating          ; flat floating glass gloss bevel pixel
 launcher_label =          ; text on the app-menu button (empty = just the Chrono mark)
 dock = false              ; true = separate dock at the bottom, bar moves to the top
 

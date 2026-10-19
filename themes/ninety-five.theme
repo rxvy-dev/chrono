@@ -2,7 +2,7 @@
 [theme]
 name = Classic Bevel
 era = retro
-description = Chunky grey bevels, a navy title gradient and that teal desktop.
+description = Mid-90s grey bevels, solid navy title bars and a teal desktop.
 
 [colors]
 bg = #c0c0c0
@@ -13,10 +13,10 @@ selection = #000080
 window_bg = #c0c0c0
 window_fg = #000000
 title_active = #000080
-title_active2 = #1084d0
+title_active2 = #000080
 title_active_fg = #ffffff
 title_inactive = #808080
-title_inactive2 = #b5b5b5
+title_inactive2 = #808080
 title_inactive_fg = #f0f0f0
 border_active = #c0c0c0
 border_inactive = #c0c0c0

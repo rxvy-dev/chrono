@@ -52,7 +52,7 @@ mono = DejaVu Sans Mono 10
 [panel]
 position = bottom
 height = 32
-style = flat
+style = gloss
 launcher_label = start
 dock = false
 

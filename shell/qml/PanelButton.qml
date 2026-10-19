@@ -7,6 +7,7 @@ Item {
 	property bool checked: false
 	property bool attention: false
 	property bool underline: false
+	property color fgOverride: "transparent"   // set to force a text colour (e.g. on a light menu)
 	property string text: ""
 	property string glyph: ""
 	property string icon: ""            // freedesktop icon name
@@ -17,7 +18,7 @@ Item {
 	property int padding: 6
 	property real maxWidth: 99999
 	readonly property alias pressed: ma.pressed
-	readonly property color fg: sk.fg
+	readonly property color fg: fgOverride.a > 0 ? fgOverride : sk.fg
 	signal clicked(var mouse)
 	signal rightClicked(var mouse)
 	signal middleClicked(var mouse)

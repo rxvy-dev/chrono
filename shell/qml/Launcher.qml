@@ -8,6 +8,9 @@ PopupLayer {
 	property var shell
 	readonly property var t: Chrono.theme
 	readonly property bool retroLook: t.panelStyle === "bevel" || t.panelStyle === "pixel"
+	// 2000s menu: white body between a glossy header (with you in it) and a glossy footer
+	readonly property bool xp: t.decor === "meadow"
+	readonly property int headerH: xp ? 60 : 0
 	readonly property int pad: 16
 	keyboard: "exclusive"
 	layerName: "overlay"
@@ -33,7 +36,7 @@ PopupLayer {
 		if (results.length > 0) launch(results[Math.min(current, results.length - 1)])
 		else if (query.trim() !== "") { Apps.runCommand(query.trim()); close() }
 	}
-	readonly property color fgOnSurface: retroLook ? t.windowFg : t.panelFg
+	readonly property color fgOnSurface: retroLook || xp ? t.windowFg : t.panelFg
 	readonly property real fs: t.fontUi.size
 
 	// open: a short fade + rise (skipped with reduce motion)
@@ -48,13 +51,61 @@ PopupLayer {
 		anchors.fill: parent
 		transformOrigin: Chrono.panelPosition === "top" ? Item.Top : Item.Bottom
 
-		Skin { anchors.fill: parent; kind: "popup" }
+		Skin { anchors.fill: parent; kind: "popup"; visible: !launcher.xp }
+		Shadow { anchors.fill: parent; visible: launcher.xp; radius: 8; size: 18; strength: 0.5; offsetY: 6 }
+		Rectangle {
+			visible: launcher.xp
+			anchors.fill: parent
+			radius: 8
+			color: t.windowBg
+			border.width: 1
+			border.color: t.titleActive
+		}
+		Rectangle {   // header
+			visible: launcher.xp
+			anchors { left: parent.left; right: parent.right; top: parent.top }
+			height: launcher.headerH
+			radius: 8
+			gradient: Gradient {
+				GradientStop { position: 0; color: Qt.lighter(t.titleActive2, 1.35) }
+				GradientStop { position: 0.25; color: t.titleActive2 }
+				GradientStop { position: 1; color: t.titleActive }
+			}
+			Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 8; color: t.titleActive }
+			Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 2; color: "#e8902c" }
+			Row {
+				anchors.verticalCenter: parent.verticalCenter
+				x: 14
+				spacing: 12
+				Rectangle {
+					width: 40; height: 40; radius: 6
+					color: t.accent; border.width: 2; border.color: "white"
+					Text { anchors.centerIn: parent; text: (System.userName || "?").charAt(0).toUpperCase(); color: t.accentFg
+						font.family: t.fontUi.family; font.pointSize: launcher.fs + 6; font.bold: true }
+				}
+				Text { anchors.verticalCenter: parent.verticalCenter; text: System.userName; color: t.titleActiveFg
+					style: Text.Raised; styleColor: Qt.rgba(0, 0, 0, 0.35)
+					font.family: t.fontTitle.family; font.pointSize: launcher.fs + 5; font.bold: true }
+			}
+		}
+		Rectangle {   // footer bar
+			visible: launcher.xp
+			anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+			height: 52
+			radius: 8
+			gradient: Gradient {
+				GradientStop { position: 0; color: t.titleActive }
+				GradientStop { position: 1; color: Qt.darker(t.titleActive, 1.15) }
+			}
+			Rectangle { anchors { left: parent.left; right: parent.right; top: parent.top } height: 8; color: t.titleActive }
+		}
 
 		// ----- retro banner
 		Rectangle {
 			id: banner
-			visible: t.retro
+			visible: t.retro && !launcher.xp
 			width: visible ? 32 : 0
+			// (the 2000s menu has its own header instead)
 			anchors { left: parent.left; top: parent.top; bottom: parent.bottom; margins: t.panelStyle === "bevel" ? 3 : 1 }
 			gradient: Gradient {
 				GradientStop { position: 0; color: t.titleActive2 }
@@ -75,13 +126,14 @@ PopupLayer {
 
 		Item {
 			id: inner
-			anchors { left: banner.right; right: parent.right; top: parent.top; bottom: parent.bottom; margins: launcher.pad }
+			anchors { left: banner.right; right: parent.right; top: parent.top; bottom: parent.bottom; margins: launcher.pad; topMargin: launcher.pad + launcher.headerH }
 
 			// ----- search
 			Item {
 				id: search
 				width: parent.width; height: 40
-				Skin { anchors.fill: parent; kind: "field" }
+				Skin { anchors.fill: parent; kind: "field"; visible: !launcher.xp }
+				Rectangle { anchors.fill: parent; visible: launcher.xp; radius: 3; color: "white"; border.color: "#7f9db9" }
 				Rectangle {   // focus ring for soft themes
 					anchors.fill: parent; anchors.margins: -2
 					visible: !launcher.retroLook && field.activeFocus
@@ -119,13 +171,18 @@ PopupLayer {
 					model: [{ id: "__pinned", name: qsTr("Pinned"), glyph: "pin" }, { id: "", name: qsTr("All apps"), glyph: "apps" }]
 						.concat(Apps.categories.map(c => ({ id: c.id, name: c.name, glyph: "" })))
 					PanelButton {
+						id: catBtn
 						required property var modelData
 						width: cats.width; height: 32
 						padding: 10
 						glyph: modelData.glyph
 						text: modelData.name
 						checked: launcher.category === modelData.id
+						fgOverride: launcher.xp ? (checked ? "white" : t.windowFg) : "transparent"
 						onClicked: launcher.category = modelData.id
+						Component.onCompleted: if (launcher.xp) skin.visible = false
+						Rectangle { parent: catBtn; z: -1; visible: launcher.xp && (catBtn.checked || catBtn.hovered); anchors.fill: parent; radius: 3
+							color: catBtn.checked ? t.selection : Qt.rgba(t.selection.r, t.selection.g, t.selection.b, 0.15) }
 					}
 				}
 			}
@@ -152,7 +209,9 @@ PopupLayer {
 						readonly property bool pinned: Apps.pinned.indexOf(modelData.id) >= 0
 						width: list.width
 						height: 48
-						Skin { id: rowSkin; anchors.fill: parent; kind: "button"; hovered: ma.containsMouse; pressed: ma.pressed; checked: row.index === launcher.current }
+						Skin { id: rowSkin; anchors.fill: parent; kind: "button"; hovered: ma.containsMouse; pressed: ma.pressed; checked: row.index === launcher.current; visible: !launcher.xp }
+						Rectangle { visible: launcher.xp && (row.index === launcher.current || ma.containsMouse); anchors.fill: parent; radius: 3
+							color: row.index === launcher.current ? t.selection : Qt.rgba(t.selection.r, t.selection.g, t.selection.b, 0.15) }
 						Image {
 							id: icon
 							x: 10; anchors.verticalCenter: parent.verticalCenter
@@ -169,7 +228,8 @@ PopupLayer {
 								Glyph { anchors.centerIn: parent; name: "pin"; width: 10; height: 10; color: t.accentFg }
 							}
 						}
-						readonly property color fg: launcher.retroLook ? rowSkin.fg : launcher.fgOnSurface
+						readonly property color fg: launcher.xp ? (row.index === launcher.current ? "white" : t.windowFg)
+									  : launcher.retroLook ? rowSkin.fg : launcher.fgOnSurface
 						Column {
 							anchors { left: icon.right; leftMargin: 12; right: parent.right; rightMargin: 10; verticalCenter: parent.verticalCenter }
 							spacing: 1
@@ -217,8 +277,9 @@ PopupLayer {
 				id: footer
 				anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
 				height: 36
-				Rectangle { visible: !launcher.retroLook; anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: -6 } height: 1; color: t.panelBorder }
+				Rectangle { visible: !launcher.retroLook && !launcher.xp; anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: -6 } height: 1; color: t.panelBorder }
 				Row {
+					visible: !launcher.xp
 					anchors.verticalCenter: parent.verticalCenter
 					spacing: 10
 					Rectangle {
@@ -235,9 +296,9 @@ PopupLayer {
 					anchors.right: parent.right
 					anchors.verticalCenter: parent.verticalCenter
 					spacing: 4
-					PanelButton { height: 32; padding: 10; glyph: "settings"; text: qsTr("Settings"); onClicked: { Chrono.action("settings"); launcher.close() } }
-					PanelButton { height: 32; width: 32; padding: 8; glyph: "lock"; onClicked: { launcher.close(); Chrono.command("lock") } }
-					PanelButton { height: 32; width: 32; padding: 8; glyph: "power"; onClicked: { launcher.close(); launcher.shell.openPowerMenu() } }
+					PanelButton { height: 32; padding: 10; glyph: "settings"; text: qsTr("Settings"); fgOverride: launcher.xp ? t.titleActiveFg : "transparent"; onClicked: { Chrono.action("settings"); launcher.close() } }
+					PanelButton { height: 32; width: 32; padding: 8; glyph: "lock"; fgOverride: launcher.xp ? t.titleActiveFg : "transparent"; onClicked: { launcher.close(); Chrono.command("lock") } }
+					PanelButton { height: 32; width: 32; padding: 8; glyph: "power"; fgOverride: launcher.xp ? t.titleActiveFg : "transparent"; onClicked: { launcher.close(); launcher.shell.openPowerMenu() } }
 				}
 			}
 		}
