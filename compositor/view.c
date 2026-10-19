@@ -2,6 +2,7 @@
  * minimize, workspaces and the foreign-toplevel handles that taskbars use. XWayland windows share all of
  * this through the is_x11 branches (see xwayland.c). */
 #define _GNU_SOURCE
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wlr/types/wlr_ext_foreign_toplevel_list_v1.h>
@@ -60,9 +61,62 @@ static bool view_visible(struct chrono_view *v)
 	return v->mapped && !v->minimized && v->workspace == v->server->workspace;
 }
 
+/* ---------------------------------------------------------------- fade-in when a window appears */
+static void set_buffer_opacity(struct wlr_scene_buffer *buf, int sx, int sy, void *data)
+{
+	(void)sx;
+	(void)sy;
+	wlr_scene_buffer_set_opacity(buf, (float)*(double *)data);
+}
+
+static void view_set_opacity(struct chrono_view *v, double a)
+{
+	wlr_scene_node_for_each_buffer(&v->tree->node, set_buffer_opacity, &a);
+}
+
+static int fade_step(void *data)
+{
+	struct chrono_view *v = data;
+	v->fade += 16.0 / 170.0;
+	if (v->fade >= 1) {
+		v->fade = 1;
+		view_set_opacity(v, 1);
+		wl_event_source_remove(v->fade_timer);
+		v->fade_timer = NULL;
+		return 0;
+	}
+	double e = 1 - pow(1 - v->fade, 3); /* ease-out */
+	view_set_opacity(v, e);
+	wl_event_source_timer_update(v->fade_timer, 16);
+	return 0;
+}
+
+static void view_fade_in(struct chrono_view *v)
+{
+	if (v->server->config.reduce_motion || !v->tree)
+		return;
+	v->fade = 0;
+	view_set_opacity(v, 0);
+	if (!v->fade_timer)
+		v->fade_timer = wl_event_loop_add_timer(v->server->loop, fade_step, v);
+	wl_event_source_timer_update(v->fade_timer, 16);
+}
+
+static void view_fade_stop(struct chrono_view *v)
+{
+	if (v->fade_timer) {
+		wl_event_source_remove(v->fade_timer);
+		v->fade_timer = NULL;
+	}
+}
+
 static void view_update_visibility(struct chrono_view *v)
 {
-	wlr_scene_node_set_enabled(&v->tree->node, view_visible(v));
+	bool was = v->tree->node.enabled;
+	bool now = view_visible(v);
+	wlr_scene_node_set_enabled(&v->tree->node, now);
+	if (now && !was && v->mapped)
+		view_fade_in(v);
 }
 
 void view_update_position(struct chrono_view *v)
@@ -547,12 +601,15 @@ void view_mapped(struct chrono_view *v)
 	view_update_visibility(v);
 	view_ftl_create(v);
 	decor_update(v);
+	view_fade_in(v);
 	view_focus(v);
 }
 
 void view_unmapped(struct chrono_view *v)
 {
 	struct chrono_server *s = v->server;
+	view_fade_stop(v);
+	view_set_opacity(v, 1);
 	v->mapped = false;
 	view_update_visibility(v);
 	if (s->grab_view == v) {
@@ -585,6 +642,7 @@ void view_unmapped(struct chrono_view *v)
 void view_destroyed(struct chrono_view *v)
 {
 	struct chrono_server *s = v->server;
+	view_fade_stop(v);
 	if (v->mapped)
 		view_unmapped(v);
 	if (s->focused == v)

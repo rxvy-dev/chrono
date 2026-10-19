@@ -88,6 +88,7 @@ uint Notifications::Notify(const QString &app, uint replaces, const QString &ico
 		{QStringLiteral("id"), id}, {QStringLiteral("app"), app}, {QStringLiteral("icon"), image},
 		{QStringLiteral("summary"), summary}, {QStringLiteral("body"), body}, {QStringLiteral("actions"), acts},
 		{QStringLiteral("urgency"), urgency}, {QStringLiteral("time"), QDateTime::currentDateTime()},
+		{QStringLiteral("timeout"), (urgency >= 2 || timeout == 0) ? 0 : (timeout > 0 ? qBound(1500, timeout, 60000) : 6000)},
 	};
 	auto upsert = [&](QVariantList &list) {
 		for (QVariant &v : list)

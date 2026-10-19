@@ -24,7 +24,7 @@ PopupLayer {
 			clip: true
 			spacing: 6
 			model: Notifications.history
-			delegate: NotificationCard { required property var modelData; note: modelData; width: notes.width; inHistory: true }
+			delegate: NotificationCard { required property var modelData; note: modelData; width: notes.width }
 			Text { anchors.centerIn: parent; visible: Notifications.history.length === 0; text: qsTr("No notifications")
 				color: t.panelFg; opacity: 0.5; font.family: t.fontUi.family; font.pointSize: t.fontUi.size }
 		}

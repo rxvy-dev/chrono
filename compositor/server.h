@@ -94,6 +94,8 @@ struct chrono_view {
 	int w, h;                       /* client content size */
 	struct wlr_box restore;         /* geometry before maximize / snap / fullscreen */
 	bool mapped, minimized, maximized, fullscreen, active, urgent;
+	struct wl_event_source *fade_timer;  /* open / restore fade-in */
+	double fade;
 	int snap;                       /* 0, or WLR_EDGE_* combination when snapped */
 	int workspace;
 	char *title, *app_id;

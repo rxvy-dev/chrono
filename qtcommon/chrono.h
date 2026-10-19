@@ -28,6 +28,8 @@ class Chrono : public QObject
 	// where the panel actually is ("top"/"bottom") and whether the dock is on, from config + theme
 	Q_PROPERTY(QString panelPosition READ panelPosition NOTIFY panelChanged)
 	Q_PROPERTY(bool dockEnabled READ dockEnabled NOTIFY panelChanged)
+	// "Reduce motion": QML multiplies its animation durations by this (0 or 1)
+	Q_PROPERTY(int motion READ motion NOTIFY configChanged)
 
 public:
 	explicit Chrono(QObject *parent = nullptr);
@@ -50,6 +52,7 @@ public:
 	QString version() const;
 	QString panelPosition() const;
 	bool dockEnabled() const;
+	int motion() const { return configValue(QStringLiteral("appearance.reduce_motion")) == QLatin1String("true") ? 0 : 1; }
 
 	// Send one command line; callback(reply) runs when the JSON answer arrives.
 	Q_INVOKABLE void command(const QString &line, const QJSValue &callback = QJSValue());

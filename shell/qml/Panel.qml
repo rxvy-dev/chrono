@@ -9,6 +9,7 @@ Window {
 	readonly property bool dockMode: Chrono.dockEnabled
 	readonly property string pos: Chrono.panelPosition
 	readonly property bool floating: t.panelStyle === "floating" && !dockMode
+	readonly property bool retroBar: t.panelStyle === "bevel" || t.panelStyle === "pixel"
 	readonly property int barHeight: Math.max(20, t.panelHeight)
 	readonly property int margin: floating ? 8 : 0
 
@@ -126,9 +127,9 @@ Window {
 				}
 			}
 
-			// ----- workspaces
+			// ----- workspaces: numbered buttons on retro bars, pills on modern ones
 			Row {
-				visible: Chrono.workspaceCount > 1
+				visible: Chrono.workspaceCount > 1 && panel.retroBar
 				spacing: t.panelStyle === "bevel" ? 0 : 2
 				anchors.verticalCenter: parent.verticalCenter
 				Repeater {
@@ -140,11 +141,39 @@ Window {
 						text: String(index + 1)
 						padding: 5
 						checked: Chrono.workspace === index + 1
-						underline: true
-						attention: Chrono.windows.some(w => w.workspace === index + 1)
 						onClicked: Chrono.action("workspace " + (index + 1))
 						onWheel: (w) => Chrono.action(w.angleDelta.y > 0 ? "workspace prev" : "workspace next")
 					}
+				}
+			}
+			Item {
+				visible: Chrono.workspaceCount > 1 && !panel.retroBar
+				width: pills.width + 16; height: bar.bh
+				anchors.verticalCenter: parent.verticalCenter
+				Row {
+					id: pills
+					anchors.centerIn: parent
+					spacing: 6
+					Repeater {
+						model: Chrono.workspaceCount
+						Rectangle {
+							required property int index
+							readonly property bool current: Chrono.workspace === index + 1
+							readonly property bool used: Chrono.windows.some(w => w.workspace === index + 1)
+							anchors.verticalCenter: parent.verticalCenter
+							width: current ? 22 : 8; height: 8; radius: 4
+							color: current ? t.accent : used ? Qt.rgba(t.panelFg.r, t.panelFg.g, t.panelFg.b, 0.7) : "transparent"
+							border.width: current || used ? 0 : 1.5
+							border.color: Qt.rgba(t.panelFg.r, t.panelFg.g, t.panelFg.b, 0.45)
+							Behavior on width { NumberAnimation { duration: 160 * Chrono.motion; easing.type: Easing.OutCubic } }
+							Behavior on color { ColorAnimation { duration: 160 * Chrono.motion } }
+							MouseArea { anchors.fill: parent; anchors.margins: -5; onClicked: Chrono.action("workspace " + (parent.index + 1)) }
+						}
+					}
+				}
+				MouseArea {
+					anchors.fill: parent; z: -1
+					onWheel: (w) => Chrono.action(w.angleDelta.y > 0 ? "workspace prev" : "workspace next")
 				}
 			}
 
@@ -226,25 +255,44 @@ Window {
 					onWheel: (w) => System.media(w.angleDelta.y > 0 ? "previous" : "next")
 					Component.onCompleted: skin.visible = Qt.binding(() => hovered)
 				}
-				PanelButton {
-					id: statusBtn
-					height: bar.bh - 2
-					padding: 5
-					checked: !!panel.shell && panel.shell.quickOpen
-					onClicked: panel.popupAt(statusBtn, panel.shell.quick)
-					onWheel: (w) => { System.setVolume(System.volume + (w.angleDelta.y > 0 ? 5 : -5)); panel.shell.showOsd("volume") }
-					Row {
-						spacing: 7
-						anchors.verticalCenter: parent.verticalCenter
-						Glyph { visible: Notifications.doNotDisturb; name: "bell"; flag: true; color: statusBtn.fg; width: 15; height: 15 }
-						Glyph { name: System.network === "wifi" ? "wifi" : System.network === "ethernet" ? "ethernet" : "offline"
-							value: System.wifiStrength / 100; color: statusBtn.fg; width: 15; height: 15 }
-						Glyph { visible: System.hasAudio; name: "volume"; value: System.volume / 100; flag: System.muted; color: statusBtn.fg; width: 15; height: 15 }
-						Glyph { visible: System.hasBattery; name: "battery"; value: System.battery / 100; flag: System.charging; color: statusBtn.fg; width: 17; height: 15 }
-						Text { visible: System.hasBattery && !t.retro; text: System.battery + "%"; color: statusBtn.fg
-							font.family: t.fontUi.family; font.pointSize: t.fontUi.size - 1; anchors.verticalCenter: parent.verticalCenter }
+				// each status icon is its own button; all open quick settings
+				Repeater {
+					model: [
+						{ id: "dnd", show: Notifications.doNotDisturb },
+						{ id: "net", show: true },
+						{ id: "vol", show: System.hasAudio },
+						{ id: "bat", show: System.hasBattery },
+					]
+					PanelButton {
+						id: sb
+						required property var modelData
+						visible: modelData.show
+						height: bar.bh - 2
+						width: modelData.id === "bat" && !t.retro ? implicitWidth : height
+						padding: modelData.id === "bat" && !t.retro ? 7 : (height - 16) / 2
+						checked: !!panel.shell && panel.shell.quickOpen
+						onClicked: panel.popupAt(sb, panel.shell.quick)
+						onWheel: (w) => { if (modelData.id === "vol") { System.setVolume(System.volume + (w.angleDelta.y > 0 ? 5 : -5)); panel.shell.showOsd("volume") } }
+						onMiddleClicked: if (modelData.id === "vol") System.toggleMute()
+						Row {
+							spacing: 5
+							anchors.verticalCenter: parent.verticalCenter
+							Glyph {
+								width: sb.modelData.id === "bat" ? 18 : 16; height: 16
+								anchors.verticalCenter: parent.verticalCenter
+								color: sb.fg
+								name: sb.modelData.id === "dnd" ? "bell" : sb.modelData.id === "vol" ? "volume" : sb.modelData.id === "bat" ? "battery"
+								    : System.network === "wifi" ? "wifi" : System.network === "ethernet" ? "ethernet" : "offline"
+								value: sb.modelData.id === "vol" ? System.volume / 100 : sb.modelData.id === "bat" ? System.battery / 100 : System.wifiStrength / 100
+								flag: sb.modelData.id === "dnd" ? true : sb.modelData.id === "vol" ? System.muted : sb.modelData.id === "bat" ? System.charging : false
+							}
+							Text { visible: sb.modelData.id === "bat" && !t.retro; text: System.battery + "%"; color: sb.fg
+								font.family: t.fontUi.family; font.pointSize: t.fontUi.size - 1; anchors.verticalCenter: parent.verticalCenter }
+						}
 					}
 				}
+				Rectangle { visible: !panel.retroBar; width: 1; height: bar.bh - 12; anchors.verticalCenter: parent.verticalCenter
+					color: t.panelBorder }
 				PanelButton {
 					id: clockBtn
 					height: bar.bh - 2

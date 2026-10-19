@@ -16,5 +16,6 @@
     <file>qml/ThemedSlider.qml</file>
     <file>qml/Skin.qml</file>
     <file>qml/Glyph.qml</file>
+    <file>qml/Shadow.qml</file>
   </qresource>
 </RCC>

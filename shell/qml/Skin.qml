@@ -25,6 +25,15 @@ Item {
 	function mix(a, b, f) { return Qt.rgba(a.r * (1 - f) + b.r * f, a.g * (1 - f) + b.g * f, a.b * (1 - f) + b.b * f, a.a * (1 - f) + b.a * f) }
 
 	// ---------- soft (flat / floating / glass)
+	Shadow {
+		anchors.fill: parent
+		visible: skin.soft && (skin.kind === "popup" || (skin.kind === "panel" && skin.style === "floating"))
+		radius: skin.radius
+		size: skin.kind === "popup" ? 22 : 10
+		strength: skin.kind === "popup" ? 0.55 : 0.3
+		offsetY: skin.kind === "popup" ? 8 : 3
+		z: -1
+	}
 	Rectangle {
 		anchors.fill: parent
 		visible: skin.soft
