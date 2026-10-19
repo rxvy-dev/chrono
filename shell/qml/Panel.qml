@@ -138,6 +138,7 @@ Window {
 						text: String(index + 1)
 						padding: 5
 						checked: Chrono.workspace === index + 1
+						underline: true
 						attention: Chrono.windows.some(w => w.workspace === index + 1)
 						onClicked: Chrono.action("workspace " + (index + 1))
 						onWheel: (w) => Chrono.action(w.angleDelta.y > 0 ? "workspace prev" : "workspace next")
@@ -182,13 +183,14 @@ Window {
 					icon: modelData.icon
 					text: w && panel.labels && tasks.each > 70 ? w.title : ""
 					checked: !!w && w.focused && !w.minimized
+					underline: true
 					opacity: w && w.minimized ? 0.6 : 1
 					onClicked: w ? Chrono.windowCommand("toggle", w.id) : Apps.launch(modelData.appId)
 					onMiddleClicked: modelData.appId ? Apps.launch(modelData.appId) : (w && Chrono.windowCommand("close", w.id))
 					onRightClicked: (m) => panel.shell.openTaskMenu(panel.screen, mapToItem(null, m.x, 0).x, modelData)
 					// running indicator for modern bars
 					Rectangle {
-						visible: !!tb.w && !t.retro && !tb.checked
+						visible: !!tb.w && !t.retro && !tb.checked && tb.text === ""
 						parent: tb
 						anchors.horizontalCenter: parent.horizontalCenter
 						anchors.bottom: parent.bottom; anchors.bottomMargin: 1

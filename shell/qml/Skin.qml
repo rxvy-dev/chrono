@@ -9,6 +9,7 @@ Item {
 	property bool pressed: false
 	property bool checked: false
 	property bool attention: false
+	property bool underline: false      // accent bar under checked taskbar buttons
 	readonly property var t: Chrono.theme
 	readonly property string style: t.panelStyle || "flat"
 	readonly property bool bevel: style === "bevel"
@@ -30,7 +31,9 @@ Item {
 		radius: skin.radius
 		color: {
 			if (skin.kind === "panel") return t.panelBg
-			if (skin.kind === "popup") return Qt.rgba(t.panelBg.r, t.panelBg.g, t.panelBg.b, Math.max(t.panelBg.a, skin.style === "glass" ? 0.55 : 0.94))
+			if (skin.kind === "popup" && skin.style === "glass")   // no blur behind us, so keep text readable
+				return t.panelFg.hslLightness > 0.5 ? Qt.rgba(0.10, 0.10, 0.14, 0.80) : Qt.rgba(1, 1, 1, 0.86)
+			if (skin.kind === "popup") return Qt.rgba(t.panelBg.r, t.panelBg.g, t.panelBg.b, Math.max(t.panelBg.a, 0.95))
 			if (skin.kind === "field" || skin.kind === "well") return Qt.rgba(t.panelFg.r, t.panelFg.g, t.panelFg.b, 0.08)
 			if (skin.pressed) return Qt.rgba(t.panelFg.r, t.panelFg.g, t.panelFg.b, 0.22)
 			if (skin.checked) return Qt.rgba(t.accent.r, t.accent.g, t.accent.b, 0.35)
@@ -54,7 +57,7 @@ Item {
 		}
 		// checked underline for taskbar buttons
 		Rectangle {
-			visible: skin.kind === "button" && skin.checked
+			visible: skin.kind === "button" && skin.checked && skin.underline
 			anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom; bottomMargin: 2 }
 			width: Math.min(parent.width - 8, 18); height: 2; radius: 1
 			color: t.accent

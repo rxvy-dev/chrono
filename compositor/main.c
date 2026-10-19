@@ -388,12 +388,13 @@ int main(int argc, char **argv)
 	for (size_t i = 0; i < sizeof global_listeners / sizeof *global_listeners; i++)
 		if (global_listeners[i]->link.next)
 			wl_list_remove(&global_listeners[i]->link);
+	/* outputs and input devices go first: their destroy handlers still use the scene and cursor */
+	wlr_backend_destroy(s->backend);
 	wlr_scene_node_destroy(&s->scene->tree.node);
 	wlr_xcursor_manager_destroy(s->xcursor);
 	wlr_cursor_destroy(s->cursor);
 	wlr_allocator_destroy(s->allocator);
 	wlr_renderer_destroy(s->renderer);
-	wlr_backend_destroy(s->backend);
 	wl_display_destroy(s->display);
 	return 0;
 }

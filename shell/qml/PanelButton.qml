@@ -6,6 +6,7 @@ Item {
 	property alias hovered: ma.containsMouse
 	property bool checked: false
 	property bool attention: false
+	property bool underline: false
 	property string text: ""
 	property string glyph: ""
 	property string icon: ""            // freedesktop icon name
@@ -26,7 +27,7 @@ Item {
 	implicitHeight: 24
 	implicitWidth: Math.min(maxWidth, row.implicitWidth + padding * 2)
 
-	Skin { id: sk; anchors.fill: parent; kind: b.kind; hovered: ma.containsMouse; pressed: ma.pressed; checked: b.checked; attention: b.attention }
+	Skin { id: sk; anchors.fill: parent; kind: b.kind; hovered: ma.containsMouse; pressed: ma.pressed; checked: b.checked; attention: b.attention; underline: b.underline }
 
 	Row {
 		id: row

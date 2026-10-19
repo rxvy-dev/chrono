@@ -52,7 +52,7 @@ PopupLayer {
 			Repeater {
 				model: 7
 				Text { required property int index; width: 37; height: 22; horizontalAlignment: Text.AlignHCenter
-					text: Qt.locale().dayName((grid.first + index) % 7, Locale.NarrowFormat)
+					text: Qt.locale().dayName((grid.first + index) % 7, Locale.ShortFormat).slice(0, 2)
 					color: t.panelFg; opacity: 0.6; font.family: t.fontUi.family; font.pointSize: t.fontUi.size - 1 }
 			}
 			Repeater {
