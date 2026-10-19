@@ -83,6 +83,10 @@ chronoctl action "snap left" >/dev/null; sleep 0.4
 grim "$OUT/shot-snap.png"
 chronoctl action "maximize" >/dev/null; sleep 0.4
 grim "$OUT/shot-maximize.png"
+# close a window mid-way through its fade-out, then make sure the compositor is still fine
+WID=$(chronoctl windows | python3 -c 'import json,sys; w=json.load(sys.stdin); print(w[0]["id"] if w else "")')
+[ -n "$WID" ] && chronoctl close "$WID" >/dev/null && sleep 0.05 && grim "$OUT/shell-closing.png"; sleep 0.5
+kill -0 $PID 2>/dev/null || { echo "::error::chrono crashed closing a window"; fail=1; }
 chronoctl lock >/dev/null; sleep 1; grim "$OUT/shell-lock.png"
 kill -0 $PID 2>/dev/null || { echo "::error::chrono crashed during the test"; fail=1; }
 chronoctl quit >/dev/null 2>&1; sleep 1; kill $PID 2>/dev/null
