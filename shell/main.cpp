@@ -52,6 +52,7 @@ int main(int argc, char **argv)
 	chrono.setEngine(&engine);
 	engine.addImageProvider(QStringLiteral("icon"), new IconProvider);
 	engine.addImageProvider(QStringLiteral("wallpaper"), new PreviewProvider(true));
+	engine.addImageProvider(QStringLiteral("glass"), new GlassProvider);
 	auto *ctx = engine.rootContext();
 	ctx->setContextProperty(QStringLiteral("Chrono"), &chrono);
 	ctx->setContextProperty(QStringLiteral("Apps"), &apps);

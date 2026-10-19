@@ -268,7 +268,7 @@ Window {
 						required property var modelData
 						visible: modelData.show
 						height: bar.bh - 2
-						width: modelData.id === "bat" && !t.retro ? implicitWidth : height
+						width: modelData.id === "bat" && !t.retro ? batText.implicitWidth + 18 + 5 + 14 : height
 						padding: modelData.id === "bat" && !t.retro ? 7 : (height - 16) / 2
 						checked: !!panel.shell && panel.shell.quickOpen
 						onClicked: panel.popupAt(sb, panel.shell.quick)
@@ -286,7 +286,7 @@ Window {
 								value: sb.modelData.id === "vol" ? System.volume / 100 : sb.modelData.id === "bat" ? System.battery / 100 : System.wifiStrength / 100
 								flag: sb.modelData.id === "dnd" ? true : sb.modelData.id === "vol" ? System.muted : sb.modelData.id === "bat" ? System.charging : false
 							}
-							Text { visible: sb.modelData.id === "bat" && !t.retro; text: System.battery + "%"; color: sb.fg
+							Text { id: batText; visible: sb.modelData.id === "bat" && !t.retro; text: System.battery + "%"; color: sb.fg
 								font.family: t.fontUi.family; font.pointSize: t.fontUi.size - 1; anchors.verticalCenter: parent.verticalCenter }
 						}
 					}

@@ -110,6 +110,74 @@ static void view_fade_stop(struct chrono_view *v)
 	}
 }
 
+/* ---------------------------------------------------------------- fade-out when a window closes
+ * The client's buffers go away on unmap, so we copy what's on screen into a "ghost" scene tree
+ * (scene buffers keep a reference to the wlr_buffer) and fade that out instead. */
+struct ghost {
+	struct wlr_scene_tree *tree;
+	struct wl_event_source *timer;
+	double t;
+};
+
+static void ghost_copy(struct wlr_scene_buffer *sb, int sx, int sy, void *data)
+{
+	struct wlr_scene_tree *tree = data;
+	if (!sb->buffer)
+		return;
+	struct wlr_scene_buffer *c = wlr_scene_buffer_create(tree, sb->buffer);
+	if (!c)
+		return;
+	wlr_scene_node_set_position(&c->node, sx, sy);
+	if (sb->dst_width > 0 && sb->dst_height > 0)
+		wlr_scene_buffer_set_dest_size(c, sb->dst_width, sb->dst_height);
+	if (!wlr_fbox_empty(&sb->src_box))
+		wlr_scene_buffer_set_source_box(c, &sb->src_box);
+	wlr_scene_buffer_set_transform(c, sb->transform);
+	wlr_scene_buffer_set_opacity(c, sb->opacity);
+}
+
+static void ghost_opacity(struct wlr_scene_buffer *buf, int sx, int sy, void *data)
+{
+	(void)sx;
+	(void)sy;
+	wlr_scene_buffer_set_opacity(buf, (float)*(double *)data);
+}
+
+static int ghost_step(void *data)
+{
+	struct ghost *g = data;
+	g->t += 16.0 / 150.0;
+	if (g->t >= 1) {
+		wl_event_source_remove(g->timer);
+		wlr_scene_node_destroy(&g->tree->node);
+		free(g);
+		return 0;
+	}
+	double a = 1 - g->t * g->t; /* ease-in */
+	wlr_scene_node_for_each_buffer(&g->tree->node, ghost_opacity, &a);
+	wl_event_source_timer_update(g->timer, 16);
+	return 0;
+}
+
+static void view_fade_out(struct chrono_view *v)
+{
+	if (v->server->config.reduce_motion || !v->tree || !v->tree->node.enabled || !v->tree->node.parent)
+		return;
+	struct ghost *g = calloc(1, sizeof *g);
+	if (!g)
+		return;
+	g->tree = wlr_scene_tree_create(v->tree->node.parent);
+	if (!g->tree) {
+		free(g);
+		return;
+	}
+	wlr_scene_node_set_position(&g->tree->node, v->tree->node.x, v->tree->node.y);
+	wlr_scene_node_for_each_buffer(&v->tree->node, ghost_copy, g->tree);
+	wlr_scene_node_place_above(&g->tree->node, &v->tree->node);
+	g->timer = wl_event_loop_add_timer(v->server->loop, ghost_step, g);
+	wl_event_source_timer_update(g->timer, 16);
+}
+
 static void view_update_visibility(struct chrono_view *v)
 {
 	bool was = v->tree->node.enabled;
@@ -609,6 +677,7 @@ void view_unmapped(struct chrono_view *v)
 {
 	struct chrono_server *s = v->server;
 	view_fade_stop(v);
+	view_fade_out(v);
 	view_set_opacity(v, 1);
 	v->mapped = false;
 	view_update_visibility(v);

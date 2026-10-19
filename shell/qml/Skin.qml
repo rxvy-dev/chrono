@@ -1,6 +1,7 @@
 // The look of every surface and button, chosen from the theme: 3D bevels for 90s themes,
 // hard 1-px frames for pixel themes, soft rounded translucency for modern ones.
 import QtQuick
+import QtQuick.Window
 
 Item {
 	id: skin
@@ -24,6 +25,38 @@ Item {
 
 	function mix(a, b, f) { return Qt.rgba(a.r * (1 - f) + b.r * f, a.g * (1 - f) + b.g * f, a.b * (1 - f) + b.b * f, a.a * (1 - f) + b.a * f) }
 
+	// ---------- frosted backdrop for glass popups: the wallpaper, blurred, cut to this rectangle.
+	// (wlroots can't blur what's behind a surface, so we blur the wallpaper we painted ourselves)
+	readonly property var win: skin.Window.window
+	readonly property bool frosted: style === "glass" && kind === "popup" && !!win && win.isPopupLayer === true && Chrono.motion >= 0
+	property int frostGen: 0
+	Image {
+		id: frost
+		anchors.fill: parent
+		visible: skin.frosted && status === Image.Ready
+		z: -1
+		cache: false
+		asynchronous: true
+		function url() {
+			if (!skin.frosted || !skin.win || !skin.win.screen || skin.width < 2) return ""
+			const p = skin.mapToItem(null, 0, 0)
+			const topBar = Chrono.panelPosition === "top" ? (t.panelHeight + (t.panelStyle === "floating" && !Chrono.dockEnabled ? 8 : 0)) : 0
+			return "image://glass/" + encodeURIComponent(Chrono.selectedTheme + "?sw=" + skin.win.screen.width + "&sh=" + skin.win.screen.height
+				+ "&x=" + Math.round(p.x) + "&y=" + Math.round(p.y + topBar) + "&w=" + Math.round(skin.width) + "&h=" + Math.round(skin.height)
+				+ "&r=" + Math.round(skin.radius)) + "#" + skin.frostGen
+		}
+		source: ""
+		Timer { id: refrost; interval: 30; onTriggered: frost.source = frost.url() }
+	}
+	onFrostedChanged: refrost.restart()
+	onWidthChanged: if (frosted) refrost.restart()
+	onHeightChanged: if (frosted) refrost.restart()
+	onVisibleChanged: if (frosted && visible) refrost.restart()
+	Connections { target: Chrono; enabled: skin.frosted; function onThemeChanged() { skin.frostGen++; refrost.restart() } }
+	Connections { target: skin.win; enabled: skin.frosted; ignoreUnknownSignals: true
+		function onVisibleChanged() { if (skin.win.visible) refrost.restart() }
+		function onTargetXChanged() { refrost.restart() } function onTargetYChanged() { refrost.restart() } }
+
 	// ---------- soft (flat / floating / glass)
 	Shadow {
 		anchors.fill: parent
@@ -40,8 +73,9 @@ Item {
 		radius: skin.radius
 		color: {
 			if (skin.kind === "panel") return t.panelBg
-			if (skin.kind === "popup" && skin.style === "glass")   // no blur behind us, so keep text readable
-				return t.panelFg.hslLightness > 0.5 ? Qt.rgba(0.11, 0.11, 0.15, 0.94) : Qt.rgba(0.98, 0.98, 1, 0.95)
+			if (skin.kind === "popup" && skin.style === "glass")   // a tint over the frosted wallpaper (or solid-ish without it)
+				return t.panelFg.hslLightness > 0.5 ? Qt.rgba(0.08, 0.08, 0.12, frost.visible ? 0.55 : 0.94)
+								    : Qt.rgba(1, 1, 1, frost.visible ? 0.6 : 0.95)
 			if (skin.kind === "popup") return Qt.rgba(t.panelBg.r, t.panelBg.g, t.panelBg.b, Math.max(t.panelBg.a, 0.97))
 			if (skin.kind === "field" || skin.kind === "well") return Qt.rgba(t.panelFg.r, t.panelFg.g, t.panelFg.b, 0.08)
 			if (skin.pressed) return Qt.rgba(t.panelFg.r, t.panelFg.g, t.panelFg.b, 0.22)

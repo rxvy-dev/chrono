@@ -13,3 +13,12 @@ public:
 private:
 	bool m_wallpaper;
 };
+
+// image://glass/<theme>?sw=W&sh=H&x=X&y=Y&w=W&h=H&r=R — the wallpaper, blurred, cut to one popup's
+// rectangle (with rounded corners) so glass popups look frosted. The blurred wallpaper is cached.
+class GlassProvider : public QQuickImageProvider
+{
+public:
+	GlassProvider() : QQuickImageProvider(QQuickImageProvider::Image) {}
+	QImage requestImage(const QString &id, QSize *size, const QSize &requested) override;
+};

@@ -15,6 +15,7 @@ Window {
 	default property alias content: holder.data
 	property alias box: holder
 	property int contentWidth: 300
+	readonly property bool isPopupLayer: true   // lets Skin draw a frosted backdrop
 	property int contentHeight: 300
 	signal opened()
 	signal closed()

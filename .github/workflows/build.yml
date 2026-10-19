@@ -18,7 +18,7 @@ jobs:
             xcb-util-wm xorg-xwayland seatd libdisplay-info libliftoff hwdata vulkan-headers \
             glslang mesa libxcb xcb-util-renderutil xcb-util-errors lcms2 \
             qt6-base qt6-declarative qt6-wayland qt6-svg layer-shell-qt \
-            foot grim fastfetch python ttf-dejavu noto-fonts dbus libnotify adwaita-icon-theme procps-ng
+            foot grim fastfetch python ttf-dejavu noto-fonts dbus libnotify adwaita-icon-theme procps-ng htop vim xterm gnome-calculator mousepad ristretto gnome-text-editor
           pacman -S --noconfirm --needed wlroots0.20 || echo "WLROOTS_FROM_SOURCE=1" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
       - name: Build wlroots 0.20 from source (if not packaged)

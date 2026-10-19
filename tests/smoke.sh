@@ -29,6 +29,8 @@ export WAYLAND_DISPLAY=$(basename "$sock")
 sleep 1
 fail=0
 chronoctl ping >"$OUT/ping.json" || { echo "::error::chronoctl ping failed"; fail=1; }
+# a realistic 1080p screen for the screenshots
+chronoctl output HEADLESS-1 mode=1920x1080 >/dev/null; sleep 1
 chronoctl outputs >"$OUT/outputs.json"
 chronoctl themes >"$OUT/themes.json"
 # real clients: foot uses xdg-shell and asks for server-side decorations

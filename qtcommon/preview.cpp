@@ -1,6 +1,12 @@
 #include "preview.h"
 #include "chrono.h"
 
+#include <QDateTime>
+#include <QFileInfo>
+#include <QHash>
+#include <QMutex>
+#include <QPainter>
+#include <QPainterPath>
 #include <QUrl>
 #include <cairo.h>
 
@@ -50,4 +56,63 @@ QImage PreviewProvider::requestImage(const QString &rawId, QSize *size, const QS
 	if (size)
 		*size = img.size();
 	return img;
+}
+
+QImage GlassProvider::requestImage(const QString &rawId, QSize *size, const QSize &)
+{
+	const QString full = QUrl::fromPercentEncoding(rawId.section(QLatin1Char('#'), 0, 0).toUtf8());
+	const QString id = full.section(QLatin1Char('?'), 0, 0);
+	QHash<QString, int> v;
+	for (const QString &kv : full.section(QLatin1Char('?'), 1).split(QLatin1Char('&'), Qt::SkipEmptyParts))
+		v.insert(kv.section(QLatin1Char('='), 0, 0), kv.section(QLatin1Char('='), 1).toInt());
+	const int sw = qBound(64, v.value(QStringLiteral("sw"), 1920), 8192), sh = qBound(64, v.value(QStringLiteral("sh"), 1080), 8192);
+	const int w = qBound(1, v.value(QStringLiteral("w"), 300), sw), h = qBound(1, v.value(QStringLiteral("h"), 300), sh);
+	const int x = v.value(QStringLiteral("x")), y = v.value(QStringLiteral("y")), r = qBound(0, v.value(QStringLiteral("r")), 64);
+
+	// blurred full-screen wallpaper, cached per theme, size and config change
+	static QMutex lock;
+	static QHash<QString, QImage> cache;
+	const QString cfg = Chrono::configPath();
+	const QString key = QStringLiteral("%1|%2x%3|%4").arg(id).arg(sw).arg(sh).arg(QFileInfo(cfg).lastModified().toMSecsSinceEpoch());
+	QImage blurred;
+	{
+		QMutexLocker l(&lock);
+		blurred = cache.value(key);
+	}
+	if (blurred.isNull()) {
+		chrono_theme t;
+		const QByteArray p = id.toUtf8(), c = cfg.toLocal8Bit();
+		if (!chrono_theme_load(&t, p.constData()))
+			chrono_theme_defaults(&t);
+		chrono_theme_apply_overrides(&t, c.constData());
+		// paint small, then scale up smoothly in two steps: a cheap, soft blur
+		const int bw = qMax(16, sw / 10), bh = qMax(16, sh / 10);
+		QImage small(bw, bh, QImage::Format_ARGB32_Premultiplied);
+		small.fill(Qt::black);
+		cairo_surface_t *s = cairo_image_surface_create_for_data(small.bits(), CAIRO_FORMAT_ARGB32, bw, bh, int(small.bytesPerLine()));
+		cairo_t *cr = cairo_create(s);
+		chrono_paint_desktop(cr, &t, bw, bh);
+		cairo_destroy(cr);
+		cairo_surface_flush(s);
+		cairo_surface_destroy(s);
+		QImage tiny = small.scaled(qMax(8, bw / 3), qMax(8, bh / 3), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		blurred = tiny.scaled(bw, bh, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
+				  .scaled(sw, sh, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		QMutexLocker l(&lock);
+		if (cache.size() > 6)
+			cache.clear();
+		cache.insert(key, blurred);
+	}
+	QImage out(w, h, QImage::Format_ARGB32_Premultiplied);
+	out.fill(Qt::transparent);
+	QPainter pt(&out);
+	pt.setRenderHint(QPainter::Antialiasing);
+	QPainterPath path;
+	path.addRoundedRect(QRectF(0, 0, w, h), r, r);
+	pt.setClipPath(path);
+	pt.drawImage(QPoint(-x, -y), blurred);
+	pt.end();
+	if (size)
+		*size = out.size();
+	return out;
 }
