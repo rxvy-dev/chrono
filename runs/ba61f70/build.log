@@ -1,0 +1,79 @@
+ninja: Entering directory `build'
+[1/64] Generating protocols/alpha-modifier-v1-protocol.h
+[2/64] Generating protocols/content-type-v1-protocol.h
+[3/64] Generating protocols/cursor-shape-v1-protocol.h
+[4/64] Generating protocols/ext-foreign-toplevel-list-v1-protocol.h
+[5/64] Generating protocols/ext-data-control-v1-protocol.h
+[6/64] Generating protocols/ext-idle-notify-v1-protocol.h
+[7/64] Generating protocols/ext-image-capture-source-v1-protocol.h
+[8/64] Generating protocols/ext-image-copy-capture-v1-protocol.h
+[9/64] Generating protocols/ext-session-lock-v1-protocol.h
+[10/64] Generating protocols/fractional-scale-v1-protocol.h
+[11/64] Generating protocols/idle-inhibit-unstable-v1-protocol.h
+[12/64] Generating protocols/linux-dmabuf-v1-protocol.h
+[13/64] Generating protocols/pointer-constraints-unstable-v1-protocol.h
+[14/64] Generating protocols/presentation-time-protocol.h
+[15/64] Generating protocols/primary-selection-unstable-v1-protocol.h
+[16/64] Generating protocols/relative-pointer-unstable-v1-protocol.h
+[17/64] Generating protocols/single-pixel-buffer-v1-protocol.h
+[18/64] Generating protocols/tablet-unstable-v2-protocol.h
+[19/64] Generating protocols/tablet-v2-protocol.h
+[20/64] Generating protocols/viewporter-protocol.h
+[21/64] Generating protocols/wlr-output-power-management-unstable-v1-protocol.h
+[22/64] Generating protocols/wlr-layer-shell-unstable-v1-protocol.h
+[23/64] Generating protocols/xdg-activation-v1-protocol.h
+[24/64] Generating protocols/xdg-decoration-unstable-v1-protocol.h
+[25/64] Generating protocols/xdg-output-unstable-v1-protocol.h
+[26/64] Generating protocols/xdg-shell-protocol.h
+[27/64] Building C object CMakeFiles/chronoctl.dir/tools/chronoctl.c.o
+[28/64] Building C object CMakeFiles/chrono-common.dir/common/ini.c.o
+[29/64] Building C object CMakeFiles/chrono-theme-preview.dir/tools/preview.c.o
+[30/64] Building C object CMakeFiles/chrono.dir/compositor/buffer.c.o
+[31/64] Building C object CMakeFiles/chrono-common.dir/common/theme.c.o
+[32/64] Building C object CMakeFiles/chrono.dir/compositor/config.c.o
+[33/64] Building C object CMakeFiles/chrono.dir/compositor/main.c.o
+[34/64] Building C object CMakeFiles/chrono.dir/compositor/decor.c.o
+[35/64] Building C object CMakeFiles/chrono.dir/compositor/layer.c.o
+[36/64] Building C object CMakeFiles/chrono-common.dir/common/paint.c.o
+[37/64] Linking C static library libchrono-common.a
+[38/64] Building C object CMakeFiles/chrono.dir/compositor/output.c.o
+[39/64] Building C object CMakeFiles/chrono.dir/compositor/switcher.c.o
+[40/64] Building C object CMakeFiles/chrono.dir/compositor/lock.c.o
+[41/64] Building C object CMakeFiles/chrono.dir/compositor/view.c.o
+[42/64] Building C object CMakeFiles/chrono.dir/compositor/input.c.o
+/__w/chrono/chrono/compositor/input.c: In function ‘run_action’:
+/__w/chrono/chrono/compositor/input.c:180:54: warning: ‘%s’ directive output may be truncated writing up to 255 bytes into a region of size 118 [-Wformat-truncation=]
+  180 |                 snprintf(cmd, sizeof cmd, "playerctl %s", arg[0] ? arg : "play-pause");
+      |                                                      ^~
+/__w/chrono/chrono/compositor/input.c:180:17: note: ‘snprintf’ output between 11 and 266 bytes into a destination of size 128
+  180 |                 snprintf(cmd, sizeof cmd, "playerctl %s", arg[0] ? arg : "play-pause");
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[43/64] Linking C executable chrono-theme-preview
+[44/64] Building C object CMakeFiles/chrono.dir/compositor/idle.c.o
+[45/64] Building C object CMakeFiles/chrono.dir/compositor/ipc.c.o
+/__w/chrono/chrono/compositor/ipc.c: In function ‘ipc_init’:
+/__w/chrono/chrono/compositor/ipc.c:335:56: warning: ‘%s’ directive output may be truncated writing up to 255 bytes into a region of size 108 [-Wformat-truncation=]
+  335 |         snprintf(addr.sun_path, sizeof addr.sun_path, "%s", s->ipc_path);
+      |                                                        ^~
+/__w/chrono/chrono/compositor/ipc.c:335:9: note: ‘snprintf’ output between 1 and 256 bytes into a destination of size 108
+  335 |         snprintf(addr.sun_path, sizeof addr.sun_path, "%s", s->ipc_path);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[46/64] Linking C executable chronoctl
+[47/64] Automatic MOC for target chrono-qtcommon
+[48/64] Building C object CMakeFiles/chrono.dir/compositor/xwayland.c.o
+[49/64] Linking C executable chrono
+[50/64] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/preview.cpp.o
+[51/64] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/chrono-qtcommon_autogen/mocs_compilation.cpp.o
+[52/64] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/icons.cpp.o
+[53/64] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/chrono.cpp.o
+[54/64] Linking CXX static library qtcommon/libchrono-qtcommon.a
+[55/64] Automatic MOC for target chrono-shell
+[56/64] Automatic RCC for shell.qrc
+[57/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/layer.cpp.o
+[58/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/chrono-shell_autogen/EWIEGA46WW/qrc_shell.cpp.o
+[59/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/chrono-shell_autogen/mocs_compilation.cpp.o
+[60/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/main.cpp.o
+[61/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/notifications.cpp.o
+[62/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/system.cpp.o
+[63/64] Building CXX object shell/CMakeFiles/chrono-shell.dir/apps.cpp.o
+[64/64] Linking CXX executable shell/chrono-shell

@@ -1,0 +1,84 @@
+00:00:00.002 [INFO] [backend/backend.c:342] Loading user-specified backends due to WLR_BACKENDS: headless
+00:00:00.002 [INFO] [backend/headless/backend.c:60] Creating headless backend
+00:00:00.002 [INFO] [util/env.c:25] Loading WLR_RENDERER option: pixman
+00:00:00.002 [INFO] [render/pixman/renderer.c:328] Creating pixman renderer
+00:00:00.002 [DEBUG] [render/allocator/allocator.c:132] Trying to create shm allocator
+00:00:00.002 [DEBUG] [render/allocator/shm.c:119] Created shm allocator
+00:00:00.003 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:00.006 [INFO] [backend/headless/backend.c:17] Starting headless backend
+00:00:00.006 [DEBUG] [types/output/render.c:123] Attaching empty buffer to output for modeset
+00:00:00.006 [DEBUG] [types/output/swapchain.c:27] Choosing primary buffer format XR24 (0x34325258) for output 'HEADLESS-1'
+00:00:00.006 [DEBUG] [types/output/swapchain.c:96] Testing swapchain for output 'HEADLESS-1'
+00:00:00.006 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.006 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 1280x720
+00:00:00.012 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.012 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 10x16
+00:00:00.014 [INFO] [/__w/chrono/chrono/compositor/main.c:367] Chrono 0.1.0 running on WAYLAND_DISPLAY=wayland-0 (theme: Midnight)
+00:00:00.025 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out enabled
+00:00:01.253 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb3e1230080 (res 0x7be3e11e4900)
+00:00:01.253 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7c53e11e5d00 (res 0x7be3e11e4c00)
+00:00:01.253 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7c33e11f0940 (res 0x7be3e11e5140)
+00:00:01.253 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb3e1230580 (res 0x7be3e11e5200)
+00:00:01.286 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out disabled
+00:00:02.754 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb3e1236e80 (res 0x7be3e11f1380)
+00:00:02.754 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7c53e11eaa00 (res 0x7be3e11f1680)
+00:00:02.754 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7c33e1258f40 (res 0x7be3e11f1bc0)
+00:00:02.754 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7cb3e1237380 (res 0x7be3e11f1c80)
+00:00:04.750 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:04.750 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:04.750 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 10x16
+00:00:05.368 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:05.394 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:05.403 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:06.012 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.039 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.047 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:06.663 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:06.690 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:06.700 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:07.400 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:07.499 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:07.505 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:08.232 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:08.288 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:08.296 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:08.908 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:08.935 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:08.944 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:09.638 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:09.734 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:09.741 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:10.350 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:10.376 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:10.382 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:11.004 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.032 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.038 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:11.648 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.675 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:11.682 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:12.292 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:12.319 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:12.327 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:13.023 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:13.101 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:13.108 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:13.734 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:13.758 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:13.766 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:14.380 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:14.408 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:14.418 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:15.031 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:15.062 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:15.068 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:15.680 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:15.706 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:15.713 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:16.322 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.348 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:16.759 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:16.786 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+00:00:17.196 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:17.221 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
+chrono: types/wlr_foreign_toplevel_management_v1.c:456: wlr_foreign_toplevel_handle_v1_destroy: Assertion `wl_list_empty(&toplevel->events.request_maximize.listener_list)' failed.
