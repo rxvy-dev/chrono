@@ -1,0 +1,20 @@
+<RCC>
+  <qresource prefix="/">
+    <file>qml/main.qml</file>
+    <file>qml/Panel.qml</file>
+    <file>qml/Dock.qml</file>
+    <file>qml/Launcher.qml</file>
+    <file>qml/QuickSettings.qml</file>
+    <file>qml/Calendar.qml</file>
+    <file>qml/NotificationCard.qml</file>
+    <file>qml/NotificationPopups.qml</file>
+    <file>qml/Osd.qml</file>
+    <file>qml/Menu.qml</file>
+    <file>qml/PowerMenu.qml</file>
+    <file>qml/PopupLayer.qml</file>
+    <file>qml/PanelButton.qml</file>
+    <file>qml/ThemedSlider.qml</file>
+    <file>qml/Skin.qml</file>
+    <file>qml/Glyph.qml</file>
+  </qresource>
+</RCC>

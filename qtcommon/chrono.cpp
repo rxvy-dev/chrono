@@ -326,7 +326,9 @@ void Chrono::handleEvent(const QVariantMap &ev)
 		});
 	} else if (e == QLatin1String("workspace")) {
 		const QVariantMap m = data.toMap();
-		if (m.contains(QStringLiteral("current")))
+		if (m.contains(QStringLiteral("workspace")))
+			m_workspace = m.value(QStringLiteral("workspace")).toInt();
+		else if (m.contains(QStringLiteral("current")))
 			m_workspace = m.value(QStringLiteral("current")).toInt();
 		if (m.contains(QStringLiteral("count")))
 			m_workspaceCount = m.value(QStringLiteral("count")).toInt();
