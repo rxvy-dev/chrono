@@ -177,6 +177,14 @@ Chrono::Chrono(QObject *parent) : QObject(parent)
 	connectNow();
 }
 
+Chrono::~Chrono()
+{
+	// the sockets' disconnect handlers touch other members, which may already be gone
+	disconnect(&m_events, nullptr, this, nullptr);
+	disconnect(&m_requests, nullptr, this, nullptr);
+	m_retry.stop();
+}
+
 void Chrono::connectNow()
 {
 	if (m_events.state() != QLocalSocket::UnconnectedState)

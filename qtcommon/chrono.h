@@ -26,6 +26,7 @@ class Chrono : public QObject
 
 public:
 	explicit Chrono(QObject *parent = nullptr);
+	~Chrono() override;
 	void setEngine(QJSEngine *e) { m_engine = e; }
 
 	static QString socketPath();

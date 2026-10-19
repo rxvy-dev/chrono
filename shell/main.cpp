@@ -6,6 +6,7 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QTimer>
+#include <cstdio>
 
 #include "apps.h"
 #include "chrono.h"
@@ -19,6 +20,9 @@ int main(int argc, char **argv)
 {
 	// all of our windows are layer surfaces (needed by layer-shell-qt 5.x; harmless on 6.x)
 	qputenv("QT_WAYLAND_SHELL_INTEGRATION", "layer-shell");
+	// log to stderr (the session log), not the journal
+	if (qEnvironmentVariableIsEmpty("QT_FORCE_STDERR_LOGGING"))
+		qputenv("QT_FORCE_STDERR_LOGGING", "1");
 	if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM"))
 		qputenv("QT_QPA_PLATFORM", "wayland");
 	QQuickWindow::setDefaultAlphaBuffer(true);
@@ -55,7 +59,9 @@ int main(int argc, char **argv)
 	ctx->setContextProperty(QStringLiteral("Notifications"), &notifications);
 	ctx->setContextProperty(QStringLiteral("Layer"), &layer);
 	engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
-	if (engine.rootObjects().isEmpty())
+	if (engine.rootObjects().isEmpty()) {
+		fprintf(stderr, "chrono-shell: the QML failed to load (see the errors above)\n");
 		return 1;
+	}
 	return app.exec();
 }

@@ -12,7 +12,7 @@ export HOME=$(mktemp -d)
 chmod 700 "$XDG_RUNTIME_DIR"
 printf '[general]\ntheme = midnight\n[power]\nlock_after = 0\nscreen_off_after = 0\n' > "$CHRONO_CONFIG"
 PATH="$PWD/$BUILD:$PWD/$BUILD/shell:$PWD/$BUILD/settings:$PWD/data:$PATH"
-export QT_QPA_PLATFORM=wayland QT_QUICK_BACKEND=software XDG_CURRENT_DESKTOP=Chrono
+export QT_QPA_PLATFORM=wayland QT_QUICK_BACKEND=software XDG_CURRENT_DESKTOP=Chrono QT_FORCE_STDERR_LOGGING=1
 SHELLFLAG=""; [ -x "$BUILD/shell/chrono-shell" ] || SHELLFLAG=--no-shell
 "$BUILD/chrono" $SHELLFLAG -d >"$OUT/chrono.log" 2>&1 &
 PID=$!

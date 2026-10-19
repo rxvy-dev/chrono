@@ -562,6 +562,12 @@ void view_unmapped(struct chrono_view *v)
 			wlr_scene_node_set_enabled(&s->snap_preview->node, false);
 	}
 	if (v->ftl) {
+		/* wlroots 0.20 asserts that nobody still listens when a handle is destroyed */
+		wl_list_remove(&v->ftl_request_activate.link);
+		wl_list_remove(&v->ftl_request_close.link);
+		wl_list_remove(&v->ftl_request_minimize.link);
+		wl_list_remove(&v->ftl_request_maximize.link);
+		wl_list_remove(&v->ftl_request_fullscreen.link);
 		wlr_foreign_toplevel_handle_v1_destroy(v->ftl);
 		v->ftl = NULL;
 	}
