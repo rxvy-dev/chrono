@@ -988,15 +988,34 @@ static void new_xdg_toplevel(struct wl_listener *l, void *data)
 /* ---------------------------------------------------------------------------- popups */
 struct popup {
 	struct wlr_xdg_popup *xdg;
+	struct chrono_server *server;
+	struct wlr_scene_tree *parent_tree;
 	struct wl_listener commit, destroy;
 };
+
+/* keep a popup inside the output its parent is on. wlroots only allows this once the popup has
+ * had its initial commit (calling it earlier asserts — that was the Firefox crash). */
+static void popup_unconstrain(struct popup *p)
+{
+	int lx = 0, ly = 0;
+	wlr_scene_node_coords(&p->parent_tree->node, &lx, &ly);
+	struct chrono_output *o = output_at(p->server, lx, ly);
+	if (!o)
+		return;
+	struct wlr_box box = o->full;
+	box.x -= lx;
+	box.y -= ly;
+	wlr_xdg_popup_unconstrain_from_box(p->xdg, &box);
+}
 
 static void popup_commit(struct wl_listener *l, void *data)
 {
 	struct popup *p = wl_container_of(l, p, commit);
 	(void)data;
-	if (p->xdg->base->initial_commit)
+	if (p->xdg->base->initial_commit) {
+		popup_unconstrain(p);
 		wlr_xdg_surface_schedule_configure(p->xdg->base);
+	}
 }
 
 static void popup_destroy(struct wl_listener *l, void *data)
@@ -1028,19 +1047,12 @@ static void new_xdg_popup(struct wl_listener *l, void *data)
 	struct wlr_scene_tree *tree = wlr_scene_xdg_surface_create(parent_tree, xp->base);
 	xp->base->data = tree;
 
-	/* keep it inside the output its parent is on */
-	int lx = 0, ly = 0;
-	wlr_scene_node_coords(&parent_tree->node, &lx, &ly);
-	struct chrono_output *o = output_at(s, lx, ly);
-	if (o) {
-		struct wlr_box box = o->full;
-		box.x -= lx;
-		box.y -= ly;
-		wlr_xdg_popup_unconstrain_from_box(xp, &box);
-	}
-
 	struct popup *p = calloc(1, sizeof *p);
+	if (!p)
+		return;
 	p->xdg = xp;
+	p->server = s;
+	p->parent_tree = parent_tree;
 	p->commit.notify = popup_commit;
 	wl_signal_add(&xp->base->surface->events.commit, &p->commit);
 	p->destroy.notify = popup_destroy;
