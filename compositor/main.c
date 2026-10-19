@@ -370,11 +370,24 @@ int main(int argc, char **argv)
 	ipc_finish(s);
 	wl_display_destroy_clients(s->display);
 #ifdef CHRONO_HAVE_XWAYLAND
-	if (s->xwayland)
+	if (s->xwayland) {
 		wl_list_remove(&s->xwayland_ready.link);
 		wl_list_remove(&s->new_xwayland_surface.link);
 		wlr_xwayland_destroy(s->xwayland);
+	}
 #endif
+	/* wlroots 0.20 asserts that nothing still listens to an object being destroyed */
+	struct wl_listener *global_listeners[] = {
+		&s->xdg_activation_request, &s->output_layout_change, &s->new_output, &s->output_manager_apply,
+		&s->output_manager_test, &s->set_output_power_mode, &s->set_gamma, &s->cursor_motion,
+		&s->cursor_motion_absolute, &s->cursor_button, &s->cursor_axis, &s->cursor_frame, &s->new_input,
+		&s->request_cursor, &s->request_set_selection, &s->request_set_primary_selection, &s->request_start_drag,
+		&s->start_drag, &s->cursor_shape_request, &s->new_constraint, &s->new_lock, &s->new_layer_surface,
+		&s->new_xdg_toplevel, &s->new_xdg_popup, &s->new_decoration, &s->kde_new_decoration, &s->new_inhibitor,
+	};
+	for (size_t i = 0; i < sizeof global_listeners / sizeof *global_listeners; i++)
+		if (global_listeners[i]->link.next)
+			wl_list_remove(&global_listeners[i]->link);
 	wlr_scene_node_destroy(&s->scene->tree.node);
 	wlr_xcursor_manager_destroy(s->xcursor);
 	wlr_cursor_destroy(s->cursor);

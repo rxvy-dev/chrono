@@ -63,7 +63,7 @@ Item {
 			width: Math.min(implicitWidth, Math.max(0, b.maxWidth - b.padding * 2 - (b.icon !== "" || b.glyph !== "" ? b.iconSize + 6 : 0)))
 			anchors.verticalCenter: parent.verticalCenter
 		}
-		Item { id: extra; width: childrenRect.width; height: b.height }
+		Row { id: extra; spacing: 6; height: b.height }
 	}
 
 	MouseArea {

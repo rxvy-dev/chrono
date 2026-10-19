@@ -21,7 +21,7 @@ Window {
 	function configure() {
 		Layer.setup(panel, {
 			layer: "top", scope: "chrono-panel", keyboard: "none",
-			anchors: (pos === "top" ? Layer.Top : Layer.Bottom) | Layer.Left | Layer.Right,
+			anchors: (pos === "top" ? 1 : 2) | 4 | 8,
 			exclusive: barHeight + margin,
 		})
 	}
@@ -99,7 +99,7 @@ Window {
 					glyph: t.launcherLabel === "" ? "start" : ""
 					bold: t.retro
 					padding: t.launcherLabel === "" ? 7 : 8
-					checked: panel.shell && panel.shell.launcherOpen
+					checked: !!panel.shell && panel.shell.launcherOpen
 					onClicked: panel.shell.toggleLauncher(panel.screen, startWrap.mapToItem(null, 0, 0).x + 160)
 				}
 				// 2000s-style green pill start button
@@ -226,7 +226,7 @@ Window {
 					id: statusBtn
 					height: bar.bh - 2
 					padding: 5
-					checked: panel.shell && panel.shell.quickOpen
+					checked: !!panel.shell && panel.shell.quickOpen
 					onClicked: panel.popupAt(statusBtn, panel.shell.quick)
 					onWheel: (w) => { System.setVolume(System.volume + (w.angleDelta.y > 0 ? 5 : -5)); panel.shell.showOsd("volume") }
 					Row {
@@ -246,7 +246,7 @@ Window {
 					height: bar.bh - 2
 					padding: 6
 					text: clock.text
-					checked: panel.shell && panel.shell.calendarOpen
+					checked: !!panel.shell && panel.shell.calendarOpen
 					attention: Notifications.history.length > 0 && !checked && !t.retro
 					onClicked: panel.popupAt(clockBtn, panel.shell.calendar)
 				}

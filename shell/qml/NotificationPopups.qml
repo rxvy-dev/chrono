@@ -11,7 +11,7 @@ Window {
 	readonly property bool want: Notifications.popups.length > 0
 	onWantChanged: {
 		if (want && !visible) {
-			Layer.setup(np, { layer: "overlay", anchors: Layer.Top | Layer.Right, exclusive: 0, keyboard: "none",
+			Layer.setup(np, { layer: "overlay", anchors: 1 | 8, exclusive: 0, keyboard: "none",
 					 scope: "chrono-notifications", margins: [8, 8, 0, 0] })
 			visible = true
 		} else if (!want) {

@@ -17,7 +17,7 @@ Window {
 
 	Component.onCompleted: {
 		Layer.setup(dock, { layer: "top", scope: "chrono-dock", keyboard: "none",
-				   anchors: Layer.Bottom | Layer.Left | Layer.Right, exclusive: height - 4 })
+				   anchors: 2 | 4 | 8, exclusive: height - 4 })
 		visible = true
 	}
 

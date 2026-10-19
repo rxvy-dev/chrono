@@ -108,6 +108,7 @@ PopupLayer {
 				boundsBehavior: Flickable.StopAtBounds
 				highlightMoveDuration: 0
 				delegate: PanelButton {
+					id: del
 					required property var modelData
 					required property int index
 					width: list.width
@@ -117,13 +118,13 @@ PopupLayer {
 					text: modelData.name
 					checked: index === launcher.current
 					onClicked: launcher.launch(modelData)
-					Glyph { visible: Apps.pinned.indexOf(modelData.id) >= 0; name: "pin"; width: 12; height: 12; color: parent.fg; opacity: 0.6
+					Glyph { visible: Apps.pinned.indexOf(modelData.id) >= 0; name: "pin"; width: 12; height: 12; color: del.fg; opacity: 0.6
 						anchors.verticalCenter: parent.verticalCenter }
 					onRightClicked: (m) => { const g = mapToItem(null, m.x, m.y); launcher.shell.openAppMenu(launcher.screen, g.x, g.y, modelData) }
 					Text {
 						anchors.verticalCenter: parent.verticalCenter
 						text: modelData.genericName || modelData.comment || ""
-						color: parent.fg; opacity: 0.55
+						color: del.fg; opacity: 0.55
 						elide: Text.ElideRight
 						width: Math.max(0, list.width - 260)
 						font.family: t.fontUi.family; font.pointSize: t.fontUi.size - 1
