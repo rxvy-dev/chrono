@@ -180,7 +180,7 @@ PopupLayer {
 						checked: launcher.category === modelData.id
 						fgOverride: launcher.xp ? (checked ? "white" : t.windowFg) : "transparent"
 						onClicked: launcher.category = modelData.id
-						Component.onCompleted: if (launcher.xp) skin.visible = false
+						Binding { target: catBtn.skin; property: "visible"; value: !launcher.xp }
 						Rectangle { parent: catBtn; z: -1; visible: launcher.xp && (catBtn.checked || catBtn.hovered); anchors.fill: parent; radius: 3
 							color: catBtn.checked ? t.selection : Qt.rgba(t.selection.r, t.selection.g, t.selection.b, 0.15) }
 					}
