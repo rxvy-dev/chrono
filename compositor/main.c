@@ -1,6 +1,7 @@
 /* Chrono — a Wayland desktop whose themes span every era of computing.
  * Compositor entry point: sets everything up, starts the shell and autostart programs, runs. */
 #define _GNU_SOURCE
+#include <execinfo.h>
 #include <getopt.h>
 #include <signal.h>
 #include <stdio.h>
@@ -269,8 +270,26 @@ static void usage(void)
 	       CHRONO_VERSION);
 }
 
+/* If we ever crash, put a backtrace in the session log (~/.local/state/chrono/chrono.log) so it
+ * can be reported; then die the normal way so a core dump is still written. */
+static void crash_handler(int sig)
+{
+	static const char msg[] = "\nchrono: crashed — backtrace follows (please report it with this log)\n";
+	ssize_t r = write(STDERR_FILENO, msg, sizeof msg - 1);
+	(void)r;
+	void *frames[64];
+	int n = backtrace(frames, 64);
+	backtrace_symbols_fd(frames, n, STDERR_FILENO);
+	signal(sig, SIG_DFL);
+	raise(sig);
+}
+
 int main(int argc, char **argv)
 {
+	signal(SIGSEGV, crash_handler);
+	signal(SIGABRT, crash_handler);
+	signal(SIGBUS, crash_handler);
+	signal(SIGFPE, crash_handler);
 	const char *startup = NULL;
 	bool no_shell = false, debug = false;
 	static const struct option opts[] = {

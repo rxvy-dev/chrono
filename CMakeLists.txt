@@ -115,6 +115,7 @@ if(CHRONO_COMPOSITOR)
     CHRONO_DATADIR="${CHRONO_DATADIR}"
     CHRONO_LIBEXECDIR="${CMAKE_INSTALL_FULL_LIBEXECDIR}")
   target_link_libraries(chrono PRIVATE chrono-common PkgConfig::WLROOTS PkgConfig::WLDEPS ${PAM_LIB} m)
+  target_link_options(chrono PRIVATE -rdynamic)   # function names in crash backtraces
 
   if(CHRONO_XWAYLAND)
     pkg_check_modules(XCB IMPORTED_TARGET xcb xcb-icccm)
