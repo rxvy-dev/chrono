@@ -52,9 +52,11 @@ grim "$OUT/shell-notification.png"
 NID=""
 for t in $(cd themes && ls *.theme | sed 's/\.theme$//'); do
     chronoctl theme $t >/dev/null; sleep 1.2
-    if command -v notify-send >/dev/null; then
-        NID=$(notify-send -p ${NID:+-r $NID} -t 30000 -a "Mail" -A open=Open -A later=Later "Lunch on Friday?" "Sam: the new place by the river, 12:30 works for everyone?" 2>/dev/null || true)
-    fi
+    # gdbus instead of notify-send: notify-send waits for an answer when a notification has actions
+    NID=$(timeout 3 gdbus call --session --dest org.freedesktop.Notifications --object-path /org/freedesktop/Notifications \
+        --method org.freedesktop.Notifications.Notify "Mail" "${NID:-0}" "mail-unread" "Lunch on Friday?" \
+        "Sam: the new place by the river, 12:30 works for everyone?" '["open", "Open", "later", "Later"]' '{}' 30000 2>/dev/null \
+        | sed -n 's/^(uint32 \([0-9]*\),)$/\1/p')
     sleep 0.6
     chronoctl action launcher >/dev/null; sleep 1.0
     grim "$OUT/theme-$t.png"
