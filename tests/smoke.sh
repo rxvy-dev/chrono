@@ -98,6 +98,14 @@ if command -v chrono-settings >/dev/null; then
     grep -h "qrc:" "$OUT"/settings-*.log | sort -u | head -20 | sed 's/^/::warning::/'
 fi
 chronoctl action "volume up" >/dev/null; sleep 0.5; grim "$OUT/shell-osd.png"
+# right-clicks on the panel (bottom bar, 1080p): a taskbar button, then empty space
+chronoctl pointer 5 5 left >/dev/null; sleep 0.4   # closes the power menu left open above
+H=$(chronoctl outputs | python3 -c 'import json,sys; o=json.load(sys.stdin)[0]; print(o["height"])')
+chronoctl pointer 260 $((H - 22)) right >/dev/null; sleep 0.8; grim "$OUT/shell-rightclick-task.png"
+chronoctl pointer 5 5 left >/dev/null; sleep 0.4
+chronoctl pointer 1200 $((H - 22)) right >/dev/null; sleep 0.8; grim "$OUT/shell-rightclick-panel.png"
+chronoctl pointer 5 5 left >/dev/null; sleep 0.4
+
 pgrep -x chrono-shell >/dev/null || { echo "::error::chrono-shell is not running"; fail=1; }
 grep -q "Assertion" "$OUT/chrono.log" && { echo "::error::an assertion failed"; fail=1; }
 grep -E "qrc:/.*(Error|error|TypeError|ReferenceError)" "$OUT/chrono.log" | sort -u | head -20 | sed "s/^/::warning::/"

@@ -30,6 +30,8 @@ int main(int argc, char **argv)
 	app.setApplicationName(QStringLiteral("chrono-shell"));
 	app.setOrganizationName(QStringLiteral("chrono"));
 	app.setQuitOnLastWindowClosed(false);
+	// (apps we launch get a clean environment — see Chrono::launch — so they don't inherit the
+	//  layer-shell setting above and open without a title bar)
 
 	Chrono chrono;
 	Apps apps;

@@ -976,3 +976,26 @@ void input_init(struct chrono_server *s)
 	s->snap_preview = wlr_scene_rect_create(s->layers[L_UI], 10, 10, (float[4]){0.2f, 0.4f, 0.8f, 0.3f});
 	wlr_scene_node_set_enabled(&s->snap_preview->node, false);
 }
+
+/* For automated tests (chronoctl pointer X Y [left|right|middle]): move the pointer and click,
+ * exactly as if a mouse had done it. */
+void input_debug_pointer(struct chrono_server *s, double x, double y, const char *button)
+{
+	struct timespec now;
+	clock_gettime(CLOCK_MONOTONIC, &now);
+	uint32_t ms = (uint32_t)(now.tv_sec * 1000 + now.tv_nsec / 1000000);
+	wlr_cursor_warp_closest(s->cursor, NULL, x, y);
+	cursor_update_focus(s, ms);
+	wlr_seat_pointer_notify_frame(s->seat);
+	uint32_t code = !strcmp(button, "left") ? BTN_LEFT : !strcmp(button, "right") ? BTN_RIGHT
+		      : !strcmp(button, "middle") ? BTN_MIDDLE : 0;
+	if (!code)
+		return;
+	struct wlr_pointer_button_event e = {.time_msec = ms, .button = code, .state = WL_POINTER_BUTTON_STATE_PRESSED};
+	s->cursor_button.notify(&s->cursor_button, &e);
+	wlr_seat_pointer_notify_frame(s->seat);
+	e.state = WL_POINTER_BUTTON_STATE_RELEASED;
+	e.time_msec = ms + 30;
+	s->cursor_button.notify(&s->cursor_button, &e);
+	wlr_seat_pointer_notify_frame(s->seat);
+}

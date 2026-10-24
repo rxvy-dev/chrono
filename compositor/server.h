@@ -346,6 +346,7 @@ void ipc_init(struct chrono_server *s);
 void ipc_finish(struct chrono_server *s);
 void ipc_event(struct chrono_server *s, const char *event, const char *json_payload);
 void themewatch_init(struct chrono_server *s);
+void input_debug_pointer(struct chrono_server *s, double x, double y, const char *button);
 void themewatch_finish(void);
 void server_refresh_theme(struct chrono_server *s);  /* re-read the current theme from disk */
 

@@ -62,6 +62,8 @@ public:
 	Q_INVOKABLE void windowCommand(const QString &verb, int id) { command(verb + QLatin1Char(' ') + QString::number(id)); }
 	Q_INVOKABLE void refreshThemes();
 	Q_INVOKABLE void spawn(const QString &cmd);
+	// run a shell command detached, without the shell-only Qt variables (used for every app we start)
+	static void launch(const QString &cmd);
 
 	// Config file helpers (used by settings; the compositor re-reads the file after `set`).
 	Q_INVOKABLE QVariantMap readConfig() const;          // "section.key" -> value

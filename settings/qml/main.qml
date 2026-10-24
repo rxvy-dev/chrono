@@ -47,6 +47,8 @@ ApplicationWindow {
 	]
 	property string current: pages.some(p => p.id === startPage) ? startPage : "themes"   // "colors" opens Themes with the colour editor
 
+	Shortcut { sequences: [StandardKey.Quit, "Ctrl+W", "Escape"]; onActivated: win.close() }
+
 	RowLayout {
 		anchors.fill: parent
 		spacing: 0

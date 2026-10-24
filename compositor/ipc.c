@@ -211,6 +211,15 @@ static void handle(struct ipc_client *c, char *line)
 		jbuf_string(&b, &n, s->config.terminal);
 		jbuf_append(&b, &n, ",\"workspaces\":%d}", s->config.workspaces);
 		reply(c, b, n);
+	} else if (!strcmp(cmd, "pointer")) {
+		double x = 0, y = 0;
+		char btn[16] = "";
+		if (sscanf(rest, "%lf %lf %15s", &x, &y, btn) < 2) {
+			reply_err(c, "usage: pointer X Y [left|right|middle]");
+			return;
+		}
+		input_debug_pointer(s, x, y, btn);
+		reply_ok(c);
 	} else if (!strcmp(cmd, "inhibit-binds")) {
 		/* "inhibit-binds on|off": while on (and while this client stays connected) shortcuts reach apps */
 		c->inhibits_binds = strcmp(rest, "off") != 0;

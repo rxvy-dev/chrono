@@ -1,4 +1,5 @@
 #include "apps.h"
+#include "chrono.h"
 
 #include <QDir>
 #include <QDirIterator>
@@ -322,7 +323,7 @@ static QString terminalCommand()
 
 void Apps::runCommand(const QString &cmd)
 {
-	QProcess::startDetached(QStringLiteral("/bin/sh"), {QStringLiteral("-c"), QStringLiteral("exec ") + cmd});
+	Chrono::launch(QStringLiteral("exec ") + cmd);
 }
 
 void Apps::launch(const QString &id, const QString &action)

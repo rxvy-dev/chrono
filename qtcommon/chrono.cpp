@@ -410,9 +410,21 @@ void Chrono::handleEvent(const QVariantMap &ev)
 	}
 }
 
+void Chrono::launch(const QString &cmd)
+{
+	QProcess p;
+	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+	for (const char *k : {"QT_WAYLAND_SHELL_INTEGRATION", "QT_FORCE_STDERR_LOGGING", "QT_QUICK_BACKEND"})
+		env.remove(QLatin1String(k));
+	p.setProcessEnvironment(env);
+	p.setProgram(QStringLiteral("/bin/sh"));
+	p.setArguments({QStringLiteral("-c"), cmd});
+	p.startDetached();
+}
+
 void Chrono::spawn(const QString &cmd)
 {
-	QProcess::startDetached(QStringLiteral("/bin/sh"), {QStringLiteral("-c"), cmd});
+	launch(cmd);
 }
 
 QVariantMap Chrono::readConfig() const
