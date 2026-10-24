@@ -138,6 +138,14 @@ Super+F1 = none        ; turn a built-in shortcut off
 | Mono | modern | black and white only | |
 | Terminal | modern | flat, monospace, green on black, scanlines | |
 | High Contrast | modern | black/white/yellow, thick focus borders | |
+| Kanagawa | modern | ink and indigo, wave wallpaper | |
+| One Dark | modern | slate grey and calm blue, top bar | |
+| Monokai | modern | hot pink and lime on charcoal, square | |
+| Ayu Mirage | modern | soft navy dusk, golden accent | |
+| Frappé | modern | Catppuccin-style mid tone, mauve | |
+| Oxocarbon | modern | graphite, square, one pink spark | |
+| Sakura | modern | cherry-blossom pink, light | |
+| Vaporwave | modern | pastel pink/cyan, sunset grid | |
 | Classic Bevel | retro | mid-90s grey 3D bevels, solid navy titles | |
 | Ninety-Eight | retro | late-90s grey bevels, navy-to-sky title gradient | |
 | Platinum | retro | grey ridged title bars | |
@@ -149,6 +157,8 @@ Super+F1 = none        ; turn a built-in shortcut off
 | Meadow Olive | retro | Meadow in olive green | |
 | Meadow Silver | retro | Meadow in silver | |
 | Pinstripe | retro | pinstripes and gel buttons | |
+| Amber CRT | retro | amber phosphor terminal, scanlines | |
+| Bulletin Board | retro | dial-up ANSI colours on black | |
 
 Per-theme screenshots (app menu open, two windows, a notification) are in
 [`docs/screenshots/`](docs/screenshots/).
