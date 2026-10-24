@@ -21,7 +21,7 @@ latest() {   # latest() URL PATTERN -> newest tag matching PATTERN (e.g. 0.20 ->
 	git ls-remote --tags --refs "$1" | sed 's#.*refs/tags/##' | grep -E "^$2(\.[0-9]+)*$" | sort -V | tail -1
 }
 required() { # required() DEP -> the minimum version wlroots' meson.build asks for
-	grep -oE "dependency\(\s*'$1'[^)]*" "$WORK/wlroots/meson.build" | grep -oE ">= *[0-9.]+" | grep -oE "[0-9.]+" | sort -V | tail -1
+	tr '\n' ' ' < "$WORK/wlroots/meson.build" | grep -oE "dependency\([[:space:]]*'$1'[^)]*" | grep -oE ">= *[0-9.]+" | grep -oE "[0-9.]+" | sort -V | tail -1
 }
 meson_install() { # meson_install DIR [meson options...]
 	d=$1; shift

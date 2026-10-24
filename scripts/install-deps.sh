@@ -62,7 +62,7 @@ fedora)
 		xorg-x11-server-Xwayland 'pkgconfig(libseat)' 'pkgconfig(libdisplay-info)' 'pkgconfig(libliftoff)' \
 		hwdata 'pkgconfig(gbm)' 'pkgconfig(egl)' 'pkgconfig(glesv2)' 'pkgconfig(vulkan)' glslang 'pkgconfig(lcms2)' \
 		'pkgconfig(libudev)' 'pkgconfig(xwayland)' 'pkgconfig(libffi)' 'pkgconfig(expat)' \
-		'cmake(Qt6Quick)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
+		'cmake(Qt6Quick)' 'cmake(Qt6QuickControls2)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
 		qt6-qtdeclarative qt6-qtwayland qt6-qtsvg \
 		dbus-daemon dbus-tools grim slurp wl-clipboard polkit
 	try dnf install -y 'pkgconfig(wlroots-0.20)'
@@ -102,7 +102,7 @@ void)
 		qt6-base-devel qt6-declarative-devel qt6-wayland-devel qt6-svg layer-shell-qt-devel \
 		dbus elogind grim slurp wl-clipboard polkit
 	try xbps-install -Sy wlroots0.20-devel
-	for p in foot xdg-desktop-portal-wlr xdg-desktop-portal-gtk brightnessctl playerctl NetworkManager; do
+	for p in hwids hwdata foot xdg-desktop-portal-wlr xdg-desktop-portal-gtk brightnessctl playerctl NetworkManager; do
 		try xbps-install -Sy $p
 	done
 	;;
@@ -115,7 +115,7 @@ suse)
 		xwayland 'pkgconfig(libseat)' 'pkgconfig(libdisplay-info)' 'pkgconfig(libliftoff)' \
 		hwdata 'pkgconfig(gbm)' 'pkgconfig(egl)' 'pkgconfig(glesv2)' 'pkgconfig(vulkan)' glslang-devel 'pkgconfig(lcms2)' \
 		'pkgconfig(libudev)' \
-		'cmake(Qt6Quick)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
+		'cmake(Qt6Quick)' 'cmake(Qt6QuickControls2)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
 		qt6-declarative-imports qt6-wayland 'pkgconfig(libffi)' 'pkgconfig(expat)' \
 		dbus-1 grim slurp wl-clipboard polkit
 	try zypper --non-interactive install 'pkgconfig(wlroots-0.20)'
