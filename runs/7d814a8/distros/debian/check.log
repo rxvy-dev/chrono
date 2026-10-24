@@ -1,0 +1,68 @@
+Unable to find image 'debian:trixie' locally
+trixie: Pulling from library/debian
+8d0037029946: Pulling fs layer
+8d0037029946: Download complete
+5ec37b31f678: Download complete
+8d0037029946: Pull complete
+Digest: sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+Status: Downloaded newer image for debian:trixie
+[2/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o -c ../subprojects/libdrm/intel/intel_bufmgr.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr.c:34:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+cc1: all warnings being treated as errors
+[3/603] Generating subprojects/libxkbcommon/src/xkbcomp/auto-generate-parser with a custom command
+[4/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o -c ../subprojects/libdrm/intel/intel_bufmgr_fake.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr_fake.c:47:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/intel/intel_bufmgr_fake.c: In function 'alloc_block':
+../subprojects/libdrm/intel/intel_bufmgr_fake.c:424:61: error: 'calloc' sizes specified with 'sizeof' in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
+  424 |         struct block *block = (struct block *)calloc(sizeof *block, 1);
+      |                                                             ^
+../subprojects/libdrm/intel/intel_bufmgr_fake.c:424:61: note: earlier argument should specify number of elements, later size of each element
+cc1: all warnings being treated as errors
+[5/603] Compiling C object subprojects/libdrm/libdrm.so.2.134.0.p/xf86drm.c.o
+[6/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o -c ../subprojects/libdrm/intel/intel_bufmgr_gem.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr_gem.c:62:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+cc1: all warnings being treated as errors
+[7/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_decode.c.o
+ninja: build stopped: subcommand failed.

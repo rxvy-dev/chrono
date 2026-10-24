@@ -1,0 +1,150 @@
+Installing include/wayland-protocols/xwayland-shell-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/fullscreen-shell-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/idle-inhibit-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/input-method-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/input-timestamps-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/keyboard-shortcuts-inhibit-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/linux-dmabuf-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/linux-explicit-synchronization-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/pointer-constraints-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/pointer-gestures-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/primary-selection-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/relative-pointer-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/tablet-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/tablet-unstable-v2-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/text-input-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/text-input-unstable-v3-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xdg-decoration-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xdg-foreign-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xdg-foreign-unstable-v2-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xdg-output-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xdg-shell-unstable-v5-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xdg-shell-unstable-v6-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xwayland-keyboard-grab-unstable-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xx-cutouts-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xx-input-method-v2-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xx-keyboard-filter-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xx-session-management-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xx-text-input-v3-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing include/wayland-protocols/xx-zones-v1-enum.h to /usr/lib/chrono/wlroots/include/wayland-protocols
+Installing /src/build/deps/wayland-protocols/stable/linux-dmabuf/linux-dmabuf-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/stable/linux-dmabuf
+Installing /src/build/deps/wayland-protocols/stable/presentation-time/presentation-time.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/stable/presentation-time
+Installing /src/build/deps/wayland-protocols/stable/tablet/tablet-v2.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/stable/tablet
+Installing /src/build/deps/wayland-protocols/stable/viewporter/viewporter.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/stable/viewporter
+Installing /src/build/deps/wayland-protocols/stable/xdg-shell/xdg-shell.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/stable/xdg-shell
+Installing /src/build/deps/wayland-protocols/staging/alpha-modifier/alpha-modifier-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/alpha-modifier
+Installing /src/build/deps/wayland-protocols/staging/color-management/color-management-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/color-management
+Installing /src/build/deps/wayland-protocols/staging/color-representation/color-representation-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/color-representation
+Installing /src/build/deps/wayland-protocols/staging/commit-timing/commit-timing-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/commit-timing
+Installing /src/build/deps/wayland-protocols/staging/content-type/content-type-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/content-type
+Installing /src/build/deps/wayland-protocols/staging/cursor-shape/cursor-shape-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/cursor-shape
+Installing /src/build/deps/wayland-protocols/staging/drm-lease/drm-lease-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/drm-lease
+Installing /src/build/deps/wayland-protocols/staging/ext-background-effect/ext-background-effect-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-background-effect
+Installing /src/build/deps/wayland-protocols/staging/ext-data-control/ext-data-control-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-data-control
+Installing /src/build/deps/wayland-protocols/staging/ext-foreign-toplevel-list/ext-foreign-toplevel-list-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-foreign-toplevel-list
+Installing /src/build/deps/wayland-protocols/staging/ext-idle-notify/ext-idle-notify-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-idle-notify
+Installing /src/build/deps/wayland-protocols/staging/ext-image-capture-source/ext-image-capture-source-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-image-capture-source
+Installing /src/build/deps/wayland-protocols/staging/ext-image-copy-capture/ext-image-copy-capture-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-image-copy-capture
+Installing /src/build/deps/wayland-protocols/staging/ext-session-lock/ext-session-lock-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-session-lock
+Installing /src/build/deps/wayland-protocols/staging/ext-transient-seat/ext-transient-seat-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-transient-seat
+Installing /src/build/deps/wayland-protocols/staging/ext-workspace/ext-workspace-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/ext-workspace
+Installing /src/build/deps/wayland-protocols/staging/fifo/fifo-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/fifo
+Installing /src/build/deps/wayland-protocols/staging/fractional-scale/fractional-scale-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/fractional-scale
+Installing /src/build/deps/wayland-protocols/staging/linux-drm-syncobj/linux-drm-syncobj-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/linux-drm-syncobj
+Installing /src/build/deps/wayland-protocols/staging/pointer-warp/pointer-warp-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/pointer-warp
+Installing /src/build/deps/wayland-protocols/staging/security-context/security-context-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/security-context
+Installing /src/build/deps/wayland-protocols/staging/single-pixel-buffer/single-pixel-buffer-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/single-pixel-buffer
+Installing /src/build/deps/wayland-protocols/staging/tearing-control/tearing-control-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/tearing-control
+Installing /src/build/deps/wayland-protocols/staging/xdg-activation/xdg-activation-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-activation
+Installing /src/build/deps/wayland-protocols/staging/xdg-dialog/xdg-dialog-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-dialog
+Installing /src/build/deps/wayland-protocols/staging/xdg-session-management/xdg-session-management-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-session-management
+Installing /src/build/deps/wayland-protocols/staging/xdg-system-bell/xdg-system-bell-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-system-bell
+Installing /src/build/deps/wayland-protocols/staging/xdg-toplevel-drag/xdg-toplevel-drag-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-toplevel-drag
+Installing /src/build/deps/wayland-protocols/staging/xdg-toplevel-icon/xdg-toplevel-icon-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-toplevel-icon
+Installing /src/build/deps/wayland-protocols/staging/xdg-toplevel-tag/xdg-toplevel-tag-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xdg-toplevel-tag
+Installing /src/build/deps/wayland-protocols/staging/xwayland-shell/xwayland-shell-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/staging/xwayland-shell
+Installing /src/build/deps/wayland-protocols/unstable/fullscreen-shell/fullscreen-shell-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/fullscreen-shell
+Installing /src/build/deps/wayland-protocols/unstable/idle-inhibit/idle-inhibit-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/idle-inhibit
+Installing /src/build/deps/wayland-protocols/unstable/input-method/input-method-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/input-method
+Installing /src/build/deps/wayland-protocols/unstable/input-timestamps/input-timestamps-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/input-timestamps
+Installing /src/build/deps/wayland-protocols/unstable/keyboard-shortcuts-inhibit/keyboard-shortcuts-inhibit-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/keyboard-shortcuts-inhibit
+Installing /src/build/deps/wayland-protocols/unstable/linux-dmabuf/linux-dmabuf-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/linux-dmabuf
+Installing /src/build/deps/wayland-protocols/unstable/linux-explicit-synchronization/linux-explicit-synchronization-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/linux-explicit-synchronization
+Installing /src/build/deps/wayland-protocols/unstable/pointer-constraints/pointer-constraints-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/pointer-constraints
+Installing /src/build/deps/wayland-protocols/unstable/pointer-gestures/pointer-gestures-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/pointer-gestures
+Installing /src/build/deps/wayland-protocols/unstable/primary-selection/primary-selection-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/primary-selection
+Installing /src/build/deps/wayland-protocols/unstable/relative-pointer/relative-pointer-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/relative-pointer
+Installing /src/build/deps/wayland-protocols/unstable/tablet/tablet-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/tablet
+Installing /src/build/deps/wayland-protocols/unstable/tablet/tablet-unstable-v2.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/tablet
+Installing /src/build/deps/wayland-protocols/unstable/text-input/text-input-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/text-input
+Installing /src/build/deps/wayland-protocols/unstable/text-input/text-input-unstable-v3.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/text-input
+Installing /src/build/deps/wayland-protocols/unstable/xdg-decoration/xdg-decoration-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xdg-decoration
+Installing /src/build/deps/wayland-protocols/unstable/xdg-foreign/xdg-foreign-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xdg-foreign
+Installing /src/build/deps/wayland-protocols/unstable/xdg-foreign/xdg-foreign-unstable-v2.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xdg-foreign
+Installing /src/build/deps/wayland-protocols/unstable/xdg-output/xdg-output-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xdg-output
+Installing /src/build/deps/wayland-protocols/unstable/xdg-shell/xdg-shell-unstable-v5.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xdg-shell
+Installing /src/build/deps/wayland-protocols/unstable/xdg-shell/xdg-shell-unstable-v6.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xdg-shell
+Installing /src/build/deps/wayland-protocols/unstable/xwayland-keyboard-grab/xwayland-keyboard-grab-unstable-v1.xml to /usr/lib/chrono/wlroots/share/wayland-protocols/unstable/xwayland-keyboard-grab
+Installing /src/build/deps/wayland-protocols/build/meson-private/wayland-protocols.pc to /usr/lib/chrono/wlroots/share/pkgconfig
+ninja: Entering directory `build'
+[1/603] Generating subprojects/libdrm/format_mod_static_table with a custom command
+[2/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o -c ../subprojects/libdrm/intel/intel_bufmgr.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr.c:34:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+cc1: all warnings being treated as errors
+[3/603] Generating subprojects/libxkbcommon/src/xkbcomp/auto-generate-parser with a custom command
+[4/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_fake.c.o -c ../subprojects/libdrm/intel/intel_bufmgr_fake.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr_fake.c:47:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/intel/intel_bufmgr_fake.c: In function 'alloc_block':
+../subprojects/libdrm/intel/intel_bufmgr_fake.c:424:61: error: 'calloc' sizes specified with 'sizeof' in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
+  424 |         struct block *block = (struct block *)calloc(sizeof *block, 1);
+      |                                                             ^
+../subprojects/libdrm/intel/intel_bufmgr_fake.c:424:61: note: earlier argument should specify number of elements, later size of each element
+cc1: all warnings being treated as errors
+[5/603] Compiling C object subprojects/libdrm/libdrm.so.2.134.0.p/xf86drm.c.o
+[6/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr_gem.c.o -c ../subprojects/libdrm/intel/intel_bufmgr_gem.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr_gem.c:62:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+cc1: all warnings being treated as errors
+[7/603] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_decode.c.o
+ninja: build stopped: subcommand failed.

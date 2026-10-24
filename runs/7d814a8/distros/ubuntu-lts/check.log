@@ -1,0 +1,68 @@
+Unable to find image 'ubuntu:24.04' locally
+24.04: Pulling from library/ubuntu
+f2b4ef06ff01: Pulling fs layer
+f2b4ef06ff01: Download complete
+5486761bbbdb: Download complete
+f2b4ef06ff01: Pull complete
+Digest: sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac
+Status: Downloaded newer image for ubuntu:24.04
+Setting up qt6-declarative-dev:amd64 (6.4.2+dfsg-4build3) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+Processing triggers for sgml-base (1.31) ...
+Setting up polkitd (124-2ubuntu1.24.04.4) ...
+Creating group 'polkitd' with GID 997.
+Creating user 'polkitd' (User for polkitd) with UID 997 and GID 997.
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of reload.
+start-stop-daemon: unable to stat /usr/libexec/polkitd (No such file or directory)
+Setting up pkexec (124-2ubuntu1.24.04.4) ...
+  (optional, not available here: libwlroots-0.20-dev)
+  (optional, not available here: libxcb-errors-dev)
+  (optional, not available here: qt6-svg-plugins)
+== your distro doesn't package wlroots 0.20 yet: building a private copy in /usr/lib/chrono/wlroots
+== meson 1.3.2 is too old: using a newer one from PyPI (private venv)
+== building wlroots 0.20.2 into /usr/lib/chrono/wlroots
+Note: switching to 'd783533489e1f75d6886c2ab5c5960090ef268f8'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+ninja: Entering directory `build'
+[1/1030] Generating subprojects/libdrm/format_mod_static_table with a custom command
+[2/1030] Generating subprojects/wayland/src/wayland.dtd.h with a custom command (wrapped by meson to capture output)
+[3/1030] Compiling C object subprojects/wayland/src/libwayland-private.a.p/wayland-os.c.o
+[4/1030] Compiling C object subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o
+FAILED: subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o 
+cc -Isubprojects/libdrm/intel/libdrm_intel.so.1.134.0.p -Isubprojects/libdrm/intel -I../subprojects/libdrm/intel -Isubprojects/libdrm -I../subprojects/libdrm -I../subprojects/libdrm/include/drm -fvisibility=hidden -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Werror -std=c11 -O3 -include /src/build/deps/wlroots/build/subprojects/libdrm/config.h -fPIC -pthread -Wsign-compare -Werror=undef -Werror=implicit-function-declaration -Wpointer-arith -Wwrite-strings -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -Wpacked -Wswitch-enum -Wmissing-format-attribute -Wstrict-aliasing=2 -Winit-self -Winline -Wshadow -Wdeclaration-after-statement -Wold-style-definition -Wno-unused-parameter -Wno-attributes -Wno-long-long -Wno-missing-field-initializers -MD -MQ subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o -MF subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o.d -o subprojects/libdrm/intel/libdrm_intel.so.1.134.0.p/intel_bufmgr.c.o -c ../subprojects/libdrm/intel/intel_bufmgr.c
+In file included from ../subprojects/libdrm/intel/intel_bufmgr.c:34:
+../subprojects/libdrm/include/drm/i915_drm.h:2233:1: error: packed attribute is unnecessary for 'i915_context_engines_load_balance' [-Werror=packed]
+ 2233 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2271:1: error: packed attribute is unnecessary for 'i915_context_engines_bond' [-Werror=packed]
+ 2271 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2399:1: error: packed attribute is unnecessary for 'i915_context_engines_parallel_submit' [-Werror=packed]
+ 2399 | } __attribute__((packed));
+      | ^
+../subprojects/libdrm/include/drm/i915_drm.h:2473:1: error: packed attribute is unnecessary for 'i915_context_param_engines' [-Werror=packed]
+ 2473 | } __attribute__((packed));
+      | ^
+cc1: all warnings being treated as errors
+[5/1030] Compiling C object subprojects/wayland/src/libwayland-util.a.p/wayland-util.c.o
+[6/1030] Compiling C object subprojects/libdrm/libdrm.so.2.134.0.p/xf86drmHash.c.o
+[7/1030] Compiling C object subprojects/wayland/src/libwayland-private.a.p/connection.c.o
+[8/1030] Compiling C object subprojects/wayland/src/wayland-scanner.p/scanner.c.o
+[9/1030] Compiling C object subprojects/libdrm/libdrm.so.2.134.0.p/xf86drm.c.o
+ninja: build stopped: subcommand failed.
