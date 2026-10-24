@@ -119,6 +119,8 @@ if(CHRONO_COMPOSITOR)
   # a private wlroots (scripts/build-wlroots.sh, for distros without 0.20) is found through the RPATH
   if(WLROOTS_LIBRARY_DIRS AND NOT WLROOTS_LIBRARY_DIRS MATCHES "^/usr/lib(64)?$|^/usr/lib/[^/]+-linux-gnu$")
     set_target_properties(chrono PROPERTIES INSTALL_RPATH "${WLROOTS_LIBRARY_DIRS}")
+    # DT_RPATH (not RUNPATH) so libwlroots also finds a private libwayland next to it
+    target_link_options(chrono PRIVATE -Wl,--disable-new-dtags)
     message(STATUS "wlroots from ${WLROOTS_LIBRARY_DIRS} (RPATH set)")
   endif()
 

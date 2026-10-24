@@ -1,7 +1,10 @@
 /* Chrono — a Wayland desktop whose themes span every era of computing.
  * Compositor entry point: sets everything up, starts the shell and autostart programs, runs. */
 #define _GNU_SOURCE
-#include <execinfo.h>
+#if defined(__has_include) && __has_include(<execinfo.h>)
+#include <execinfo.h>   /* glibc; musl (Alpine, Void-musl) has no backtrace() */
+#define HAVE_BACKTRACE 1
+#endif
 #include <getopt.h>
 #include <signal.h>
 #include <stdio.h>
@@ -278,8 +281,10 @@ static void crash_handler(int sig)
 	ssize_t r = write(STDERR_FILENO, msg, sizeof msg - 1);
 	(void)r;
 	void *frames[64];
+#ifdef HAVE_BACKTRACE
 	int n = backtrace(frames, 64);
 	backtrace_symbols_fd(frames, n, STDERR_FILENO);
+#endif
 	signal(sig, SIG_DFL);
 	raise(sig);
 }

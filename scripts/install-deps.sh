@@ -61,7 +61,7 @@ fedora)
 		'pkgconfig(xcb-renderutil)' 'pkgconfig(xcb-errors)' 'pkgconfig(xcb-composite)' 'pkgconfig(xcb-res)' \
 		xorg-x11-server-Xwayland 'pkgconfig(libseat)' 'pkgconfig(libdisplay-info)' 'pkgconfig(libliftoff)' \
 		hwdata 'pkgconfig(gbm)' 'pkgconfig(egl)' 'pkgconfig(glesv2)' 'pkgconfig(vulkan)' glslang 'pkgconfig(lcms2)' \
-		'pkgconfig(libudev)' 'pkgconfig(xwayland)' \
+		'pkgconfig(libudev)' 'pkgconfig(xwayland)' 'pkgconfig(libffi)' 'pkgconfig(expat)' \
 		'cmake(Qt6Quick)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
 		qt6-qtdeclarative qt6-qtwayland qt6-qtsvg \
 		dbus-daemon dbus-tools grim slurp wl-clipboard polkit
@@ -78,27 +78,27 @@ debian)
 		libwayland-dev wayland-protocols libinput-dev libxkbcommon-dev libpixman-1-dev libdrm-dev \
 		libcairo2-dev libpango1.0-dev libpam0g-dev \
 		libxcb1-dev libxcb-icccm4-dev libxcb-composite0-dev libxcb-res0-dev libxcb-render-util0-dev \
-		libxcb-xfixes0-dev libxcb-ewmh-dev libxcb-errors-dev xwayland \
+		libxcb-xfixes0-dev libxcb-ewmh-dev xwayland libffi-dev libexpat1-dev \
 		libseat-dev libdisplay-info-dev libliftoff-dev hwdata libgbm-dev libegl-dev libgles-dev \
 		libvulkan-dev glslang-tools liblcms2-dev libudev-dev \
 		qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-wayland-dev qt6-wayland-dev-tools \
 		liblayershellqtinterface-dev layer-shell-qt \
 		qml6-module-qtquick qml6-module-qtquick-controls qml6-module-qtquick-layouts \
 		qml6-module-qtquick-window qml6-module-qtquick-templates qml6-module-qtqml-workerscript \
-		qt6-wayland qt6-svg-plugins \
+		qt6-wayland \
 		dbus dbus-user-session grim slurp wl-clipboard polkitd pkexec
 	try env DEBIAN_FRONTEND=noninteractive apt-get install -y libwlroots-0.20-dev
-	for p in foot xdg-desktop-portal-wlr xdg-desktop-portal-gtk brightnessctl playerctl network-manager; do
+	for p in libxcb-errors-dev qt6-svg-plugins foot xdg-desktop-portal-wlr xdg-desktop-portal-gtk brightnessctl playerctl network-manager; do
 		try env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $p
 	done
 	;;
 void)
-	run xbps-install -Sy xbps
+	$SUDO xbps-install -Syu xbps >/dev/null 2>&1 || true
 	run xbps-install -Sy base-devel git cmake meson ninja pkg-config \
 		wayland-devel wayland-protocols libinput-devel libxkbcommon-devel pixman-devel libdrm-devel \
 		cairo-devel pango-devel pam-devel libxcb-devel xcb-util-wm-devel xcb-util-renderutil-devel \
 		xcb-util-errors-devel xorg-server-xwayland libseat-devel libdisplay-info-devel libliftoff-devel \
-		hwdata-devel MesaLib-devel vulkan-loader-devel Vulkan-Headers glslang lcms2-devel eudev-libudev-devel \
+		hwdata MesaLib-devel libffi-devel expat-devel vulkan-loader-devel Vulkan-Headers glslang lcms2-devel eudev-libudev-devel \
 		qt6-base-devel qt6-declarative-devel qt6-wayland-devel qt6-svg layer-shell-qt-devel \
 		dbus elogind grim slurp wl-clipboard polkit
 	try xbps-install -Sy wlroots0.20-devel
@@ -116,10 +116,10 @@ suse)
 		hwdata 'pkgconfig(gbm)' 'pkgconfig(egl)' 'pkgconfig(glesv2)' 'pkgconfig(vulkan)' glslang-devel 'pkgconfig(lcms2)' \
 		'pkgconfig(libudev)' \
 		'cmake(Qt6Quick)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
-		qt6-declarative-imports qt6-wayland qt6-svg \
+		qt6-declarative-imports qt6-wayland 'pkgconfig(libffi)' 'pkgconfig(expat)' \
 		dbus-1 grim slurp wl-clipboard polkit
 	try zypper --non-interactive install 'pkgconfig(wlroots-0.20)'
-	for p in foot xdg-desktop-portal-wlr xdg-desktop-portal-gtk brightnessctl playerctl NetworkManager; do
+	for p in qt6-svg-imports libQt6Svg6 foot xdg-desktop-portal-wlr xdg-desktop-portal-gtk brightnessctl playerctl NetworkManager; do
 		try zypper --non-interactive install $p
 	done
 	;;
@@ -128,7 +128,7 @@ alpine)
 		wayland-dev wayland-protocols libinput-dev libxkbcommon-dev pixman-dev libdrm-dev \
 		cairo-dev pango-dev linux-pam-dev libxcb-dev xcb-util-wm-dev xcb-util-renderutil-dev \
 		xcb-util-errors-dev xwayland xwayland-dev libseat-dev libdisplay-info-dev libliftoff-dev hwdata-dev \
-		mesa-dev vulkan-loader-dev vulkan-headers glslang lcms2-dev eudev-dev \
+		mesa-dev vulkan-loader-dev vulkan-headers glslang lcms2-dev eudev-dev libffi-dev expat-dev \
 		qt6-qtbase-dev qt6-qtdeclarative-dev qt6-qtwayland-dev qt6-qtsvg layer-shell-qt-dev \
 		dbus grim slurp wl-clipboard polkit
 	try apk add wlroots0.20-dev
