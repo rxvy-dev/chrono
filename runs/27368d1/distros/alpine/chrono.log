@@ -1,0 +1,29 @@
+00:00:00.000 [INFO] [backend/backend.c:342] Loading user-specified backends due to WLR_BACKENDS: headless
+00:00:00.000 [INFO] [backend/headless/backend.c:60] Creating headless backend
+00:00:00.000 [INFO] [util/env.c:25] Loading WLR_RENDERER option: pixman
+00:00:00.000 [INFO] [render/pixman/renderer.c:328] Creating pixman renderer
+00:00:00.000 [DEBUG] [render/allocator/allocator.c:132] Trying to create shm allocator
+00:00:00.000 [DEBUG] [render/allocator/shm.c:119] Created shm allocator
+00:00:00.000 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'default' at size 24 (26 available cursors)
+00:00:00.002 [INFO] [xwayland/sockets.c:102] Created /tmp/.X11-unix ourselves -- other users will be unable to create X11 UNIX sockets of their own
+00:00:00.002 [INFO] [backend/headless/backend.c:17] Starting headless backend
+00:00:00.002 [DEBUG] [types/output/render.c:123] Attaching empty buffer to output for modeset
+00:00:00.002 [DEBUG] [types/output/swapchain.c:27] Choosing primary buffer format XR24 (0x34325258) for output 'HEADLESS-1'
+00:00:00.002 [DEBUG] [types/output/swapchain.c:96] Testing swapchain for output 'HEADLESS-1'
+00:00:00.002 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.002 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 1280x720
+00:00:00.007 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.007 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 10x16
+00:00:00.009 [INFO] [/src/compositor/main.c:407] Chrono 0.1.0 running on WAYLAND_DISPLAY=wayland-0 (theme: Midnight)
+00:00:00.020 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out enabled
+qml: chrono-shell: panel on HEADLESS-1
+qml: chrono-shell: screens HEADLESS-1 1280x720+0+0 | panel setting: auto
+00:00:00.238 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7d08da98d680 (res 0x7d08da99a430)
+00:00:00.238 [DEBUG] [types/wlr_layer_shell_v1.c:502] new layer_surface 0x7d08da98da80 (res 0x7d08da99a700)
+00:00:00.246 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out disabled
+00:00:06.408 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x7d08daaff590 (res 0x7d08e9058750)
+00:00:06.408 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x7d08da546800 (res 0x7d08e9058510)
+00:00:06.408 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x7d08e60dcf00 (res 0x7d08da9b83f0)
+00:00:11.177 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:11.177 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.217 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
