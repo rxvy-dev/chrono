@@ -98,7 +98,7 @@ void)
 		wayland-devel wayland-protocols libinput-devel libxkbcommon-devel pixman-devel libdrm-devel \
 		cairo-devel pango-devel pam-devel libxcb-devel xcb-util-wm-devel xcb-util-renderutil-devel \
 		xcb-util-errors-devel xorg-server-xwayland libseat-devel libdisplay-info-devel libliftoff-devel \
-		hwdata MesaLib-devel libffi-devel expat-devel vulkan-loader-devel Vulkan-Headers glslang lcms2-devel eudev-libudev-devel \
+		MesaLib-devel libffi-devel expat-devel vulkan-loader-devel Vulkan-Headers glslang lcms2-devel eudev-libudev-devel \
 		qt6-base-devel qt6-declarative-devel qt6-wayland-devel qt6-svg layer-shell-qt-devel \
 		dbus elogind grim slurp wl-clipboard polkit
 	try xbps-install -Sy wlroots0.20-devel

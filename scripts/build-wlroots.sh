@@ -35,24 +35,34 @@ echo "== building wlroots $tag into $PREFIX"
 rm -rf "$WORK/wlroots"
 git clone -q --depth 1 --branch "$tag" "$url" "$WORK/wlroots"
 
-need=$(required wayland-server)
-if [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-server; then
+build_wayland() { # libwayland >= $1, privately
 	wurl=https://gitlab.freedesktop.org/wayland/wayland.git
-	wtag=$(latest "$wurl" "$(echo "$need" | cut -d. -f1-2 | sed 's/\./\\./g')")
-	echo "== libwayland $(pkg-config --modversion wayland-server 2>/dev/null || echo none) is older than $need: building $wtag privately"
+	wtag=$(latest "$wurl" "$(echo "$1" | cut -d. -f1-2 | sed 's/\./\\./g')")
+	echo "== libwayland $(pkg-config --modversion wayland-server 2>/dev/null || echo none) is older than $1: building ${wtag:-$1} privately"
 	rm -rf "$WORK/wayland"
-	git clone -q --depth 1 --branch "${wtag:-$need}" "$wurl" "$WORK/wayland"
+	git clone -q --depth 1 --branch "${wtag:-$1}" "$wurl" "$WORK/wayland"
 	meson_install "$WORK/wayland" -Ddocumentation=false -Dtests=false -Ddtd_validation=false
-fi
-
-need=$(required wayland-protocols)
-if [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-protocols; then
+}
+build_protocols() { # wayland-protocols >= $1, privately (just XML + a .pc file)
 	purl=https://gitlab.freedesktop.org/wayland/wayland-protocols.git
-	echo "== wayland-protocols $(pkg-config --modversion wayland-protocols 2>/dev/null || echo none) is older than $need: building it too"
+	echo "== wayland-protocols $(pkg-config --modversion wayland-protocols 2>/dev/null || echo none) is older than $1: building it too"
 	rm -rf "$WORK/wayland-protocols"
-	git clone -q --depth 1 --branch "$(latest "$purl" '[0-9]+\.[0-9]+' )" "$purl" "$WORK/wayland-protocols"
+	git clone -q --depth 1 --branch "$(latest "$purl" '[0-9]+\.[0-9]+')" "$purl" "$WORK/wayland-protocols"
 	meson_install "$WORK/wayland-protocols" -Dtests=false
-fi
+}
+# what meson says is too old, e.g. "Found 1.23.1 but need: '>=1.24.0'"
+too_old() { grep -iE "Dependency $1 found: NO.*need: '>=" "$WORK/setup.log" | grep -oE ">=[0-9.]+" | tr -d '>=' | tail -1; }
 
-meson_install "$WORK/wlroots" -Dexamples=false
+need=$(required wayland-server); [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-server && build_wayland "$need"
+need=$(required wayland-protocols); [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-protocols && build_protocols "$need"
+# second chance from meson's own error messages (the requirement may live in a variable)
+for attempt in 1 2 3; do
+	rm -rf "$WORK/wlroots/build"
+	(cd "$WORK/wlroots" && meson setup build --prefix="$PREFIX" --libdir=lib --buildtype=release -Dexamples=false) >"$WORK/setup.log" 2>&1 && break
+	w=$(too_old wayland-server); p=$(too_old wayland-protocols)
+	[ -z "$w$p" ] && { cat "$WORK/setup.log"; exit 1; }
+	[ -n "$w" ] && build_wayland "$w"
+	[ -n "$p" ] && build_protocols "$p"
+done
+(cd "$WORK/wlroots" && ninja -C build && $SUDO ninja -C build install)
 echo "== wlroots $tag installed in $PREFIX"
