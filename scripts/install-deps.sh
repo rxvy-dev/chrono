@@ -78,7 +78,7 @@ debian)
 		libwayland-dev wayland-protocols libinput-dev libxkbcommon-dev libpixman-1-dev libdrm-dev \
 		libcairo2-dev libpango1.0-dev libpam0g-dev \
 		libxcb1-dev libxcb-icccm4-dev libxcb-composite0-dev libxcb-res0-dev libxcb-render-util0-dev \
-		libxcb-xfixes0-dev libxcb-ewmh-dev xwayland libffi-dev libexpat1-dev bison python3-venv \
+		libxcb-xfixes0-dev libxcb-ewmh-dev xwayland libffi-dev libexpat1-dev bison python3-venv libxml2-dev \
 		libseat-dev libdisplay-info-dev libliftoff-dev hwdata libgbm-dev libegl-dev libgles-dev \
 		libvulkan-dev glslang-tools liblcms2-dev libudev-dev \
 		qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-wayland-dev qt6-wayland-dev-tools \

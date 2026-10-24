@@ -57,18 +57,27 @@ build_protocols() { # wayland-protocols >= $1, privately (just XML + a .pc file)
 	git clone -q --depth 1 --branch "$(latest "$purl" '[0-9]+\.[0-9]+')" "$purl" "$WORK/wayland-protocols"
 	meson_install "$WORK/wayland-protocols" -Dtests=false
 }
+build_pixman() { # pixman >= $1, privately (no fallback recipe in wlroots)
+	xurl=https://gitlab.freedesktop.org/pixman/pixman.git
+	xtag=$(latest "$xurl" 'pixman-[0-9]+\.[0-9]+')
+	echo "== pixman $(pkg-config --modversion pixman-1 2>/dev/null) is older than $1: building ${xtag} privately"
+	rm -rf "$WORK/pixman"
+	git clone -q --depth 1 --branch "$xtag" "$xurl" "$WORK/pixman"
+	meson_install "$WORK/pixman" -Dtests=disabled -Ddemos=disabled -Dgtk=disabled -Dlibpng=disabled
+}
 # what meson says is too old, e.g. "Found 1.23.1 but need: '>=1.24.0'"
-too_old() { grep -iE "Dependency $1 found: NO.*need: '>=" "$WORK/setup.log" | grep -oE ">=[0-9.]+" | tr -d '>=' | tail -1; }
+too_old() { grep -iE "Dependency $1( for host machine)? found: NO.*need: '>=" "$WORK/setup.log" | grep -oE ">=[0-9.]+" | tr -d '>=' | tail -1; }
 
 need=$(required wayland-server); [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-server && build_wayland "$need"
 need=$(required wayland-protocols); [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-protocols && build_protocols "$need"
 # second chance from meson's own error messages; anything else too old (libdrm on Debian 13...)
 # comes from the wrap fallbacks wlroots ships, installed into the same private prefix
-for attempt in 1 2 3; do
+for attempt in 1 2 3 4; do
 	rm -rf "$WORK/wlroots/build"
 	(cd "$WORK/wlroots" && meson setup build --prefix="$PREFIX" --libdir=lib --buildtype=release -Dexamples=false --wrap-mode=default) >"$WORK/setup.log" 2>&1 && break
-	w=$(too_old wayland-server); p=$(too_old wayland-protocols)
-	[ -z "$w$p" ] && { cat "$WORK/setup.log"; exit 1; }
+	w=$(too_old wayland-server); p=$(too_old wayland-protocols); x=$(too_old pixman-1)
+	[ -z "$w$p$x" ] && { cat "$WORK/setup.log"; exit 1; }
+	[ -n "$x" ] && build_pixman "$x"
 	[ -n "$w" ] && build_wayland "$w"
 	[ -n "$p" ] && build_protocols "$p"
 done
