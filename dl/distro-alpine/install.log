@@ -1,0 +1,503 @@
+== installing dependencies
++ apk add build-base git cmake meson samurai pkgconf linux-headers wayland-dev wayland-protocols libinput-dev libxkbcommon-dev pixman-dev libdrm-dev cairo-dev pango-dev linux-pam-dev libxcb-dev xcb-util-wm-dev xcb-util-renderutil-dev xcb-util-errors-dev xwayland xwayland-dev libseat-dev libdisplay-info-dev libliftoff-dev hwdata-dev mesa-dev vulkan-loader-dev vulkan-headers glslang lcms2-dev eudev-dev qt6-qtbase-dev qt6-qtdeclarative-dev qt6-qtwayland-dev qt6-qtsvg layer-shell-qt-dev dbus grim slurp wl-clipboard polkit
+(  1/390) Upgrading musl (1.2.6-r2 -> 1.2.6-r6)
+(  2/390) Upgrading libcrypto3 (3.5.7-r0 -> 3.5.9-r0)
+(  3/390) Upgrading libssl3 (3.5.7-r0 -> 3.5.9-r0)
+(  4/390) Upgrading zlib (1.3.2-r0 -> 1.3.2-r1)
+(  5/390) Installing libgcc (15.2.0-r9)
+(  6/390) Installing jansson (2.15.0-r0)
+(  7/390) Installing libstdc++ (15.2.0-r9)
+(  8/390) Installing binutils (2.45.1-r1)
+(  9/390) Installing libmagic (5.48-r0)
+( 10/390) Installing file (5.48-r0)
+( 11/390) Installing libgcc-static (15.2.0-r9)
+( 12/390) Installing libgomp (15.2.0-r9)
+( 13/390) Installing libatomic (15.2.0-r9)
+( 14/390) Installing gmp (6.3.0-r4)
+( 15/390) Installing isl26 (0.26-r2)
+( 16/390) Installing mpfr4 (4.2.2-r0)
+( 17/390) Installing mpc1 (1.3.1-r1)
+( 18/390) Installing gcc (15.2.0-r9)
+( 19/390) Installing libstdc++-dev (15.2.0-r9)
+( 20/390) Installing musl-dev (1.2.6-r6)
+( 21/390) Installing g++ (15.2.0-r9)
+( 22/390) Installing make (4.4.1-r4)
+( 23/390) Installing fortify-headers (3.0.2-r0)
+( 24/390) Installing patch (2.8-r0)
+( 25/390) Installing build-base (0.5-r4)
+( 26/390) Installing cairo-tools (1.18.4-r1)
+( 27/390) Installing libxau (1.0.12-r0)
+( 28/390) Installing libmd (1.3.0-r0)
+( 29/390) Installing libbsd (0.12.2-r0)
+( 30/390) Installing libxdmcp (1.1.5-r1)
+( 31/390) Installing libxcb (1.17.0-r2)
+( 32/390) Installing libx11 (1.8.14-r0)
+( 33/390) Installing libxext (1.3.7-r0)
+( 34/390) Installing libxrender (0.9.13-r0)
+( 35/390) Installing libbz2 (1.0.8-r6)
+( 36/390) Installing libpng (1.6.59-r0)
+( 37/390) Installing freetype (2.14.3-r0)
+( 38/390) Installing fontconfig (2.18.1-r0)
+( 39/390) Installing pixman (0.46.4-r0)
+( 40/390) Installing cairo (1.18.4-r1)
+( 41/390) Installing libffi (3.8.0-r0)
+( 42/390) Installing libintl (1.0-r0)
+( 43/390) Installing libeconf (0.8.4-r0)
+( 44/390) Installing libblkid (2.42.4-r3)
+( 45/390) Installing libmount (2.42.4-r3)
+( 46/390) Installing glib (2.90.0-r0)
+( 47/390) Installing cairo-gobject (1.18.4-r1)
+( 48/390) Installing expat (2.9.0-r0)
+( 49/390) Installing pkgconf (3.0.10-r0)
+( 50/390) Installing expat-dev (2.9.0-r0)
+( 51/390) Installing bzip2-dev (1.0.8-r6)
+( 52/390) Installing brotli (1.2.1-r0)
+( 53/390) Installing brotli-dev (1.2.1-r0)
+( 54/390) Installing zlib-dev (1.3.2-r1)
+( 55/390) Installing libpng-dev (1.6.59-r0)
+( 56/390) Installing freetype-dev (2.14.3-r0)
+( 57/390) Installing fontconfig-dev (2.18.1-r0)
+( 58/390) Installing xz-libs (5.8.4-r0)
+( 59/390) Installing libxml2 (2.13.9-r2)
+( 60/390) Installing libxml2-utils (2.13.9-r2)
+( 61/390) Installing docbook-xml (4.5-r10)
+  Executing docbook-xml-4.5-r10.post-install
+( 62/390) Installing libxslt (1.1.43-r3)
+( 63/390) Installing docbook-xsl-ns (1.79.2-r13)
+  Executing docbook-xsl-ns-1.79.2-r13.post-install
+( 64/390) Installing docbook-xsl-nons (1.79.2-r13)
+  Executing docbook-xsl-nons-1.79.2-r13.post-install
+( 65/390) Installing docbook-xsl (1.79.2-r13)
+( 66/390) Installing xz (5.8.4-r0)
+( 67/390) Installing gettext-asprintf (1.0-r0)
+( 68/390) Installing ncurses-terminfo-base (6.6_p20261017-r0)
+( 69/390) Installing libncursesw (6.6_p20261017-r0)
+( 70/390) Installing gettext-libs (1.0-r0)
+( 71/390) Installing gettext-envsubst (1.0-r0)
+( 72/390) Installing gettext (1.0-r0)
+( 73/390) Installing gettext-dev (1.0-r0)
+( 74/390) Installing mpdecimal (4.0.1-r0)
+( 75/390) Installing libpanelw (6.6_p20261017-r0)
+( 76/390) Installing readline (8.3.3-r1)
+( 77/390) Installing sqlite-libs (3.54.1-r0)
+( 78/390) Installing python3 (3.14.9-r2)
+( 79/390) Installing python3-pycache-pyc0 (3.14.9-r2)
+( 80/390) Installing pyc (3.14.9-r2)
+( 81/390) Installing python3-pyc (3.14.9-r2)
+( 82/390) Installing py3-parsing (3.3.3-r0)
+( 83/390) Installing py3-parsing-pyc (3.3.3-r0)
+( 84/390) Installing py3-packaging (26.3-r0)
+( 85/390) Installing py3-packaging-pyc (26.3-r0)
+( 86/390) Installing linux-headers (7.2.1-r0)
+( 87/390) Installing libffi-dev (3.8.0-r0)
+( 88/390) Installing bsd-compat-headers (0.7.2-r6)
+( 89/390) Installing libformw (6.6_p20261017-r0)
+( 90/390) Installing libmenuw (6.6_p20261017-r0)
+( 91/390) Installing libncurses++ (6.6_p20261017-r0)
+( 92/390) Installing ncurses-dev (6.6_p20261017-r0)
+( 93/390) Installing libedit (20260512.3.1-r0)
+( 94/390) Installing libedit-dev (20260512.3.1-r0)
+( 95/390) Installing libpcre2-16 (10.49-r0)
+( 96/390) Installing libpcre2-32 (10.49-r0)
+( 97/390) Installing pcre2-dev (10.49-r0)
+( 98/390) Installing libuuid (2.42.4-r3)
+( 99/390) Installing libfdisk (2.42.4-r3)
+(100/390) Installing skalibs-libs (2.16.0.0-r0)
+(101/390) Installing utmps-libs (0.1.3.4-r1)
+(102/390) Installing linux-pam (1.7.1-r4)
+(103/390) Installing liblastlog2 (2.42.4-r3)
+(104/390) Installing libsmartcols (2.42.4-r3)
+(105/390) Installing sqlite (3.54.1-r0)
+(106/390) Installing sqlite-dev (3.54.1-r0)
+(107/390) Installing util-linux-dev (2.42.4-r3)
+(108/390) Installing glib-dev (2.90.0-r0)
+(109/390) Installing pixman-dev (0.46.4-r0)
+(110/390) Installing xorgproto (2026.1-r0)
+(111/390) Installing libxau-dev (1.0.12-r0)
+(112/390) Installing xcb-proto (1.17.0-r1)
+(113/390) Installing xcb-proto-pyc (1.17.0-r1)
+(114/390) Installing libxdmcp-dev (1.1.5-r1)
+(115/390) Installing libxcb-dev (1.17.0-r2)
+(116/390) Installing xtrans (1.6.0-r0)
+(117/390) Installing libx11-dev (1.8.14-r0)
+(118/390) Installing libxext-dev (1.3.7-r0)
+(119/390) Installing libxrender-dev (0.9.13-r0)
+(120/390) Installing cairo-dev (1.18.4-r1)
+(121/390) Installing acl-libs (2.3.2-r1)
+(122/390) Installing lz4-libs (1.10.0-r1)
+(123/390) Installing libarchive (3.8.10-r0)
+(124/390) Installing rhash-libs (1.4.6-r1)
+(125/390) Installing libuv (1.52.1-r0)
+(126/390) Installing cmake (4.3.4-r0)
+(127/390) Installing dbus-libs (1.16.2-r4)
+(128/390) Installing dbus (1.16.2-r4)
+  Executing dbus-1.16.2-r4.pre-install
+  Executing dbus-1.16.2-r4.post-install
+(129/390) Installing dbus-daemon-launch-helper (1.16.2-r4)
+(130/390) Installing eudev-libs (3.2.14-r8)
+(131/390) Installing eudev-dev (3.2.14-r8)
+(132/390) Installing spirv-tools (1.4.357.0-r0)
+(133/390) Installing glslang-libs (1.4.341.0-r0)
+(134/390) Installing glslang (1.4.341.0-r0)
+(135/390) Installing libjpeg-turbo (3.1.3-r0)
+(136/390) Installing wayland-libs-client (1.26.0-r0)
+(137/390) Installing grim (1.5.0-r0)
+(138/390) Installing hwdata-usb (0.412-r0)
+(139/390) Installing hwdata-pci (0.412-r0)
+(140/390) Installing hwdata-pnp (0.412-r0)
+(141/390) Installing hwdata-net (0.412-r0)
+(142/390) Installing hwdata (0.412-r0)
+(143/390) Installing hwdata-dev (0.412-r0)
+(144/390) Installing vulkan-headers (1.4.360-r0)
+(145/390) Installing tzdata (2026e-r0)
+(146/390) Installing libb2 (0.98.1-r3)
+(147/390) Installing double-conversion (3.4.0-r0)
+(148/390) Installing icu-data-en (78.1-r0)
+  Executing icu-data-en-78.1-r0.post-install
+  * If you need ICU with non-English locales and legacy charset support, install
+  * package icu-data-full.
+(149/390) Installing icu-libs (78.1-r0)
+(150/390) Installing duktape-libs (2.7.0-r3)
+(151/390) Installing libproxy (0.5.12-r0)
+(152/390) Installing qt6-qtbase (6.11.1-r3)
+(153/390) Installing hicolor-icon-theme (0.18-r0)
+(154/390) Installing xprop (1.2.8-r0)
+(155/390) Installing libice (1.1.2-r0)
+(156/390) Installing libsm (1.2.6-r0)
+(157/390) Installing libxt (1.3.1-r0)
+(158/390) Installing libxmu (1.3.1-r0)
+(159/390) Installing xset (1.2.5-r1)
+(160/390) Installing xdg-utils (1.2.1-r1)
+(161/390) Installing llvm23-libs (23.1.4-r0)
+(162/390) Installing libpciaccess (0.19-r0)
+(163/390) Installing libdrm (2.4.134-r0)
+(164/390) Installing libelf (0.195-r0)
+(165/390) Installing libxshmfence (1.3.3-r0)
+(166/390) Installing mesa (26.2.5-r0)
+(167/390) Installing mesa-gles (26.2.5-r0)
+(168/390) Installing mesa-gbm (26.2.5-r0)
+(169/390) Installing mesa-egl (26.2.5-r0)
+(170/390) Installing libxxf86vm (1.1.7-r0)
+(171/390) Installing mesa-gl (26.2.5-r0)
+(172/390) Installing avahi-libs (0.9_rc5-r1)
+(173/390) Installing nettle (3.10.2-r0)
+(174/390) Installing libtasn1 (4.21.0-r0)
+(175/390) Installing p11-kit (0.26.2-r1)
+(176/390) Installing gnutls (3.8.13-r0)
+(177/390) Installing cups-libs (2.4.20-r1)
+(178/390) Installing graphite2 (1.3.15-r0)
+(179/390) Installing harfbuzz (14.2.1-r0)
+(180/390) Installing libevdev (1.13.6-r0)
+(181/390) Installing mtdev (1.1.7-r0)
+(182/390) Installing libinput-libs (1.32.0-r0)
+(183/390) Installing tslib (1.24-r0)
+(184/390) Installing xcb-util (0.4.1-r3)
+(185/390) Installing xcb-util-image (0.4.1-r0)
+(186/390) Installing xcb-util-renderutil (0.3.10-r0)
+(187/390) Installing xcb-util-cursor (0.1.5-r0)
+(188/390) Installing xcb-util-wm (0.4.2-r0)
+(189/390) Installing xcb-util-keysyms (0.4.1-r0)
+(190/390) Installing xkeyboard-config (2.49-r0)
+(191/390) Installing libxkbcommon (1.13.2-r0)
+(192/390) Installing libxkbcommon-x11 (1.13.2-r0)
+(193/390) Installing qt6-qtbase-x11 (6.11.1-r3)
+(194/390) Installing qt6-qtshadertools (6.11.1-r0)
+(195/390) Installing mariadb-connector-c (3.4.9-r0)
+(196/390) Installing qt6-qtbase-mysql (6.11.1-r3)
+(197/390) Installing unixodbc (2.3.14-r1)
+(198/390) Installing qt6-qtbase-odbc (6.11.1-r3)
+(199/390) Installing libpq (18.6-r0)
+(200/390) Installing qt6-qtbase-postgresql (6.11.1-r3)
+(201/390) Installing qt6-qtbase-sqlite (6.11.1-r3)
+(202/390) Installing wayland-libs-cursor (1.26.0-r0)
+(203/390) Installing wayland-libs-egl (1.26.0-r0)
+(204/390) Installing qt6-qtbase-wayland (6.11.1-r3)
+(205/390) Installing libxi (1.8.4-r0)
+(206/390) Installing at-spi2-core-libs (2.62.1-r0)
+(207/390) Installing libxtst (1.2.6-r0)
+(208/390) Installing at-spi2-core (2.62.1-r0)
+(209/390) Installing libatk-1.0 (2.62.1-r0)
+(210/390) Installing libatk-bridge-2.0 (2.62.1-r0)
+(211/390) Installing dbus-dev (1.16.2-r4)
+(212/390) Installing libxfixes (6.0.2-r0)
+(213/390) Installing libxfixes-dev (6.0.2-r0)
+(214/390) Installing libxi-dev (1.8.4-r0)
+(215/390) Installing libxtst-dev (1.2.6-r0)
+(216/390) Installing at-spi2-core-dev (2.62.1-r0)
+(217/390) Installing libgpg-error (1.61-r0)
+(218/390) Installing libgcrypt (1.12.4-r0)
+(219/390) Installing libgpg-error-dev (1.61-r0)
+(220/390) Installing libgcrypt-dev (1.12.4-r0)
+(221/390) Installing gnutls-c++ (3.8.13-r0)
+(222/390) Installing libgmpxx (6.3.0-r4)
+(223/390) Installing gmp-dev (6.3.0-r4)
+(224/390) Installing nettle-dev (3.10.2-r0)
+(225/390) Installing libidn2-dev (2.3.8-r0)
+(226/390) Installing libtasn1-progs (4.21.0-r0)
+(227/390) Installing libtasn1-dev (4.21.0-r0)
+(228/390) Installing zstd (1.5.7-r2)
+(229/390) Installing zstd-dev (1.5.7-r2)
+(230/390) Installing p11-kit-dev (0.26.2-r1)
+(231/390) Installing gnutls-dev (3.8.13-r0)
+(232/390) Installing gdbm (1.26-r0)
+(233/390) Installing gdbm-tools (1.26-r0)
+(234/390) Installing gdbm-dev (1.26-r0)
+(235/390) Installing avahi-compat-howl (0.9_rc5-r1)
+(236/390) Installing avahi-compat-libdns_sd (0.9_rc5-r1)
+(237/390) Installing avahi-glib (0.9_rc5-r1)
+(238/390) Installing libcap2 (2.78-r1)
+(239/390) Installing libdaemon (0.14-r6)
+(240/390) Installing libevent (2.1.13-r0)
+(241/390) Installing avahi (0.9_rc5-r1)
+  Executing avahi-0.9_rc5-r1.pre-install
+(242/390) Installing libevent-dev (2.1.13-r0)
+(243/390) Installing avahi-dev (0.9_rc5-r1)
+(244/390) Installing cups-dev (2.4.20-r1)
+(245/390) Installing double-conversion-dev (3.4.0-r0)
+(246/390) Installing harfbuzz-cairo (14.2.1-r0)
+(247/390) Installing harfbuzz-gobject (14.2.1-r0)
+(248/390) Installing harfbuzz-icu (14.2.1-r0)
+(249/390) Installing harfbuzz-subset (14.2.1-r0)
+(250/390) Installing graphite2-dev (1.3.15-r0)
+(251/390) Installing icu (78.1-r0)
+(252/390) Installing icu-dev (78.1-r0)
+(253/390) Installing harfbuzz-dev (14.2.1-r0)
+(254/390) Installing libb2-dev (0.98.1-r3)
+(255/390) Installing libinput-dev (1.32.0-r0)
+(256/390) Installing libturbojpeg (3.1.3-r0)
+(257/390) Installing libjpeg-turbo-dev (3.1.3-r0)
+(258/390) Installing openssl-dev (3.5.9-r0)
+(259/390) Installing libpq-dev (18.6-r0)
+(260/390) Installing libproxy-dev (0.5.12-r0)
+(261/390) Installing xz-dev (5.8.4-r0)
+(262/390) Installing libxml2-dev (2.13.9-r2)
+(263/390) Installing libxkbcommon-dev (1.13.2-r0)
+(264/390) Installing fmt (12.2.0-r0)
+(265/390) Installing fmt-dev (12.2.0-r0)
+(266/390) Installing mariadb-connector-c-dev (3.4.9-r0)
+(267/390) Installing mariadb-common (11.8.9-r0)
+(268/390) Installing libaio (0.3.113-r3)
+(269/390) Installing mariadb-embedded (11.8.9-r0)
+(270/390) Installing mariadb-dev (11.8.9-r0)
+(271/390) Installing libpciaccess-dev (0.19-r0)
+(272/390) Installing libdrm-dev (2.4.134-r0)
+(273/390) Installing libxdamage (1.1.7-r0)
+(274/390) Installing libxdamage-dev (1.1.7-r0)
+(275/390) Installing libxshmfence-dev (1.3.3-r0)
+(276/390) Installing clang23-headers (23.1.4-r0)
+(277/390) Installing libclc (23.1.4-r0)
+(278/390) Installing spirv-llvm-translator-libs (23.1.1-r0)
+(279/390) Installing clang23-libs (23.1.4-r0)
+(280/390) Installing mesa-rusticl (26.2.5-r0)
+(281/390) Installing libxxf86vm-dev (1.1.7-r0)
+(282/390) Installing mesa-dev (26.2.5-r0)
+(283/390) Installing tslib-dev (1.24-r0)
+(284/390) Installing unixodbc-dev (2.3.14-r1)
+(285/390) Installing vulkan-loader (1.4.360-r0)
+(286/390) Installing vulkan-loader-dev (1.4.360-r0)
+(287/390) Installing wayland-libs-server (1.26.0-r0)
+(288/390) Installing qt6-qtsvg (6.11.1-r0)
+(289/390) Installing qt6-qtdeclarative (6.11.1-r1)
+(290/390) Installing qt6-qtwayland (6.11.1-r2)
+(291/390) Installing wayland-dev (1.26.0-r0)
+(292/390) Installing util-macros (1.20.2-r0)
+(293/390) Installing xcb-util-dev (0.4.1-r3)
+(294/390) Installing xcb-util-image-dev (0.4.1-r0)
+(295/390) Installing xcb-util-renderutil-dev (0.3.10-r0)
+(296/390) Installing xcb-util-cursor-dev (0.1.5-r0)
+(297/390) Installing xcb-util-keysyms-dev (0.4.1-r0)
+(298/390) Installing xcb-util-wm-dev (0.4.2-r0)
+(299/390) Installing qt6-qtbase-dev (6.11.1-r3)
+(300/390) Installing qt6-qtshadertools-dev (6.11.1-r0)
+(301/390) Installing qt6-qtsvg-dev (6.11.1-r0)
+(302/390) Installing qt6-qtdeclarative-dev (6.11.1-r1)
+(303/390) Installing qt6-qtbase-private-dev (6.11.1-r3)
+(304/390) Installing qt6-qtdeclarative-private-dev (6.11.1-r1)
+(305/390) Installing qt6-qtwayland-private-dev (6.11.1-r2)
+(306/390) Installing qt6-qtwayland-dev (6.11.1-r2)
+(307/390) Installing layer-shell-qt (6.8.1-r0)
+(308/390) Installing layer-shell-qt-dev (6.8.1-r0)
+(309/390) Installing lcms2 (2.19.1-r0)
+(310/390) Installing lcms2-plugins (2.19.1-r0)
+(311/390) Installing libsharpyuv (1.6.0-r0)
+(312/390) Installing libwebp (1.6.0-r0)
+(313/390) Installing tiff (4.7.2-r0)
+(314/390) Installing libtiffxx (4.7.2-r0)
+(315/390) Installing libwebpdecoder (1.6.0-r0)
+(316/390) Installing libwebpdemux (1.6.0-r0)
+(317/390) Installing libwebpmux (1.6.0-r0)
+(318/390) Installing libwebp-dev (1.6.0-r0)
+(319/390) Installing tiff-dev (4.7.2-r0)
+(320/390) Installing lcms2-dev (2.19.1-r0)
+(321/390) Installing libdisplay-info (0.3.0-r1)
+(322/390) Installing libdisplay-info-dev (0.3.0-r1)
+(323/390) Installing libliftoff (0.5.0-r0)
+(324/390) Installing libliftoff-dev (0.5.0-r0)
+(325/390) Installing libelogind (255.24-r2)
+(326/390) Installing libseat (0.9.3-r1)
+(327/390) Installing elogind-dev (255.24-r2)
+(328/390) Installing libseat-dev (0.9.3-r1)
+(329/390) Installing linux-pam-dev (1.7.1-r4)
+(330/390) Installing samurai (1.3-r0)
+(331/390) Installing meson (1.12.1-r0)
+(332/390) Installing meson-pyc (1.12.1-r0)
+(333/390) Installing libxft (2.3.9-r0)
+(334/390) Installing fribidi (1.0.17-r0)
+(335/390) Installing pango (1.58.2-r0)
+(336/390) Installing pango-tools (1.58.2-r0)
+(337/390) Installing fribidi-dev (1.0.17-r0)
+(338/390) Installing libxft-dev (2.3.9-r0)
+(339/390) Installing pango-dev (1.58.2-r0)
+(340/390) Installing polkit-noelogind-libs (127-r3)
+(341/390) Installing polkit-common (127-r3)
+  Executing polkit-common-127-r3.pre-install
+(342/390) Installing polkit (127-r3)
+(343/390) Installing meson-polkit (1.12.1-r0)
+(344/390) Installing slurp (1.5.0-r0)
+(345/390) Installing wayland-protocols (1.49-r0)
+(346/390) Installing wl-clipboard (2.3.0-r0)
+(347/390) Installing xcb-util-errors (1.0.1-r0)
+(348/390) Installing xcb-util-errors-dev (1.0.1-r0)
+(349/390) Installing xorg-server-common (21.1.25-r0)
+(350/390) Installing libxkbfile (1.2.0-r0)
+(351/390) Installing xkbcomp (1.5.0-r0)
+(352/390) Installing libfontenc (1.1.9-r0)
+(353/390) Installing libxfont2 (2.0.8-r0)
+(354/390) Installing libepoxy (1.5.10-r1)
+(355/390) Installing libtirpc-conf (1.3.5-r1)
+(356/390) Installing libtirpc-nokrb (1.3.5-r1)
+(357/390) Installing libxcvt (0.1.3-r0)
+(358/390) Installing xwayland (24.1.14-r0)
+(359/390) Installing perl (5.44.0-r0)
+(360/390) Installing perl-error (0.17030-r0)
+(361/390) Installing perl-git (2.56.0-r0)
+(362/390) Installing git-perl (2.56.0-r0)
+(363/390) Installing font-util (1.4.2-r0)
+(364/390) Installing font-util-dev (1.4.2-r0)
+(365/390) Installing libepoxy-dev (1.5.10-r1)
+(366/390) Installing gawk (5.3.2-r2)
+(367/390) Installing libcom_err (1.47.4-r0)
+(368/390) Installing e2fsprogs-libs (1.47.4-r0)
+(369/390) Installing e2fsprogs-dev (1.47.4-r0)
+(370/390) Installing libverto (0.3.2-r2)
+(371/390) Installing libverto-glib (0.3.2-r2)
+(372/390) Installing libev (4.33-r1)
+(373/390) Installing libverto-libev (0.3.2-r2)
+(374/390) Installing libverto-libevent (0.3.2-r2)
+(375/390) Installing libverto-dev (0.3.2-r2)
+(376/390) Installing krb5-conf (1.0-r2)
+(377/390) Installing keyutils-libs (1.6.3-r4)
+(378/390) Installing krb5-libs (1.22.2-r1)
+(379/390) Installing libsasl (2.1.28-r9)
+(380/390) Installing libldap (2.6.15-r0)
+(381/390) Installing krb5-server-ldap (1.22.2-r1)
+(382/390) Installing krb5-dev (1.22.2-r1)
+(383/390) Installing libtirpc (1.3.5-r1)
+(384/390) Installing libtirpc-dev (1.3.5-r1)
+(385/390) Installing libmd-dev (1.3.0-r0)
+(386/390) Installing libxcvt-dev (0.1.3-r0)
+(387/390) Installing libfontenc-dev (1.1.9-r0)
+(388/390) Installing libxfont2-dev (2.0.8-r0)
+(389/390) Installing libxkbfile-dev (1.2.0-r0)
+(390/390) Installing xwayland-dev (24.1.14-r0)
+Executing busybox-1.38.0-r4.trigger
+Executing fontconfig-2.18.1-r0.trigger
+Executing glib-2.90.0-r0.trigger
+* No schema files found: doing nothing.
+Executing dbus-1.16.2-r4.trigger
+OK: 1813.3 MiB in 416 packages
+== using wlroots 0.20.2 from /usr/lib
+-- The C compiler identification is GNU 15.2.0
+-- The CXX compiler identification is GNU 15.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "3.0.10")
+-- Checking for modules 'cairo;pangocairo'
+--   Found cairo, version 1.18.4
+--   Found pangocairo, version 1.58.2
+-- Checking for module 'wlroots-0.20'
+--   Found wlroots-0.20, version 0.20.2
+-- Checking for modules 'wayland-server;xkbcommon;libinput;pixman-1;libdrm'
+--   Found wayland-server, version 1.26.0
+--   Found xkbcommon, version 1.13.2
+--   Found libinput, version 1.32.0
+--   Found pixman-1, version 0.46.4
+--   Found libdrm, version 2.4.134
+-- Checking for module 'pam'
+--   Found pam, version 1.7.1
+-- Checking for modules 'xcb;xcb-icccm'
+--   Found xcb, version 1.17.0
+--   Found xcb-icccm, version 0.4.2
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /usr/lib/libGL.so
+-- Found WrapOpenGL: TRUE
+-- Found WrapVulkanHeaders: /usr/include
+-- layer-shell-qt 6.8.1
+-- Configuring done (2.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: /src/build
+[1/72] Generating protocols/wlr-output-power-management-unstable-v1-protocol.h
+[2/72] Generating protocols/wlr-layer-shell-unstable-v1-protocol.h
+[3/72] Generating protocols/single-pixel-buffer-v1-protocol.h
+[4/72] Generating protocols/fractional-scale-v1-protocol.h
+[5/72] Generating protocols/alpha-modifier-v1-protocol.h
+[6/72] Generating protocols/content-type-v1-protocol.h
+[7/72] Generating protocols/xdg-activation-v1-protocol.h
+[8/72] Generating protocols/ext-data-control-v1-protocol.h
+[9/72] Generating protocols/ext-image-copy-capture-v1-protocol.h
+[10/72] Generating protocols/ext-image-capture-source-v1-protocol.h
+[11/72] Generating protocols/ext-foreign-toplevel-list-v1-protocol.h
+[12/72] Generating protocols/ext-idle-notify-v1-protocol.h
+[13/72] Generating protocols/ext-session-lock-v1-protocol.h
+[14/72] Generating protocols/cursor-shape-v1-protocol.h
+[15/72] Generating protocols/tablet-unstable-v2-protocol.h
+[16/72] Generating protocols/primary-selection-unstable-v1-protocol.h
+[17/72] Generating protocols/xdg-output-unstable-v1-protocol.h
+[18/72] Generating protocols/idle-inhibit-unstable-v1-protocol.h
+[19/72] Generating protocols/relative-pointer-unstable-v1-protocol.h
+[20/72] Generating protocols/pointer-constraints-unstable-v1-protocol.h
+[21/72] Generating protocols/xdg-decoration-unstable-v1-protocol.h
+[22/72] Generating protocols/tablet-v2-protocol.h
+[23/72] Generating protocols/linux-dmabuf-v1-protocol.h
+[24/72] Generating protocols/presentation-time-protocol.h
+[25/72] Generating protocols/viewporter-protocol.h
+[26/72] Generating protocols/xdg-shell-protocol.h
+[27/72] Building C object CMakeFiles/chronoctl.dir/tools/chronoctl.c.o
+[28/72] Building C object CMakeFiles/chrono-theme-preview.dir/tools/preview.c.o
+[29/72] Building C object CMakeFiles/chrono-common.dir/common/paint.c.o
+[30/72] Building C object CMakeFiles/chrono-common.dir/common/theme.c.o
+[31/72] Building C object CMakeFiles/chrono-common.dir/common/ini.c.o
+[32/72] Building C object CMakeFiles/chrono.dir/compositor/themewatch.c.o
+[33/72] Building C object CMakeFiles/chrono.dir/compositor/xwayland.c.o
+[34/72] Linking C executable chronoctl
+[35/72] Building C object CMakeFiles/chrono.dir/compositor/ipc.c.o
+[36/72] Building C object CMakeFiles/chrono.dir/compositor/idle.c.o
+[37/72] Building C object CMakeFiles/chrono.dir/compositor/lock.c.o
+[38/72] Building C object CMakeFiles/chrono.dir/compositor/switcher.c.o
+[39/72] Building C object CMakeFiles/chrono.dir/compositor/input.c.o
+[40/72] Building C object CMakeFiles/chrono.dir/compositor/layer.c.o
+[41/72] Building C object CMakeFiles/chrono.dir/compositor/output.c.o
+[42/72] Building C object CMakeFiles/chrono.dir/compositor/view.c.o
+[43/72] Building C object CMakeFiles/chrono.dir/compositor/decor.c.o
+[44/72] Building C object CMakeFiles/chrono.dir/compositor/buffer.c.o
+[45/72] Building C object CMakeFiles/chrono.dir/compositor/config.c.o
+[46/72] Building C object CMakeFiles/chrono.dir/compositor/main.c.o
+ninja: job failed with status 1: /usr/bin/cc -DCHRONO_DATADIR=\"/usr/share/chrono\" -DCHRONO_HAVE_XWAYLAND -DCHRONO_LIBEXECDIR=\"/usr/libexec\" -DCHRONO_VERSION=\"0.1.0\" -DWLR_USE_UNSTABLE -I/src/build/protocols -I/src/compositor -I/src/common -isystem /usr/include/pango-1.0 -isystem /usr/include/cairo -isystem /usr/include/pixman-1 -isystem /usr/include/libmount -isystem /usr/include/blkid -isystem /usr/include/fribidi -isystem /usr/include/harfbuzz -isystem /usr/include/freetype2 -isystem /usr/include/libpng16 -isystem /usr/include/glib-2.0 -isystem /usr/lib/glib-2.0/include -isystem /usr/include/wlroots-0.20 -isystem /usr/include/elogind -isystem /usr/include/libdrm -O2 -g -DNDEBUG -std=gnu11 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -pthread -MD -MT CMakeFiles/chrono.dir/compositor/main.c.o -MF CMakeFiles/chrono.dir/compositor/main.c.o.d -o CMakeFiles/chrono.dir/compositor/main.c.o -c /src/compositor/main.c
+/src/compositor/main.c:4:10: fatal error: execinfo.h: No such file or directory
+    4 | #include <execinfo.h>
+      |          ^~~~~~~~~~~~
+compilation terminated.
+ninja: subcommand failed
