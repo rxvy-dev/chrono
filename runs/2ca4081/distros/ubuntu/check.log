@@ -1,0 +1,14 @@
+Unable to find image 'ubuntu:rolling' locally
+rolling: Pulling from library/ubuntu
+0ea008b1b37b: Pulling fs layer
+c3f1e810a4fd: Pulling fs layer
+0ea008b1b37b: Download complete
+c3f1e810a4fd: Download complete
+c250b08da737: Download complete
+0ea008b1b37b: Pull complete
+c3f1e810a4fd: Pull complete
+Digest: sha256:93e29beff5257b2cdf1c024d831f6d2997e53655a653ff76a811fc9e6564a719
+Status: Downloaded newer image for ubuntu:rolling
+== installing dependencies
+== using wlroots 0.20.2 from /usr/lib/x86_64-linux-gnu
+distro check passed
