@@ -105,6 +105,41 @@ SettingsPage {
 		}
 		return best || { x: Math.round(nx), y: Math.round(ny) }
 	}
+	// while dragging: follow the mouse, but pull to another screen's edges/alignments when within `t`
+	function magnet(i, nx, ny, t) {
+		const me = logicalSize(outs[i])
+		let bx = null, by = null
+		for (let j = 0; j < outs.length; j++) {
+			if (j === i || !outs[j].enabled) continue
+			const o = rectOf(outs[j])
+			for (const x of [o.x + o.w, o.x - me.w, o.x, o.x + o.w - me.w]) {
+				const d = Math.abs(nx - x); if (d < t && (bx === null || d < bx.d)) bx = { v: x, d: d } }
+			for (const y of [o.y + o.h, o.y - me.h, o.y, o.y + o.h - me.h]) {
+				const d = Math.abs(ny - y); if (d < t && (by === null || d < by.d)) by = { v: y, d: d } }
+		}
+		return { x: Math.round(bx ? bx.v : nx), y: Math.round(by ? by.v : ny) }
+	}
+	// move the selected screen next to its neighbour with the arrow keys
+	function nudge(dx, dy) {
+		if (sel < 0 || outs.length < 2) return
+		// jump past the other screens in that direction, keeping the other coordinate
+		const r = rectOf(outs[sel])
+		const others = outs.filter((o, j) => j !== sel && o.enabled).map(rectOf)
+		if (!others.length) return
+		let nx = r.x, ny = r.y
+		if (dx < 0) nx = Math.min(...others.map(o => o.x)) - r.w
+		if (dx > 0) nx = Math.max(...others.map(o => o.x + o.w))
+		if (dy < 0) ny = Math.min(...others.map(o => o.y)) - r.h
+		if (dy > 0) ny = Math.max(...others.map(o => o.y + o.h))
+		if (dx !== 0 && others.every(o => ny >= o.y + o.h || ny + r.h <= o.y)) ny = others[0].y   // stay level with them
+		if (dy !== 0 && others.every(o => nx >= o.x + o.w || nx + r.w <= o.x)) nx = others[0].x
+		const sp = snap(sel, nx, ny)
+		const copy = JSON.parse(JSON.stringify(outs))
+		copy[sel].x = sp.x; copy[sel].y = sp.y
+		outs = normalize(copy); dirty = true
+	}
+	property point dropPos: Qt.point(0, 0)   // where the dragged screen lands when released
+
 	// shift everything so the top-left corner of the layout is 0,0
 	function normalize(list) {
 		let x0 = 1e9, y0 = 1e9
@@ -180,19 +215,21 @@ SettingsPage {
 						cursorShape: page.outs.length > 1 ? (pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor) : Qt.ArrowCursor
 						property point grab
 						property bool moved: false
-						onPressed: (m) => { page.sel = scr.index; grab = Qt.point(m.x, m.y); moved = false }
+						onPressed: (m) => { page.sel = scr.index; arena.forceActiveFocus(); grab = Qt.point(m.x, m.y); moved = false }
 						onPositionChanged: (m) => {
 							if (!pressed || page.outs.length < 2) return
 							const p = mapToItem(arena, m.x, m.y)
 							const nx = (p.x - grab.x - arena.ox) / arena.k, ny = (p.y - grab.y - arena.oy) / arena.k
 							if (!moved && Math.hypot(nx - scr.modelData.x, ny - scr.modelData.y) < 20 / arena.k) return
 							if (!moved) { arena.frozen = arena.box; moved = true; page.dragIndex = scr.index }
-							const sp = page.snap(scr.index, nx, ny)
-							page.dragPos = Qt.point(sp.x, sp.y)
+							const mp = page.magnet(scr.index, nx, ny, 24 / arena.k)
+							page.dragPos = Qt.point(mp.x, mp.y)
+							const sp = page.snap(scr.index, mp.x, mp.y)
+							page.dropPos = Qt.point(sp.x, sp.y)
 						}
 						onReleased: {
 							if (moved) {
-								const sp = page.dragPos
+								const sp = page.dropPos
 								const copy = JSON.parse(JSON.stringify(page.outs))
 								copy[scr.index].x = sp.x; copy[scr.index].y = sp.y
 								page.outs = page.normalize(copy)
@@ -208,7 +245,7 @@ SettingsPage {
 			Label {
 				anchors { left: parent.left; bottom: parent.bottom; margins: 10 }
 				opacity: 0.6; font.pointSize: 8
-				text: page.outs.length > 1 ? qsTr("Drag screens to match your desk — they snap together. Then press Apply.") : ""
+				text: page.outs.length > 1 ? qsTr("Drag a screen where you want it (it snaps to edges), or select one and use the arrow keys. Then press Apply.") : ""
 			}
 		}
 	}
