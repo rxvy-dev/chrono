@@ -56,6 +56,16 @@ SettingsPage {
 		}
 		return s
 	}
+	// a change that could leave a screen black (mode, scale, rotation, on/off) — moving screens can't
+	function risky(before, after) {
+		for (const a of after) {
+			const b = before.find(o => o.name === a.name)
+			if (!b || a.enabled !== b.enabled || a.scale !== b.scale || a.transform !== b.transform) return true
+			if (a.enabled && (a.mode.width !== b.mode.width || a.mode.height !== b.mode.height
+					|| Math.abs((a.mode.refresh || 0) - (b.mode.refresh || 0)) > 0.01)) return true
+		}
+		return false
+	}
 	function applyList(list) {
 		let err = ""
 		for (const o of list) {
@@ -69,7 +79,8 @@ SettingsPage {
 		const err = applyList(normalize(JSON.parse(JSON.stringify(outs))))
 		dirty = false
 		if (err) { errorLabel.text = err; reload() }
-		else confirm.start()
+		else if (risky(original, outs)) confirm.start()   // only ask when the picture itself changed
+		else reload()
 	}
 
 	// ----- arrangement
@@ -420,6 +431,7 @@ SettingsPage {
 		parent: Overlay.overlay
 		anchors.centerIn: parent
 		modal: true
+		closePolicy: Popup.NoAutoClose   // clicking elsewhere must not count as "revert"
 		title: qsTr("Keep these display settings?")
 		Label { text: qsTr("Reverting in %1 seconds…").arg(confirm.left) }
 		standardButtons: Dialog.Ok | Dialog.Cancel
@@ -429,5 +441,7 @@ SettingsPage {
 		onAccepted: { tick.stop(); page.reload() }
 		onRejected: { tick.stop(); page.applyList(page.original); page.reload() }
 		Component.onCompleted: standardButton(Dialog.Ok).text = qsTr("Keep")
+		// leaving the page (another tab, closing Settings) means the screen works: keep it
+		Component.onDestruction: tick.stop()
 	}
 }
