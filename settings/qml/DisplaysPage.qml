@@ -18,6 +18,7 @@ SettingsPage {
 	function reload() {
 		outs = JSON.parse(JSON.stringify(Chrono.outputs))
 		dirty = false
+		fitView()
 	}
 	Component.onCompleted: reload()
 	Connections { target: Chrono; function onOutputsChanged() { if (!page.dirty && !confirm.visible) page.reload() } }
@@ -37,8 +38,9 @@ SettingsPage {
 			else for (let i = 0; i < copy.length; i++) if (i !== sel && copy[i].enabled && overlaps(rectOf(copy[i]), after)) {
 				const sp = snap(i, copy[i].x, copy[i].y); copy[i].x = sp.x; copy[i].y = sp.y }
 		}
-		outs = normalize(copy)
+		outs = copy
 		dirty = true
+		fitView(true)
 	}
 	function logicalSize(o) {
 		const rot = o.transform === "90" || o.transform === "270" || o.transform === "flipped-90" || o.transform === "flipped-270"
@@ -64,7 +66,7 @@ SettingsPage {
 	}
 	function apply() {
 		original = JSON.parse(JSON.stringify(Chrono.outputs))
-		const err = applyList(outs)
+		const err = applyList(normalize(JSON.parse(JSON.stringify(outs))))
 		dirty = false
 		if (err) { errorLabel.text = err; reload() }
 		else confirm.start()
@@ -88,19 +90,26 @@ SettingsPage {
 		for (const o of others) {
 			// along a vertical edge (left/right of o): x fixed, try aligning tops, bottoms, centres, or keep y
 			for (const x of [o.x + o.w, o.x - me.w])
-				for (const y of [o.y, o.y + o.h - me.h, o.y + (o.h - me.h) / 2, Math.max(o.y - me.h + 1, Math.min(o.y + o.h - 1, ny))])
-					cands.push({ x: x, y: y })
+			{
+				for (const y of [o.y, o.y + o.h - me.h, o.y + (o.h - me.h) / 2]) cands.push({ x: x, y: y, aligned: true })
+				const ov = Math.min(me.h, o.h) * 0.25   // share at least a quarter of the edge, never just a corner
+				cands.push({ x: x, y: Math.max(o.y - me.h + ov, Math.min(o.y + o.h - ov, ny)), aligned: false })
+			}
 			// along a horizontal edge (above/below o)
 			for (const y of [o.y + o.h, o.y - me.h])
-				for (const x of [o.x, o.x + o.w - me.w, o.x + (o.w - me.w) / 2, Math.max(o.x - me.w + 1, Math.min(o.x + o.w - 1, nx))])
-					cands.push({ x: x, y: y })
+			{
+				for (const x of [o.x, o.x + o.w - me.w, o.x + (o.w - me.w) / 2]) cands.push({ x: x, y: y, aligned: true })
+				const ov = Math.min(me.w, o.w) * 0.25
+				cands.push({ x: Math.max(o.x - me.w + ov, Math.min(o.x + o.w - ov, nx)), y: y, aligned: false })
+			}
 		}
 		let best = null
+		// lined-up spots (tops, bottoms, centres) win unless a free spot is much closer
+		const bias = Math.min(me.w, me.h) * 0.35
 		for (const c of cands) {
 			const r = { x: c.x, y: c.y, w: me.w, h: me.h }
 			if (others.some(o => overlaps(r, o))) continue
-			// prefer aligned edges: a small bonus when the candidate lines up with the free position
-			const d = Math.hypot(c.x - nx, c.y - ny)
+			const d = Math.hypot(c.x - nx, c.y - ny) + (c.aligned ? 0 : bias)
 			if (!best || d < best.d) best = { x: Math.round(c.x), y: Math.round(c.y), d: d }
 		}
 		return best || { x: Math.round(nx), y: Math.round(ny) }
@@ -136,11 +145,32 @@ SettingsPage {
 		const sp = snap(sel, nx, ny)
 		const copy = JSON.parse(JSON.stringify(outs))
 		copy[sel].x = sp.x; copy[sel].y = sp.y
-		outs = normalize(copy); dirty = true
+		outs = copy; dirty = true; fitView(true)
 	}
 	property point dropPos: Qt.point(0, 0)   // where the dragged screen lands when released
+	function drop() {
+		const i = dragIndex
+		dragIndex = -1
+		if (i < 0) return
+		const copy = JSON.parse(JSON.stringify(outs))
+		copy[i].x = dropPos.x; copy[i].y = dropPos.y
+		outs = copy
+		dirty = true
+		fitView(true)
+	}
 
-	// shift everything so the top-left corner of the layout is 0,0
+	// The area shown in the editor. It stays put while you work, so the screens you aren't
+	// touching never move; it only re-fits when something would end up outside it.
+	property var view: ({ x: 0, y: 0, w: 1920, h: 1080 })
+	function fitView(onlyIfNeeded) {
+		let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, mw = 0, mh = 0
+		for (const o of outs) { const r = rectOf(o); x0 = Math.min(x0, r.x); y0 = Math.min(y0, r.y); x1 = Math.max(x1, r.x + r.w); y1 = Math.max(y1, r.y + r.h); mw = Math.max(mw, r.w); mh = Math.max(mh, r.h) }
+		if (x0 > x1) return
+		if (onlyIfNeeded && x0 >= view.x && y0 >= view.y && x1 <= view.x + view.w && y1 <= view.y + view.h) return
+		// room for any screen on any side, so moving one never re-zooms (and never moves the others)
+		view = { x: x0 - mw, y: y0 - mh, w: x1 - x0 + 2 * mw, h: y1 - y0 + 2 * mh }
+	}
+	// shift everything so the top-left corner of the layout is 0,0 (only for what we send)
 	function normalize(list) {
 		let x0 = 1e9, y0 = 1e9
 		for (const o of list) if (o.enabled) { x0 = Math.min(x0, o.x); y0 = Math.min(y0, o.y) }
@@ -151,29 +181,36 @@ SettingsPage {
 
 	Frame {
 		Layout.fillWidth: true
-		Layout.preferredHeight: 300
+		Layout.preferredHeight: 360
 		padding: 0
 		background: Rectangle { color: Qt.darker(palette.window, 1.12); radius: 8; border.color: palette.mid }
 		Item {
 			id: arena
 			anchors.fill: parent
 			clip: true
-			// scale is fixed while dragging so the picture doesn't jump around under the mouse
-			property var frozen: null
-			readonly property var box: {
-				if (frozen) return frozen
-				let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9
-				for (const o of page.outs) { const s = page.logicalSize(o); x0 = Math.min(x0, o.x); y0 = Math.min(y0, o.y); x1 = Math.max(x1, o.x + s.w); y1 = Math.max(y1, o.y + s.h) }
-				if (x0 > x1) return { x: 0, y: 0, w: 1920, h: 1080 }
-				return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 }
+			readonly property var box: page.view
+			readonly property real k: Math.min((width - 24) / Math.max(1, box.w), (height - 24) / Math.max(1, box.h), 0.2)
+			focus: true
+			Keys.onLeftPressed: page.nudge(-1, 0)
+			Keys.onRightPressed: page.nudge(1, 0)
+			Keys.onUpPressed: page.nudge(0, -1)
+			Keys.onDownPressed: page.nudge(0, 1)
+			Rectangle {   // where the screen being dragged will land
+				visible: page.dragIndex >= 0 && (page.dropPos.x !== page.dragPos.x || page.dropPos.y !== page.dragPos.y)
+				readonly property var size: page.dragIndex >= 0 ? page.logicalSize(page.outs[page.dragIndex]) : ({ w: 0, h: 0 })
+				x: arena.ox + page.dropPos.x * arena.k; y: arena.oy + page.dropPos.y * arena.k
+				width: size.w * arena.k; height: size.h * arena.k
+				radius: 6; z: 3; color: "transparent"
+				border.width: 2; border.color: palette.highlight
+				Rectangle { anchors.fill: parent; radius: 6; color: palette.highlight; opacity: 0.15 }
 			}
-			readonly property real k: Math.min((width - 80) / Math.max(1, box.w), (height - 80) / Math.max(1, box.h), 0.2)
 			readonly property real ox: (width - box.w * k) / 2 - box.x * k
 			readonly property real oy: (height - box.h * k) / 2 - box.y * k
 			Repeater {
 				model: page.outs
 				Rectangle {
 					id: scr
+					objectName: "screen-" + modelData.name
 					required property var modelData
 					required property int index
 					readonly property var size: page.logicalSize(modelData)
@@ -186,7 +223,7 @@ SettingsPage {
 					width: size.w * arena.k
 					height: size.h * arena.k
 					radius: 6
-					opacity: modelData.enabled ? 1 : 0.35
+					opacity: !modelData.enabled ? 0.35 : dragging ? 0.8 : 1
 					color: index === page.sel ? Qt.rgba(palette.highlight.r, palette.highlight.g, palette.highlight.b, 0.30) : palette.base
 					border.width: index === page.sel ? 2 : 1
 					border.color: index === page.sel ? palette.highlight : Qt.rgba(palette.windowText.r, palette.windowText.g, palette.windowText.b, 0.35)
@@ -212,6 +249,7 @@ SettingsPage {
 					}
 					MouseArea {
 						anchors.fill: parent
+						preventStealing: true   // the page scrolls; don't let it steal the drag
 						cursorShape: page.outs.length > 1 ? (pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor) : Qt.ArrowCursor
 						property point grab
 						property bool moved: false
@@ -219,26 +257,21 @@ SettingsPage {
 						onPositionChanged: (m) => {
 							if (!pressed || page.outs.length < 2) return
 							const p = mapToItem(arena, m.x, m.y)
-							const nx = (p.x - grab.x - arena.ox) / arena.k, ny = (p.y - grab.y - arena.oy) / arena.k
+							let nx = (p.x - grab.x - arena.ox) / arena.k, ny = (p.y - grab.y - arena.oy) / arena.k
 							if (!moved && Math.hypot(nx - scr.modelData.x, ny - scr.modelData.y) < 20 / arena.k) return
-							if (!moved) { arena.frozen = arena.box; moved = true; page.dragIndex = scr.index }
+							if (!moved) { moved = true; page.dragIndex = scr.index }
+							// keep it inside the visible area so it can always be grabbed again
+							const vis = { x: (-arena.ox) / arena.k, y: (-arena.oy) / arena.k, w: arena.width / arena.k, h: arena.height / arena.k }
+							nx = Math.max(vis.x, Math.min(vis.x + vis.w - scr.size.w, nx))
+							ny = Math.max(vis.y, Math.min(vis.y + vis.h - scr.size.h, ny))
 							const mp = page.magnet(scr.index, nx, ny, 24 / arena.k)
 							page.dragPos = Qt.point(mp.x, mp.y)
 							const sp = page.snap(scr.index, mp.x, mp.y)
 							page.dropPos = Qt.point(sp.x, sp.y)
 						}
-						onReleased: {
-							if (moved) {
-								const sp = page.dropPos
-								const copy = JSON.parse(JSON.stringify(page.outs))
-								copy[scr.index].x = sp.x; copy[scr.index].y = sp.y
-								page.outs = page.normalize(copy)
-								page.dirty = true
-							}
-							page.dragIndex = -1
-							arena.frozen = null
-							moved = false
-						}
+						// reset our own state first: drop() replaces the model, which recreates this delegate
+						onReleased: { const was = moved; moved = false; if (was) page.drop(); else page.dragIndex = -1 }
+						onCanceled: { moved = false; page.dragIndex = -1 }
 					}
 				}
 			}
@@ -257,13 +290,13 @@ SettingsPage {
 			let x = 0
 			for (const o of copy) { if (!o.enabled) continue; o.x = x; o.y = 0; x += page.logicalSize(o).w }
 			const byName = {}; for (const o of copy) byName[o.name] = o
-			page.outs = page.outs.map(o => byName[o.name]); page.dirty = true } }
+			page.outs = page.outs.map(o => byName[o.name]); page.dirty = true; page.fitView() } }
 		Button { text: qsTr("Stack top to bottom"); onClicked: {
 			const copy = JSON.parse(JSON.stringify(page.outs)).sort((a, b) => a.y - b.y)
 			let y = 0
 			for (const o of copy) { if (!o.enabled) continue; o.x = 0; o.y = y; y += page.logicalSize(o).h }
 			const byName = {}; for (const o of copy) byName[o.name] = o
-			page.outs = page.outs.map(o => byName[o.name]); page.dirty = true } }
+			page.outs = page.outs.map(o => byName[o.name]); page.dirty = true; page.fitView() } }
 		Item { Layout.fillWidth: true }
 	}
 
