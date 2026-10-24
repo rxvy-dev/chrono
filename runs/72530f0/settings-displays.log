@@ -1,0 +1,3 @@
+qrc:/qml/DisplaysPage.qml:384:2: QML Dialog: Binding loop detected for property "implicitWidth":
+qrc:/qt-project.org/imports/QtQuick/Controls/Fusion/Dialog.qml:14:5
+qt.qpa.services: Failed to register with host portal QDBusError("org.freedesktop.portal.Error.Failed", "Could not register app ID: App info not found for 'chrono-settings'")
