@@ -1,0 +1,67 @@
+Unable to find image 'opensuse/tumbleweed:latest' locally
+latest: Pulling from opensuse/tumbleweed
+0dd9453e3496: Pulling fs layer
+0dd9453e3496: Download complete
+0dd9453e3496: Pull complete
+Digest: sha256:dd9dd83d48156b3c1acbdb2760e1031cfea5238f9f762a4e24db7061e651afae
+Status: Downloaded newer image for opensuse/tumbleweed:latest
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found PkgConfig: /usr/bin/pkg-config (found version "2.5.1")
+-- Checking for modules 'cairo;pangocairo'
+--   Found cairo, version 1.18.6
+--   Found pangocairo, version 1.58.2
+-- Checking for module 'wlroots-0.20'
+--   Found wlroots-0.20, version 0.20.2
+-- Checking for modules 'wayland-server;xkbcommon;libinput;pixman-1;libdrm'
+--   Found wayland-server, version 1.26.0
+--   Found xkbcommon, version 1.13.2
+--   Found libinput, version 1.32.0
+--   Found pixman-1, version 0.46.4
+--   Found libdrm, version 2.4.134
+-- Checking for module 'pam'
+--   Found pam, version 1.7.3
+-- Checking for modules 'xcb;xcb-icccm'
+--   Found xcb, version 1.17.0
+--   Found xcb-icccm, version 0.4.2
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /usr/lib64/libOpenGL.so
+-- Found WrapOpenGL: TRUE
+-- Found WrapVulkanHeaders: /usr/include
+-- layer-shell-qt 6.8.0
+-- Could NOT find Qt6QuickControls2 (missing: Qt6QuickControls2_DIR)
+CMake Error at settings/CMakeLists.txt:1 (find_package):
+  Found package configuration file:
+
+    /usr/lib64/cmake/Qt6/Qt6Config.cmake
+
+  but it set Qt6_FOUND to FALSE so package "Qt6" is considered to be NOT
+  FOUND.  Reason given by package:
+
+  Failed to find required Qt component "QuickControls2".
+
+  Expected Config file at
+  "/usr/lib64/cmake/Qt6QuickControls2/Qt6QuickControls2Config.cmake" does NOT
+  exist
+
+
+
+  Configuring with --debug-find-pkg=Qt6QuickControls2 might reveal details
+  why the package was not found.
+
+  Configuring with -DQT_DEBUG_FIND_PACKAGE=ON will print the values of some
+  of the path variables that find_package uses to try and find the package.
+
+
+
+-- Configuring incomplete, errors occurred!

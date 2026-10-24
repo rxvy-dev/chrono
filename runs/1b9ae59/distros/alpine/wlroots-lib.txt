@@ -1,0 +1,1 @@
+	libwlroots-0.20.so => /usr/lib/libwlroots-0.20.so (0x720a2d026000)

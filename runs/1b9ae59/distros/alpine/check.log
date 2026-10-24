@@ -1,0 +1,12 @@
+Unable to find image 'alpine:edge' locally
+edge: Pulling from library/alpine
+173a115417ee: Pulling fs layer
+173a115417ee: Download complete
+5f46e9872445: Download complete
+c6452e6e231d: Download complete
+173a115417ee: Pull complete
+Digest: sha256:020dfcbaaf4cc1078bf2d9c7ba31a8466e334061dcd2f248001d68f79e52c000
+Status: Downloaded newer image for alpine:edge
+== installing dependencies
+== using wlroots 0.20.2 from /usr/lib
+distro check passed

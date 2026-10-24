@@ -1,0 +1,8 @@
+alpine=pass
+arch=pass
+debian=install-failed
+fedora=pass
+opensuse=install-failed
+ubuntu=pass
+ubuntu-lts=install-failed
+void=install-failed
