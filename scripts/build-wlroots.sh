@@ -28,6 +28,13 @@ meson_install() { # meson_install DIR [meson options...]
 	(cd "$d" && meson setup build --prefix="$PREFIX" --libdir=lib --buildtype=release "$@" && ninja -C build && $SUDO ninja -C build install)
 }
 
+# the fallback recipes need a recent meson (Ubuntu 24.04 ships 1.3): use a private one if so
+if ! meson --version 2>/dev/null | awk -F. '{ exit !($1 > 1 || ($1 == 1 && $2 >= 4)) }'; then
+	echo "== meson $(meson --version 2>/dev/null) is too old: using a newer one from PyPI (private venv)"
+	python3 -m venv "$WORK/venv" && "$WORK/venv/bin/pip" install -q meson
+	export PATH="$WORK/venv/bin:$PATH"
+fi
+
 url=https://gitlab.freedesktop.org/wlroots/wlroots.git
 tag=$(latest "$url" '0\.20')
 [ -n "$tag" ] || tag=0.20.0

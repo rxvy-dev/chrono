@@ -61,7 +61,7 @@ fedora)
 		'pkgconfig(xcb-renderutil)' 'pkgconfig(xcb-errors)' 'pkgconfig(xcb-composite)' 'pkgconfig(xcb-res)' \
 		xorg-x11-server-Xwayland 'pkgconfig(libseat)' 'pkgconfig(libdisplay-info)' 'pkgconfig(libliftoff)' \
 		hwdata 'pkgconfig(gbm)' 'pkgconfig(egl)' 'pkgconfig(glesv2)' 'pkgconfig(vulkan)' glslang 'pkgconfig(lcms2)' \
-		'pkgconfig(libudev)' 'pkgconfig(xwayland)' 'pkgconfig(libffi)' 'pkgconfig(expat)' \
+		'pkgconfig(libudev)' 'pkgconfig(xwayland)' 'pkgconfig(libffi)' 'pkgconfig(expat)' bison \
 		'cmake(Qt6Quick)' 'cmake(Qt6QuickControls2)' 'cmake(Qt6DBus)' 'cmake(Qt6WaylandClient)' 'cmake(LayerShellQt)' \
 		qt6-qtdeclarative qt6-qtwayland qt6-qtsvg \
 		dbus-daemon dbus-tools grim slurp wl-clipboard polkit
@@ -78,7 +78,7 @@ debian)
 		libwayland-dev wayland-protocols libinput-dev libxkbcommon-dev libpixman-1-dev libdrm-dev \
 		libcairo2-dev libpango1.0-dev libpam0g-dev \
 		libxcb1-dev libxcb-icccm4-dev libxcb-composite0-dev libxcb-res0-dev libxcb-render-util0-dev \
-		libxcb-xfixes0-dev libxcb-ewmh-dev xwayland libffi-dev libexpat1-dev \
+		libxcb-xfixes0-dev libxcb-ewmh-dev xwayland libffi-dev libexpat1-dev bison python3-venv \
 		libseat-dev libdisplay-info-dev libliftoff-dev hwdata libgbm-dev libegl-dev libgles-dev \
 		libvulkan-dev glslang-tools liblcms2-dev libudev-dev \
 		qt6-base-dev qt6-base-private-dev qt6-declarative-dev qt6-wayland-dev qt6-wayland-dev-tools \
