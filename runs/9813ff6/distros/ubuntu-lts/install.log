@@ -1,0 +1,150 @@
+[23/28] Compiling C object src/libwayland-server.so.0.24.91.p/wayland-server.c.o
+[24/28] Linking target src/libwayland-server.so.0.24.91
+[25/28] Compiling C object src/libwayland-client.so.0.24.91.p/wayland-client.c.o
+[26/28] Linking target src/libwayland-client.so.0.24.91
+[27/28] Generating symbol file src/libwayland-client.so.0.24.91.p/libwayland-client.so.0.24.91.symbols
+[28/28] Linking target cursor/libwayland-cursor.so.0.24.91
+ninja: Entering directory `build'
+[0/1] Installing files.
+Installing src/wayland-scanner to /usr/lib/chrono/wlroots/bin
+Installing src/wayland-server-protocol.h to /usr/lib/chrono/wlroots/include
+Installing src/wayland-client-protocol.h to /usr/lib/chrono/wlroots/include
+Installing src/libwayland-server.so.0.24.91 to /usr/lib/chrono/wlroots/lib
+Installing src/libwayland-client.so.0.24.91 to /usr/lib/chrono/wlroots/lib
+Installing cursor/libwayland-cursor.so.0.24.91 to /usr/lib/chrono/wlroots/lib
+Installing egl/libwayland-egl.so.1.24.91 to /usr/lib/chrono/wlroots/lib
+Installing /src/build/deps/wayland/src/wayland-util.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/src/wayland-server.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/src/wayland-server-core.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/src/wayland-client.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/src/wayland-client-core.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/cursor/wayland-cursor.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/egl/wayland-egl.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/egl/wayland-egl-core.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/egl/wayland-egl-backend.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/build/src/wayland-version.h to /usr/lib/chrono/wlroots/include
+Installing /src/build/deps/wayland/build/meson-private/wayland-scanner.pc to /usr/lib/chrono/wlroots/lib/pkgconfig
+Installing /src/build/deps/wayland/build/meson-private/wayland-server.pc to /usr/lib/chrono/wlroots/lib/pkgconfig
+Installing /src/build/deps/wayland/build/meson-private/wayland-client.pc to /usr/lib/chrono/wlroots/lib/pkgconfig
+Installing /src/build/deps/wayland/build/meson-private/wayland-cursor.pc to /usr/lib/chrono/wlroots/lib/pkgconfig
+Installing /src/build/deps/wayland/build/meson-private/wayland-egl.pc to /usr/lib/chrono/wlroots/lib/pkgconfig
+Installing /src/build/deps/wayland/build/meson-private/wayland-egl-backend.pc to /usr/lib/chrono/wlroots/lib/pkgconfig
+Installing /src/build/deps/wayland/wayland-scanner.mk to /usr/lib/chrono/wlroots/share/wayland
+Installing /src/build/deps/wayland/protocol/wayland.xml to /usr/lib/chrono/wlroots/share/wayland
+Installing /src/build/deps/wayland/protocol/wayland.dtd to /usr/lib/chrono/wlroots/share/wayland
+Installing /src/build/deps/wayland/wayland-scanner.m4 to /usr/lib/chrono/wlroots/share/aclocal
+Installing symlink pointing to libwayland-server.so.0.24.91 to /usr/lib/chrono/wlroots/lib/libwayland-server.so.0
+Installing symlink pointing to libwayland-server.so.0 to /usr/lib/chrono/wlroots/lib/libwayland-server.so
+Installing symlink pointing to libwayland-client.so.0.24.91 to /usr/lib/chrono/wlroots/lib/libwayland-client.so.0
+Installing symlink pointing to libwayland-client.so.0 to /usr/lib/chrono/wlroots/lib/libwayland-client.so
+Installing symlink pointing to libwayland-cursor.so.0.24.91 to /usr/lib/chrono/wlroots/lib/libwayland-cursor.so.0
+Installing symlink pointing to libwayland-cursor.so.0 to /usr/lib/chrono/wlroots/lib/libwayland-cursor.so
+Installing symlink pointing to libwayland-egl.so.1.24.91 to /usr/lib/chrono/wlroots/lib/libwayland-egl.so.1
+Installing symlink pointing to libwayland-egl.so.1 to /usr/lib/chrono/wlroots/lib/libwayland-egl.so
+Cloning into 'libdrm'...
+Cloning into 'libxkbcommon'...
+The Meson build system
+Version: 1.3.2
+Source dir: /src/build/deps/wlroots
+Build dir: /src/build/deps/wlroots/build
+Build type: native build
+Project name: wlroots
+Project version: 0.20.2
+C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+C linker for the host machine: cc ld.bfd 2.42
+Host machine cpu family: x86_64
+Host machine cpu: x86_64
+Compiler for C supports arguments -Wundef: YES 
+Compiler for C supports arguments -Wlogical-op: YES 
+Compiler for C supports arguments -Wmissing-include-dirs: YES 
+Compiler for C supports arguments -Wold-style-definition: YES 
+Compiler for C supports arguments -Wpointer-arith: YES 
+Compiler for C supports arguments -Winit-self: YES 
+Compiler for C supports arguments -Wstrict-prototypes: YES 
+Compiler for C supports arguments -Wimplicit-fallthrough=2: YES 
+Compiler for C supports arguments -Wendif-labels: YES 
+Compiler for C supports arguments -Wstrict-aliasing=2: YES 
+Compiler for C supports arguments -Woverflow: YES 
+Compiler for C supports arguments -Wmissing-prototypes: YES 
+Compiler for C supports arguments -Walloca: YES 
+Compiler for C supports arguments -Wno-missing-braces: YES 
+Compiler for C supports arguments -Wno-missing-field-initializers: YES 
+Compiler for C supports arguments -Wno-unused-parameter: YES 
+Compiler for C supports arguments -fmacro-prefix-map=/prefix/to/hide=: YES 
+Found pkg-config: YES (/usr/bin/pkg-config) 1.8.1
+Run-time dependency wayland-server found: YES 1.24.91
+Dependency libdrm found: NO found 2.4.125 but need: '>=2.4.129'
+Found CMake: /usr/bin/cmake (3.28.3)
+Run-time dependency libdrm found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency libdrm
+
+Executing subproject libdrm 
+
+libdrm| Project name: libdrm
+libdrm| Project version: 2.4.134
+libdrm| C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+libdrm| C linker for the host machine: cc ld.bfd 2.42
+libdrm| Run-time dependency threads found: YES
+libdrm| Checking for function "secure_getenv" : YES
+libdrm| Program symbols-check.py found: YES (/usr/bin/python3 /src/build/deps/wlroots/subprojects/libdrm/symbols-check.py)
+libdrm| Program nm found: YES (/usr/bin/nm)
+libdrm| Program python3 found: YES (/usr/bin/python3)
+libdrm| Run-time dependency atomic_ops found: NO (tried pkgconfig and cmake)
+libdrm| Checking if "Intel Atomics" : links: YES
+libdrm| Run-time dependency pciaccess found: YES 0.17
+libdrm| Checking for function "dlsym" : YES
+libdrm| Checking for function "clock_gettime" : YES
+libdrm| Check usable header "sys/select.h" : YES
+libdrm| Check usable header "alloca.h" : YES
+libdrm| Header "sys/sysmacros.h" has symbol "major" : YES
+libdrm| Header "sys/sysmacros.h" has symbol "minor" : YES
+libdrm| Header "sys/sysmacros.h" has symbol "makedev" : YES
+libdrm| Header "sys/mkdev.h" has symbol "major" : NO
+libdrm| Checking for function "open_memstream" : YES
+libdrm| Compiler for C supports arguments -Wsign-compare: YES
+libdrm| Compiler for C supports arguments -Werror=undef: YES
+libdrm| Compiler for C supports arguments -Werror=implicit-function-declaration: YES
+libdrm| Compiler for C supports arguments -Wpointer-arith: YES (cached)
+libdrm| Compiler for C supports arguments -Wwrite-strings: YES
+libdrm| Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+libdrm| Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+libdrm| Compiler for C supports arguments -Wmissing-declarations: YES
+libdrm| Compiler for C supports arguments -Wnested-externs: YES
+libdrm| Compiler for C supports arguments -Wpacked: YES
+libdrm| Compiler for C supports arguments -Wswitch-enum: YES
+libdrm| Compiler for C supports arguments -Wmissing-format-attribute: YES
+libdrm| Compiler for C supports arguments -Wstrict-aliasing=2: YES (cached)
+libdrm| Compiler for C supports arguments -Winit-self: YES (cached)
+libdrm| Compiler for C supports arguments -Winline: YES
+libdrm| Compiler for C supports arguments -Wshadow: YES
+libdrm| Compiler for C supports arguments -Wdeclaration-after-statement: YES
+libdrm| Compiler for C supports arguments -Wold-style-definition: YES (cached)
+libdrm| Compiler for C supports arguments -Wno-unused-parameter: YES (cached)
+libdrm| Compiler for C supports arguments -Wno-attributes: YES
+libdrm| Compiler for C supports arguments -Wno-long-long: YES
+libdrm| Compiler for C supports arguments -Wno-missing-field-initializers: YES (cached)
+libdrm| Run-time dependency cairo found: YES 1.18.0
+libdrm| Run-time dependency valgrind found: NO (tried pkgconfig)
+libdrm| Program rst2man rst2man.py found: NO
+libdrm| Compiler for C supports function attribute visibility:hidden: YES
+libdrm| Configuring config.h using configuration
+libdrm| Program tests/gen4-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen4-3d.batch.sh)
+libdrm| Program tests/gm45-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gm45-3d.batch.sh)
+libdrm| Program tests/gen5-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen5-3d.batch.sh)
+libdrm| Program tests/gen6-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen6-3d.batch.sh)
+libdrm| Program tests/gen7-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen7-3d.batch.sh)
+libdrm| Program tests/gen7-2d-copy.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen7-2d-copy.batch.sh)
+libdrm| Build targets in project: 7
+libdrm| Subproject libdrm finished.
+
+Dependency libdrm found: YES 2.4.134 (overridden)
+Dependency xkbcommon found: NO found 1.6.0 but need: '>=1.8.0'
+Run-time dependency xkbcommon found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency xkbcommon
+
+Executing subproject libxkbcommon 
+
+
+subprojects/libxkbcommon/meson.build:10:19: ERROR: Meson version is 1.3.2 but project requires >= 1.4.0
+
+A full log can be found at /src/build/deps/wlroots/build/meson-logs/meson-log.txt

@@ -1,0 +1,150 @@
+--   Found wayland-server, version 1.26.0
+--   Found xkbcommon, version 1.13.2
+--   Found libinput, version 1.32.0
+--   Found pixman-1, version 0.46.4
+--   Found libdrm, version 2.4.134
+-- Checking for module 'pam'
+--   Found pam, version 1.7.3
+-- Checking for modules 'xcb;xcb-icccm'
+--   Found xcb, version 1.17.0
+--   Found xcb-icccm, version 0.4.2
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /usr/lib64/libOpenGL.so
+-- Found WrapOpenGL: TRUE
+-- Found WrapVulkanHeaders: /usr/include
+-- layer-shell-qt 6.8.0
+-- Configuring done (1.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /src/build
+[1/72] Generating protocols/content-type-v1-protocol.h
+[2/72] Generating protocols/alpha-modifier-v1-protocol.h
+[3/72] Generating protocols/cursor-shape-v1-protocol.h
+[4/72] Generating protocols/ext-foreign-toplevel-list-v1-protocol.h
+[5/72] Generating protocols/ext-data-control-v1-protocol.h
+[6/72] Generating protocols/ext-idle-notify-v1-protocol.h
+[7/72] Generating protocols/ext-image-capture-source-v1-protocol.h
+[8/72] Generating protocols/ext-image-copy-capture-v1-protocol.h
+[9/72] Generating protocols/ext-session-lock-v1-protocol.h
+[10/72] Generating protocols/fractional-scale-v1-protocol.h
+[11/72] Generating protocols/idle-inhibit-unstable-v1-protocol.h
+[12/72] Generating protocols/linux-dmabuf-v1-protocol.h
+[13/72] Generating protocols/pointer-constraints-unstable-v1-protocol.h
+[14/72] Generating protocols/presentation-time-protocol.h
+[15/72] Generating protocols/primary-selection-unstable-v1-protocol.h
+[16/72] Generating protocols/relative-pointer-unstable-v1-protocol.h
+[17/72] Generating protocols/single-pixel-buffer-v1-protocol.h
+[18/72] Generating protocols/tablet-unstable-v2-protocol.h
+[19/72] Generating protocols/tablet-v2-protocol.h
+[20/72] Generating protocols/wlr-layer-shell-unstable-v1-protocol.h
+[21/72] Generating protocols/viewporter-protocol.h
+[22/72] Generating protocols/wlr-output-power-management-unstable-v1-protocol.h
+[23/72] Generating protocols/xdg-activation-v1-protocol.h
+[24/72] Generating protocols/xdg-decoration-unstable-v1-protocol.h
+[25/72] Generating protocols/xdg-output-unstable-v1-protocol.h
+[26/72] Generating protocols/xdg-shell-protocol.h
+[27/72] Building C object CMakeFiles/chrono-theme-preview.dir/tools/preview.c.o
+[28/72] Building C object CMakeFiles/chronoctl.dir/tools/chronoctl.c.o
+[29/72] Building C object CMakeFiles/chrono-common.dir/common/ini.c.o
+[30/72] Building C object CMakeFiles/chrono.dir/compositor/buffer.c.o
+[31/72] Building C object CMakeFiles/chrono.dir/compositor/config.c.o
+[32/72] Building C object CMakeFiles/chrono.dir/compositor/main.c.o
+[33/72] Building C object CMakeFiles/chrono-common.dir/common/theme.c.o
+[34/72] Building C object CMakeFiles/chrono.dir/compositor/decor.c.o
+[35/72] Building C object CMakeFiles/chrono.dir/compositor/layer.c.o
+[36/72] Building C object CMakeFiles/chrono.dir/compositor/output.c.o
+[37/72] Building C object CMakeFiles/chrono.dir/compositor/switcher.c.o
+[38/72] Building C object CMakeFiles/chrono.dir/compositor/idle.c.o
+[39/72] Building C object CMakeFiles/chrono.dir/compositor/view.c.o
+[40/72] Building C object CMakeFiles/chrono.dir/compositor/input.c.o
+[41/72] Linking C executable chronoctl
+[42/72] Building C object CMakeFiles/chrono.dir/compositor/xwayland.c.o
+[43/72] Building C object CMakeFiles/chrono.dir/compositor/themewatch.c.o
+[44/72] Building C object CMakeFiles/chrono-common.dir/common/paint.c.o
+[45/72] Building C object CMakeFiles/chrono.dir/compositor/lock.c.o
+[46/72] Linking C static library libchrono-common.a
+[47/72] Linking C executable chrono-theme-preview
+[48/72] Building C object CMakeFiles/chrono.dir/compositor/ipc.c.o
+/src/compositor/ipc.c: In function 'ipc_init':
+/src/compositor/ipc.c:382:56: warning: '%s' directive output may be truncated writing up to 255 bytes into a region of size 108 [-Wformat-truncation=]
+  382 |         snprintf(addr.sun_path, sizeof addr.sun_path, "%s", s->ipc_path);
+      |                                                        ^~
+/src/compositor/ipc.c:382:9: note: 'snprintf' output between 1 and 256 bytes into a destination of size 108
+  382 |         snprintf(addr.sun_path, sizeof addr.sun_path, "%s", s->ipc_path);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[49/72] Linking C executable chrono
+[50/72] Automatic MOC for target chrono-qtcommon
+[51/72] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/chrono-qtcommon_autogen/mocs_compilation.cpp.o
+[52/72] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/icons.cpp.o
+[53/72] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/preview.cpp.o
+[54/72] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/chrono.cpp.o
+[55/72] Building CXX object qtcommon/CMakeFiles/chrono-qtcommon.dir/apps.cpp.o
+[56/72] Linking CXX static library qtcommon/libchrono-qtcommon.a
+[57/72] Automatic MOC for target chrono-settings
+[58/72] Automatic RCC for settings.qrc
+[59/72] Building CXX object settings/CMakeFiles/chrono-settings.dir/chrono-settings_autogen/EWIEGA46WW/qrc_settings.cpp.o
+[60/72] Automatic MOC for target chrono-shell
+[61/72] Automatic RCC for shell.qrc
+[62/72] Building CXX object settings/CMakeFiles/chrono-settings.dir/chrono-settings_autogen/mocs_compilation.cpp.o
+[63/72] Building CXX object shell/CMakeFiles/chrono-shell.dir/layer.cpp.o
+[64/72] Building CXX object shell/CMakeFiles/chrono-shell.dir/chrono-shell_autogen/mocs_compilation.cpp.o
+[65/72] Building CXX object shell/CMakeFiles/chrono-shell.dir/chrono-shell_autogen/EWIEGA46WW/qrc_shell.cpp.o
+[66/72] Building CXX object settings/CMakeFiles/chrono-settings.dir/main.cpp.o
+[67/72] Building CXX object shell/CMakeFiles/chrono-shell.dir/main.cpp.o
+[68/72] Building CXX object shell/CMakeFiles/chrono-shell.dir/system.cpp.o
+[69/72] Building CXX object settings/CMakeFiles/chrono-settings.dir/backend.cpp.o
+[70/72] Linking CXX executable settings/chrono-settings
+[71/72] Building CXX object shell/CMakeFiles/chrono-shell.dir/notifications.cpp.o
+[72/72] Linking CXX executable shell/chrono-shell
+-- Install configuration: "RelWithDebInfo"
+-- Installing: /usr/bin/chrono-theme-preview
+-- Installing: /usr/bin/chronoctl
+-- Installing: /usr/share/chrono/themes
+-- Installing: /usr/share/chrono/themes/yellow-tab.theme
+-- Installing: /usr/share/chrono/themes/topaz.theme
+-- Installing: /usr/share/chrono/themes/midnight.theme
+-- Installing: /usr/share/chrono/themes/liquid-glass.theme
+-- Installing: /usr/share/chrono/themes/ninety-five.theme
+-- Installing: /usr/share/chrono/themes/motif.theme
+-- Installing: /usr/share/chrono/themes/cyberpunk.theme
+-- Installing: /usr/share/chrono/themes/rose-pine.theme
+-- Installing: /usr/share/chrono/themes/meadow-silver.theme
+-- Installing: /usr/share/chrono/themes/meadow-olive.theme
+-- Installing: /usr/share/chrono/themes/latte.theme
+-- Installing: /usr/share/chrono/themes/rose-pine-dawn.theme
+-- Installing: /usr/share/chrono/themes/daylight.theme
+-- Installing: /usr/share/chrono/themes/solarized-dark.theme
+-- Installing: /usr/share/chrono/themes/dracula.theme
+-- Installing: /usr/share/chrono/themes/nord.theme
+-- Installing: /usr/share/chrono/themes/platinum.theme
+-- Installing: /usr/share/chrono/themes/starfield.theme
+-- Installing: /usr/share/chrono/themes/pinstripe.theme
+-- Installing: /usr/share/chrono/themes/high-contrast.theme
+-- Installing: /usr/share/chrono/themes/meadow.theme
+-- Installing: /usr/share/chrono/themes/material.theme
+-- Installing: /usr/share/chrono/themes/cube.theme
+-- Installing: /usr/share/chrono/themes/tokyo-night.theme
+-- Installing: /usr/share/chrono/themes/synthwave.theme
+-- Installing: /usr/share/chrono/themes/everforest.theme
+-- Installing: /usr/share/chrono/themes/mono.theme
+-- Installing: /usr/share/chrono/themes/solarized-light.theme
+-- Installing: /usr/share/chrono/themes/ninety-eight.theme
+-- Installing: /usr/share/chrono/themes/gruvbox.theme
+-- Installing: /usr/share/chrono/themes/terminal.theme
+-- Installing: /usr/share/chrono/themes/mocha.theme
+-- Installing: /usr/bin/chrono
+-- Installing: /usr/bin/chrono-shell
+-- Installing: /usr/bin/chrono-settings
+-- Installing: /usr/bin/chrono-session
+-- Installing: /usr/bin/chrono-screenshot
+-- Installing: /usr/bin/chrono-autostart
+-- Installing: /usr/share/wayland-sessions/chrono.desktop
+-- Installing: /usr/share/xdg-desktop-portal/chrono-portals.conf
+-- Installing: /etc/pam.d/chrono
+-- Installing: /usr/share/applications/chrono-settings.desktop
+
+Chrono is installed. Log out and pick “Chrono” in your login manager, or run chrono-session from a TTY.

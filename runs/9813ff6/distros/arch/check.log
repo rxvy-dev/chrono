@@ -1,0 +1,15 @@
+Unable to find image 'archlinux:latest' locally
+latest: Pulling from library/archlinux
+7450fb54bb4f: Pulling fs layer
+62956096fa4d: Pulling fs layer
+62956096fa4d: Download complete
+862d5806c467: Download complete
+ec0a8040d9fb: Download complete
+7450fb54bb4f: Download complete
+7450fb54bb4f: Pull complete
+62956096fa4d: Pull complete
+Digest: sha256:52dfbd5afb23a220d5ee92dafcb4c788d96c026ed04179890c23adef4c897fa0
+Status: Downloaded newer image for archlinux:latest
+== installing dependencies
+== using wlroots 0.20.2 from /usr/lib
+distro check passed

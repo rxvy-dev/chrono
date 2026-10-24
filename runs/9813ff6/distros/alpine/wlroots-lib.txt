@@ -1,0 +1,5 @@
+	libwlroots-0.20.so => /usr/lib/libwlroots-0.20.so (0x75f362385000)
+	libwayland-server.so.0 => /usr/lib/libwayland-server.so.0 (0x75f362372000)
+	libdrm.so.2 => /usr/lib/libdrm.so.2 (0x75f361ac1000)
+	libdrm_amdgpu.so.1 => /usr/lib/libdrm_amdgpu.so.1 (0x75f3531d7000)
+	libdrm_intel.so.1 => /usr/lib/libdrm_intel.so.1 (0x75f3531b2000)

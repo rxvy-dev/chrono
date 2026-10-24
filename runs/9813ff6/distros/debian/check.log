@@ -1,0 +1,68 @@
+Unable to find image 'debian:trixie' locally
+trixie: Pulling from library/debian
+8d0037029946: Pulling fs layer
+8d0037029946: Download complete
+5ec37b31f678: Download complete
+8d0037029946: Pull complete
+Digest: sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+Status: Downloaded newer image for debian:trixie
+libxkbcommon| Compiler for C supports arguments -Wformat=2: YES
+libxkbcommon| Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wnested-externs: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wbad-function-cast: YES
+libxkbcommon| Compiler for C supports arguments -Wshadow: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wlogical-op: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wdate-time: YES
+libxkbcommon| Compiler for C supports arguments -Wwrite-strings: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wno-documentation-deprecated-sync: NO
+libxkbcommon| Compiler for C supports arguments -Wno-pedantic: YES
+libxkbcommon| Compiler for C supports arguments /utf-8: NO
+libxkbcommon| Compiler for C supports arguments /wd4100: NO
+libxkbcommon| Compiler for C supports arguments /wd4127: NO
+libxkbcommon| Run-time dependency xkeyboard-config-2 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config found: YES 2.42
+libxkbcommon| Run-time dependency xkeyboard-config-12 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-11 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-10 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-9 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-8 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-7 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-6 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-5 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-4 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-3 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-2 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Dependency xkeyboard-config found: YES 2.42 (cached)
+libxkbcommon| Checking for type "max_align_t" : YES
+libxkbcommon| Has header "unistd.h" : YES
+libxkbcommon| Has header "dirent.h" : YES
+libxkbcommon| Checking if "__builtin_expect" links: YES
+libxkbcommon| Compiler for C supports arguments -Werror=attributes: YES
+libxkbcommon| Checking if "counted_by attribute for pointers" compiles: NO
+libxkbcommon| Header "unistd.h" has symbol "eaccess" : YES
+libxkbcommon| Header "unistd.h" has symbol "euidaccess" : YES
+libxkbcommon| Header "sys/mman.h" has symbol "mmap" : YES
+libxkbcommon| Header "stdlib.h" has symbol "mkostemp" : YES
+libxkbcommon| Header "fcntl.h" has symbol "posix_fallocate" : YES
+libxkbcommon| Header "string.h" has symbol "strndup" : YES
+libxkbcommon| Header "stdio.h" has symbol "asprintf" : YES
+libxkbcommon| Header "stdio.h" has symbol "open_memstream" : YES
+libxkbcommon| Header "stdlib.h" has symbol "secure_getenv" : YES
+libxkbcommon| Header "stdlib.h" has symbol "random" : YES
+libxkbcommon| Header "stdlib.h" has symbol "realpath" : YES
+libxkbcommon| Header "limits.h" has symbol "PATH_MAX" : YES
+libxkbcommon| Header "time.h" has symbol "CLOCK_PROCESS_CPUTIME_ID" : YES
+libxkbcommon| Header "time.h" has symbol "CLOCK_MONOTONIC" : YES
+libxkbcommon| Header "termios.h" has symbol "tcsetattr" : YES
+libxkbcommon| Checking for function "gnu_get_libc_version" : YES
+libxkbcommon| Header "locale.h" has symbol "newlocale" : YES
+libxkbcommon| Checking if "newlocale fails on invalid locales" runs: YES
+libxkbcommon| Header "wctype.h" has symbol "iswprint_l" : YES
+libxkbcommon| Checking if "-Wl,--version-script" links: YES
+libxkbcommon| Program scripts/map-to-def found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/scripts/map-to-def)
+libxkbcommon| Program bison win_bison found: NO
+
+subprojects/libxkbcommon/meson.build:383:8: ERROR: Program 'bison win_bison' not found or not executable
+
+A full log can be found at /src/build/deps/wlroots/build/meson-logs/meson-log.txt
