@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Window
 
 QtObject {
-	id: shell
+	id: root   // (not "shell": the panels have a property called shell, which would shadow the id)
 	readonly property bool launcherOpen: launcher.visible
 	readonly property bool quickOpen: quick.visible
 	readonly property bool calendarOpen: calendar.visible
@@ -113,31 +113,31 @@ QtObject {
 	}
 
 	property var panels: Instantiator {
-		model: shell.panelScreens
-		delegate: Panel { required property var modelData; screen: modelData; shell: shell }
+		model: root.panelScreens
+		delegate: Panel { required property var modelData; screen: modelData; shell: root }
 	}
 	property var docks: Instantiator {
-		model: Chrono.dockEnabled ? shell.panelScreens : []
-		delegate: Dock { required property var modelData; screen: modelData; shell: shell }
+		model: Chrono.dockEnabled ? root.panelScreens : []
+		delegate: Dock { required property var modelData; screen: modelData; shell: root }
 	}
 
-	property var launcherWin: Launcher { id: launcher; shell: shell }
-	property var quickPopup: QuickSettings { id: quick; shell: shell }
+	property var launcherWin: Launcher { id: launcher; shell: root }
+	property var quickPopup: QuickSettings { id: quick; shell: root }
 	property var calendarPopup: Calendar { id: calendar }
 	property var menuPopup: Menu { id: menu }
 	property var powerPopup: PowerMenu { id: power }
-	property var osdWindow: Osd { id: osd; screen: shell.primaryScreen() }
-	property var notes: NotificationPopups { screen: shell.primaryScreen() }
+	property var osdWindow: Osd { id: osd; screen: root.primaryScreen() }
+	property var notes: NotificationPopups { screen: root.primaryScreen() }
 
 	property var conn: Connections {
 		target: Chrono
-		function onLauncherRequested() { shell.toggleLauncher(null, undefined) }
-		function onPowerMenuRequested() { shell.openPowerMenu() }
-		function onNotificationsRequested() { calendar.toggle(shell.primaryScreen(), calendar.screen ? calendar.screen.width - 300 : 1000) }
+		function onLauncherRequested() { root.toggleLauncher(null, undefined) }
+		function onPowerMenuRequested() { root.openPowerMenu() }
+		function onNotificationsRequested() { calendar.toggle(root.primaryScreen(), calendar.screen ? calendar.screen.width - 300 : 1000) }
 		function onOsdRequested(kind) { osd.show(kind) }
 		function onWindowMenuRequested(info) {
 			const w = Chrono.windows.find(x => x.id === info.id)
-			if (w) menu.show(shell.primaryScreen(), info.x !== undefined ? info.x : 400, shell.windowMenuItems(w), w.title, info.y)
+			if (w) menu.show(root.primaryScreen(), info.x !== undefined ? info.x : 400, root.windowMenuItems(w), w.title, info.y)
 		}
 		function onLocked() { launcher.close(); quick.close(); calendar.close(); menu.close(); power.close() }
 	}

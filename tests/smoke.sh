@@ -106,10 +106,13 @@ chronoctl pointer 260 $((H - 22)) right >/dev/null; sleep 0.8; grim "$OUT/shell-
 chronoctl pointer 5 5 left >/dev/null; sleep 0.4
 chronoctl pointer 1200 $((H - 22)) right >/dev/null; sleep 0.8; grim "$OUT/shell-rightclick-panel.png"
 chronoctl pointer 5 5 left >/dev/null; sleep 0.4
+chronoctl pointer 28 $((H - 22)) left >/dev/null; sleep 0.8; grim "$OUT/shell-click-launcher.png"
+chronoctl pointer 5 5 left >/dev/null; sleep 0.4
 
 pgrep -x chrono-shell >/dev/null || { echo "::error::chrono-shell is not running"; fail=1; }
 grep -q "Assertion" "$OUT/chrono.log" && { echo "::error::an assertion failed"; fail=1; }
 grep -E "qrc:/.*(Error|error|TypeError|ReferenceError)" "$OUT/chrono.log" | sort -u | head -20 | sed "s/^/::warning::/"
+grep -qE "qrc:/.*(TypeError|ReferenceError)" "$OUT/chrono.log" && { echo "::error::the shell hit a script error (see above)"; fail=1; }
 chronoctl action "snap left" >/dev/null; sleep 0.4
 grim "$OUT/shot-snap.png"
 chronoctl action "maximize" >/dev/null; sleep 0.4
