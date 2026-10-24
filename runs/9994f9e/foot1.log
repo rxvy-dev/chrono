@@ -1,0 +1,3 @@
+warn: wayland.c:1888: compositor does not implement the xdg-toplevel-icon protocol
+warn: wayland.c:1893: text input interface not implemented by compositor; IME will be disabled
+warn: terminal.c:2034: slave exited with signal 1 (Hangup)
