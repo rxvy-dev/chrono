@@ -1,0 +1,30 @@
+00:00:00.000 [INFO] [backend/backend.c:342] Loading user-specified backends due to WLR_BACKENDS: headless
+00:00:00.000 [INFO] [backend/headless/backend.c:60] Creating headless backend
+00:00:00.000 [INFO] [util/env.c:25] Loading WLR_RENDERER option: pixman
+00:00:00.000 [INFO] [render/pixman/renderer.c:328] Creating pixman renderer
+00:00:00.000 [DEBUG] [render/allocator/allocator.c:132] Trying to create shm allocator
+00:00:00.000 [DEBUG] [render/allocator/shm.c:119] Created shm allocator
+00:00:00.002 [DEBUG] [xcursor/wlr_xcursor.c:233] Loaded cursor theme 'Adwaita' at size 24 (59 available cursors)
+00:00:00.003 [INFO] [xwayland/sockets.c:102] Created /tmp/.X11-unix ourselves -- other users will be unable to create X11 UNIX sockets of their own
+00:00:00.003 [INFO] [backend/headless/backend.c:17] Starting headless backend
+00:00:00.003 [DEBUG] [types/output/render.c:123] Attaching empty buffer to output for modeset
+00:00:00.003 [DEBUG] [types/output/swapchain.c:27] Choosing primary buffer format XR24 (0x34325258) for output 'HEADLESS-1'
+00:00:00.003 [DEBUG] [types/output/swapchain.c:96] Testing swapchain for output 'HEADLESS-1'
+00:00:00.003 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.003 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 1280x720
+00:00:00.007 [DEBUG] [render/swapchain.c:103] Allocating new swapchain buffer
+00:00:00.007 [DEBUG] [render/pixman/renderer.c:186] Created pixman buffer 24x24
+00:00:00.007 [INFO] [/src/compositor/main.c:407] Chrono 0.1.0 running on WAYLAND_DISPLAY=wayland-0 (theme: Midnight)
+00:00:00.021 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out enabled
+00:00:00.121 [INFO] [/src/compositor/main.c:94] chrono-shell exited (status 139), restarting
+00:00:00.228 [INFO] [/src/compositor/main.c:94] chrono-shell exited (status 139), restarting
+00:00:00.343 [INFO] [/src/compositor/main.c:94] chrono-shell exited (status 139), restarting
+00:00:00.433 [INFO] [/src/compositor/main.c:94] chrono-shell exited (status 139), restarting
+00:00:00.538 [INFO] [/src/compositor/main.c:94] chrono-shell exited (status 139), restarting
+00:00:00.644 [ERROR] [/src/compositor/main.c:97] chrono-shell keeps exiting; not restarting it again
+00:00:06.304 [DEBUG] [types/wlr_compositor.c:785] New wlr_surface 0x5c45022b1e40 (res 0x5c45022b2210)
+00:00:06.304 [DEBUG] [types/xdg_shell/wlr_xdg_surface.c:441] new xdg_surface 0x5c45022b28a0 (res 0x5c45022b2a00)
+00:00:06.304 [DEBUG] [types/wlr_xdg_decoration_v1.c:220] new xdg_toplevel_decoration 0x5c45022b4ce0 (res 0x5c45022b4e30)
+00:00:06.325 [DEBUG] [types/scene/wlr_scene.c:2465] Direct scan-out disabled
+00:00:11.205 [DEBUG] [types/output/render.c:142] Disabling direct scan-out on output 'HEADLESS-1' (locks: 1)
+00:00:11.207 [DEBUG] [types/output/render.c:142] Enabling direct scan-out on output 'HEADLESS-1' (locks: 0)
