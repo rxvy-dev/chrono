@@ -1,0 +1,12 @@
+Unable to find image 'fedora:latest' locally
+latest: Pulling from library/fedora
+59259e167f13: Pulling fs layer
+dc7d8fa277cd: Download complete
+3ebbaf332340: Download complete
+59259e167f13: Download complete
+59259e167f13: Pull complete
+Digest: sha256:43b29f65a41eb9c35e1cd5323e3bdf3b655c2357a9f4f1ff2f9c2798e5045d80
+Status: Downloaded newer image for fedora:latest
+== installing dependencies
+== using wlroots 0.20.2 from /usr/lib64
+distro check passed

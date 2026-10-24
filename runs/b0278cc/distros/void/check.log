@@ -1,0 +1,15 @@
+Unable to find image 'ghcr.io/void-linux/void-glibc-full:latest' locally
+latest: Pulling from void-linux/void-glibc-full
+b81bbb142a83: Pulling fs layer
+1c3fe1437540: Pulling fs layer
+b81bbb142a83: Download complete
+1c3fe1437540: Download complete
+1c3fe1437540: Pull complete
+b81bbb142a83: Pull complete
+Digest: sha256:9eb02d7ed63f77b785f5b597099292767fab23bbb824aa987f93ac583d8aa44f
+Status: Downloaded newer image for ghcr.io/void-linux/void-glibc-full:latest
+== installing dependencies
+== using wlroots 0.20.2 from /usr/lib64
+tests/distro-check.sh: 16: ldd: not found
+tests/distro-check.sh: 17: ldd: not found
+distro check passed
