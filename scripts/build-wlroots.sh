@@ -55,10 +55,11 @@ too_old() { grep -iE "Dependency $1 found: NO.*need: '>=" "$WORK/setup.log" | gr
 
 need=$(required wayland-server); [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-server && build_wayland "$need"
 need=$(required wayland-protocols); [ -n "$need" ] && ! pkg-config --atleast-version="$need" wayland-protocols && build_protocols "$need"
-# second chance from meson's own error messages (the requirement may live in a variable)
+# second chance from meson's own error messages; anything else too old (libdrm on Debian 13...)
+# comes from the wrap fallbacks wlroots ships, installed into the same private prefix
 for attempt in 1 2 3; do
 	rm -rf "$WORK/wlroots/build"
-	(cd "$WORK/wlroots" && meson setup build --prefix="$PREFIX" --libdir=lib --buildtype=release -Dexamples=false) >"$WORK/setup.log" 2>&1 && break
+	(cd "$WORK/wlroots" && meson setup build --prefix="$PREFIX" --libdir=lib --buildtype=release -Dexamples=false --wrap-mode=default) >"$WORK/setup.log" 2>&1 && break
 	w=$(too_old wayland-server); p=$(too_old wayland-protocols)
 	[ -z "$w$p" ] && { cat "$WORK/setup.log"; exit 1; }
 	[ -n "$w" ] && build_wayland "$w"

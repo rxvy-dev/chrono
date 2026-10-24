@@ -13,8 +13,10 @@ printf '[general]\ntheme = midnight\n[power]\nlock_after = 0\nscreen_off_after =
 fail=0
 err() { echo "::error::$*"; fail=1; }
 
-ldd "$(command -v chrono)" | grep -q "not found" && { ldd "$(command -v chrono)" | grep "not found"; err "chrono has missing libraries"; }
-ldd "$(command -v chrono)" | grep wlroots > "$OUT/wlroots-lib.txt"
+if command -v ldd >/dev/null; then
+	ldd "$(command -v chrono)" | grep -q "not found" && { ldd "$(command -v chrono)" | grep "not found"; err "chrono has missing libraries"; }
+	ldd "$(command -v chrono)" | grep -E "wlroots|wayland-server|drm" > "$OUT/wlroots-lib.txt"
+fi
 
 chrono -d >"$OUT/chrono.log" 2>&1 &
 PID=$!
