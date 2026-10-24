@@ -1,0 +1,68 @@
+Unable to find image 'ubuntu:24.04' locally
+24.04: Pulling from library/ubuntu
+f2b4ef06ff01: Pulling fs layer
+f2b4ef06ff01: Download complete
+5486761bbbdb: Download complete
+f2b4ef06ff01: Pull complete
+Digest: sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac
+Status: Downloaded newer image for ubuntu:24.04
+Compiler for C supports arguments -Wlogical-op: YES 
+Compiler for C supports arguments -Wmissing-include-dirs: YES 
+Compiler for C supports arguments -Wold-style-definition: YES 
+Compiler for C supports arguments -Wpointer-arith: YES 
+Compiler for C supports arguments -Winit-self: YES 
+Compiler for C supports arguments -Wstrict-prototypes: YES 
+Compiler for C supports arguments -Wimplicit-fallthrough=2: YES 
+Compiler for C supports arguments -Wendif-labels: YES 
+Compiler for C supports arguments -Wstrict-aliasing=2: YES 
+Compiler for C supports arguments -Woverflow: YES 
+Compiler for C supports arguments -Wmissing-prototypes: YES 
+Compiler for C supports arguments -Walloca: YES 
+Compiler for C supports arguments -Wno-missing-braces: YES 
+Compiler for C supports arguments -Wno-missing-field-initializers: YES 
+Compiler for C supports arguments -Wno-unused-parameter: YES 
+Compiler for C supports arguments -fmacro-prefix-map=/prefix/to/hide=: YES 
+Found pkg-config: YES (/usr/bin/pkg-config) 1.8.1
+Dependency wayland-server for host machine found: NO. Found 1.22.0 but need: '>=1.24.0'
+Found CMake: /usr/bin/cmake (3.28.3)
+Run-time dependency wayland-server found: NO  (tried pkg-config and cmake)
+Looking for a fallback subproject for the dependency wayland-server
+
+Executing subproject wayland for machine: host 
+
+wayland| Project name: wayland
+wayland| Project version: 1.26.90
+wayland| C compiler for the host machine: cc (gcc 13.3.0 "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0")
+wayland| C linker for the host machine: cc ld.bfd 2.42
+wayland| Compiler for C supports arguments -Wno-unused-parameter: YES (cached)
+wayland| Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+wayland| Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+wayland| Compiler for C supports arguments -fvisibility=hidden: YES
+wayland| Has header "sys/prctl.h" : YES
+wayland| Has header "sys/procctl.h" : NO
+wayland| Has header "sys/ucred.h" : NO
+wayland| Checking for function "accept4" : YES
+wayland| Checking for function "mkostemp" : YES
+wayland| Checking for function "posix_fallocate" : YES
+wayland| Checking for function "ppoll" : YES
+wayland| Checking for function "prctl" : YES
+wayland| Checking for function "memfd_create" : YES
+wayland| Checking for function "mremap" : YES
+wayland| Checking for function "strndup" : YES
+wayland| Checking for function "gettid" : YES
+wayland| Checking whether type "struct xucred" has member "cr_pid" : NO
+wayland| Run-time dependency libffi found: YES 3.4.6
+wayland| Header "sys/signalfd.h" has symbol "SFD_CLOEXEC" : YES
+wayland| Header "sys/timerfd.h" has symbol "TFD_CLOEXEC" : YES
+wayland| Header "time.h" has symbol "CLOCK_MONOTONIC" : YES
+wayland| Checking for function "clock_gettime" : NO
+wayland| Library rt found: YES
+wayland| Checking for function "clock_gettime" with dependency -lrt: YES
+wayland| Configuring config.h using configuration
+wayland| Configuring wayland-version.h using configuration
+wayland| Run-time dependency expat found: YES 2.6.1
+wayland| Run-time dependency libxml-2.0 found: NO  (tried pkg-config and cmake)
+
+subprojects/wayland/src/meson.build:36:18: ERROR: Dependency "libxml-2.0" not found (tried pkg-config and cmake)
+
+A full log can be found at /src/build/deps/wlroots/build/meson-logs/meson-log.txt

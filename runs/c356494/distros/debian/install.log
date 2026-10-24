@@ -1,0 +1,150 @@
+libdrm| Compiler for C supports arguments -Werror=implicit-function-declaration: YES
+libdrm| Compiler for C supports arguments -Wpointer-arith: YES (cached)
+libdrm| Compiler for C supports arguments -Wwrite-strings: YES
+libdrm| Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+libdrm| Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+libdrm| Compiler for C supports arguments -Wmissing-declarations: YES
+libdrm| Compiler for C supports arguments -Wnested-externs: YES
+libdrm| Compiler for C supports arguments -Wpacked: YES
+libdrm| Compiler for C supports arguments -Wswitch-enum: YES
+libdrm| Compiler for C supports arguments -Wmissing-format-attribute: YES
+libdrm| Compiler for C supports arguments -Wstrict-aliasing=2: YES (cached)
+libdrm| Compiler for C supports arguments -Winit-self: YES (cached)
+libdrm| Compiler for C supports arguments -Winline: YES
+libdrm| Compiler for C supports arguments -Wshadow: YES
+libdrm| Compiler for C supports arguments -Wdeclaration-after-statement: YES
+libdrm| Compiler for C supports arguments -Wold-style-definition: YES (cached)
+libdrm| Compiler for C supports arguments -Wno-unused-parameter: YES (cached)
+libdrm| Compiler for C supports arguments -Wno-attributes: YES
+libdrm| Compiler for C supports arguments -Wno-long-long: YES
+libdrm| Compiler for C supports arguments -Wno-missing-field-initializers: YES (cached)
+libdrm| Run-time dependency cairo found: YES 1.18.4
+libdrm| Run-time dependency valgrind found: NO (tried pkgconfig)
+libdrm| Program rst2man rst2man.py found: NO
+libdrm| Compiler for C supports function attribute visibility:hidden: YES
+libdrm| Configuring config.h using configuration
+libdrm| Program tests/gen4-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen4-3d.batch.sh)
+libdrm| Program tests/gm45-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gm45-3d.batch.sh)
+libdrm| Program tests/gen5-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen5-3d.batch.sh)
+libdrm| Program tests/gen6-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen6-3d.batch.sh)
+libdrm| Program tests/gen7-3d.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen7-3d.batch.sh)
+libdrm| Program tests/gen7-2d-copy.batch.sh found: YES (/src/build/deps/wlroots/subprojects/libdrm/intel/tests/gen7-2d-copy.batch.sh)
+libdrm| Build targets in project: 7
+libdrm| Subproject libdrm finished.
+
+Dependency libdrm found: YES 2.4.134 (overridden)
+Dependency xkbcommon found: NO. Found 1.7.0 but need: '>=1.8.0'
+Run-time dependency xkbcommon found: NO (tried pkgconfig and cmake)
+Looking for a fallback subproject for the dependency xkbcommon
+
+Executing subproject libxkbcommon 
+
+libxkbcommon| Project name: xkbcommon
+libxkbcommon| Project version: 1.14.0-beta2
+libxkbcommon| C compiler for the host machine: cc (gcc 14.2.0 "cc (Debian 14.2.0-19) 14.2.0")
+libxkbcommon| C linker for the host machine: cc ld.bfd 2.44
+libxkbcommon| Compiler for C supports arguments -fno-strict-aliasing: YES
+libxkbcommon| Compiler for C supports arguments -Wno-unused-parameter: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wno-missing-field-initializers: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wpointer-arith: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wmissing-declarations: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wformat=2: YES
+libxkbcommon| Compiler for C supports arguments -Wstrict-prototypes: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wmissing-prototypes: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wnested-externs: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wbad-function-cast: YES
+libxkbcommon| Compiler for C supports arguments -Wshadow: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wlogical-op: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wdate-time: YES
+libxkbcommon| Compiler for C supports arguments -Wwrite-strings: YES (cached)
+libxkbcommon| Compiler for C supports arguments -Wno-documentation-deprecated-sync: NO
+libxkbcommon| Compiler for C supports arguments -Wno-pedantic: YES
+libxkbcommon| Compiler for C supports arguments /utf-8: NO
+libxkbcommon| Compiler for C supports arguments /wd4100: NO
+libxkbcommon| Compiler for C supports arguments /wd4127: NO
+libxkbcommon| Run-time dependency xkeyboard-config-2 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config found: YES 2.42
+libxkbcommon| Run-time dependency xkeyboard-config-12 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-11 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-10 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-9 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-8 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-7 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-6 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-5 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-4 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-3 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Run-time dependency xkeyboard-config-2 found: NO (tried pkgconfig and cmake)
+libxkbcommon| Dependency xkeyboard-config found: YES 2.42 (cached)
+libxkbcommon| Checking for type "max_align_t" : YES
+libxkbcommon| Has header "unistd.h" : YES
+libxkbcommon| Has header "dirent.h" : YES
+libxkbcommon| Checking if "__builtin_expect" links: YES
+libxkbcommon| Compiler for C supports arguments -Werror=attributes: YES
+libxkbcommon| Checking if "counted_by attribute for pointers" compiles: NO
+libxkbcommon| Header "unistd.h" has symbol "eaccess" : YES
+libxkbcommon| Header "unistd.h" has symbol "euidaccess" : YES
+libxkbcommon| Header "sys/mman.h" has symbol "mmap" : YES
+libxkbcommon| Header "stdlib.h" has symbol "mkostemp" : YES
+libxkbcommon| Header "fcntl.h" has symbol "posix_fallocate" : YES
+libxkbcommon| Header "string.h" has symbol "strndup" : YES
+libxkbcommon| Header "stdio.h" has symbol "asprintf" : YES
+libxkbcommon| Header "stdio.h" has symbol "open_memstream" : YES
+libxkbcommon| Header "stdlib.h" has symbol "secure_getenv" : YES
+libxkbcommon| Header "stdlib.h" has symbol "random" : YES
+libxkbcommon| Header "stdlib.h" has symbol "realpath" : YES
+libxkbcommon| Header "limits.h" has symbol "PATH_MAX" : YES
+libxkbcommon| Header "time.h" has symbol "CLOCK_PROCESS_CPUTIME_ID" : YES
+libxkbcommon| Header "time.h" has symbol "CLOCK_MONOTONIC" : YES
+libxkbcommon| Header "termios.h" has symbol "tcsetattr" : YES
+libxkbcommon| Checking for function "gnu_get_libc_version" : YES
+libxkbcommon| Header "locale.h" has symbol "newlocale" : YES
+libxkbcommon| Checking if "newlocale fails on invalid locales" runs: YES
+libxkbcommon| Header "wctype.h" has symbol "iswprint_l" : YES
+libxkbcommon| Checking if "-Wl,--version-script" links: YES
+libxkbcommon| Program scripts/map-to-def found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/scripts/map-to-def)
+libxkbcommon| Program bison found: YES 3.8.2 3.8.2 (/usr/bin/bison)
+libxkbcommon| Program /src/build/deps/wlroots/subprojects/libxkbcommon/scripts/yacc-wrapper found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/scripts/yacc-wrapper)
+libxkbcommon| Run-time dependency icu-uc found: YES 76.1
+libxkbcommon| Program python3 found: YES (/usr/bin/python3)
+libxkbcommon| Program ../scripts/gen-evdev-scancodes-lookup.py found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/test/../scripts/gen-evdev-scancodes-lookup.py)
+libxkbcommon| Configuring test-config.h using configuration
+libxkbcommon| C++ compiler for the host machine: c++ (gcc 14.2.0 "c++ (Debian 14.2.0-19) 14.2.0")
+libxkbcommon| C++ linker for the host machine: c++ ld.bfd 2.44
+libxkbcommon| Library m found: YES
+libxkbcommon| Program python3 (jinja2) found: NO
+libxkbcommon| Program symbols-leak-test.py found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/test/symbols-leak-test.py)
+libxkbcommon| Program valgrind found: NO
+libxkbcommon| Message: valgrind not found, disabling valgrind test setup
+libxkbcommon| Configuring xkeyboard-config-test using configuration
+libxkbcommon| Header "getopt.h" has symbol "getopt_long" : YES
+libxkbcommon| Configuring config.h using configuration
+libxkbcommon| Build targets in project: 53
+libxkbcommon| Subproject libxkbcommon finished.
+
+Dependency xkbcommon found: YES 1.14.0-beta2 (overridden)
+Run-time dependency pixman-1 found: YES 0.44.0
+Library m found: YES
+Library rt found: YES
+Run-time dependency wayland-protocols found: YES 1.49
+Build-time dependency wayland-scanner found: YES 1.24.91
+Program /usr/lib/chrono/wlroots/bin/wayland-scanner found: YES (/usr/lib/chrono/wlroots/bin/wayland-scanner)
+Has header "linux/dma-buf.h" : YES 
+Checking if define "DMA_BUF_IOCTL_IMPORT_SYNC_FILE" exists: YES 
+Has header "sys/eventfd.h" : YES 
+Has header "linux/sync_file.h" : YES 
+Run-time dependency egl found: YES 1.5
+Fetching value of define "EGL_EGLEXT_VERSION" with dependency egl: 20211210 
+Run-time dependency gbm found: YES 25.0.7-2+deb13u1
+Run-time dependency glesv2 found: YES 3.2
+Program glslang found: YES (/usr/bin/glslang)
+Program ./check.sh found: YES (/bin/sh -eu /src/build/deps/wlroots/render/gles2/shaders/./check.sh)
+Program ./embed.sh found: YES (/src/build/deps/wlroots/render/gles2/shaders/./embed.sh)
+Run-time dependency vulkan found: YES 1.4.309
+Check usable header "vulkan/vulkan.h" with dependency vulkan: YES 
+Program glslang found: YES (/usr/bin/glslang)
+Dependency pixman-1 found: NO found 0.44.0 but need: '>=0.46.0' (cached)
+
+render/pixman/meson.build:1:9: ERROR: Dependency 'pixman-1' is required but not found.
+
+A full log can be found at /src/build/deps/wlroots/build/meson-logs/meson-log.txt

@@ -1,0 +1,68 @@
+Unable to find image 'debian:trixie' locally
+trixie: Pulling from library/debian
+8d0037029946: Pulling fs layer
+5ec37b31f678: Download complete
+8d0037029946: Download complete
+8d0037029946: Pull complete
+Digest: sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+Status: Downloaded newer image for debian:trixie
+libxkbcommon| Header "stdio.h" has symbol "asprintf" : YES
+libxkbcommon| Header "stdio.h" has symbol "open_memstream" : YES
+libxkbcommon| Header "stdlib.h" has symbol "secure_getenv" : YES
+libxkbcommon| Header "stdlib.h" has symbol "random" : YES
+libxkbcommon| Header "stdlib.h" has symbol "realpath" : YES
+libxkbcommon| Header "limits.h" has symbol "PATH_MAX" : YES
+libxkbcommon| Header "time.h" has symbol "CLOCK_PROCESS_CPUTIME_ID" : YES
+libxkbcommon| Header "time.h" has symbol "CLOCK_MONOTONIC" : YES
+libxkbcommon| Header "termios.h" has symbol "tcsetattr" : YES
+libxkbcommon| Checking for function "gnu_get_libc_version" : YES
+libxkbcommon| Header "locale.h" has symbol "newlocale" : YES
+libxkbcommon| Checking if "newlocale fails on invalid locales" runs: YES
+libxkbcommon| Header "wctype.h" has symbol "iswprint_l" : YES
+libxkbcommon| Checking if "-Wl,--version-script" links: YES
+libxkbcommon| Program scripts/map-to-def found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/scripts/map-to-def)
+libxkbcommon| Program bison found: YES 3.8.2 3.8.2 (/usr/bin/bison)
+libxkbcommon| Program /src/build/deps/wlroots/subprojects/libxkbcommon/scripts/yacc-wrapper found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/scripts/yacc-wrapper)
+libxkbcommon| Run-time dependency icu-uc found: YES 76.1
+libxkbcommon| Program python3 found: YES (/usr/bin/python3)
+libxkbcommon| Program ../scripts/gen-evdev-scancodes-lookup.py found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/test/../scripts/gen-evdev-scancodes-lookup.py)
+libxkbcommon| Configuring test-config.h using configuration
+libxkbcommon| C++ compiler for the host machine: c++ (gcc 14.2.0 "c++ (Debian 14.2.0-19) 14.2.0")
+libxkbcommon| C++ linker for the host machine: c++ ld.bfd 2.44
+libxkbcommon| Library m found: YES
+libxkbcommon| Program python3 (jinja2) found: NO
+libxkbcommon| Program symbols-leak-test.py found: YES (/src/build/deps/wlroots/subprojects/libxkbcommon/test/symbols-leak-test.py)
+libxkbcommon| Program valgrind found: NO
+libxkbcommon| Message: valgrind not found, disabling valgrind test setup
+libxkbcommon| Configuring xkeyboard-config-test using configuration
+libxkbcommon| Header "getopt.h" has symbol "getopt_long" : YES
+libxkbcommon| Configuring config.h using configuration
+libxkbcommon| Build targets in project: 53
+libxkbcommon| Subproject libxkbcommon finished.
+
+Dependency xkbcommon found: YES 1.14.0-beta2 (overridden)
+Run-time dependency pixman-1 found: YES 0.44.0
+Library m found: YES
+Library rt found: YES
+Run-time dependency wayland-protocols found: YES 1.49
+Build-time dependency wayland-scanner found: YES 1.24.91
+Program /usr/lib/chrono/wlroots/bin/wayland-scanner found: YES (/usr/lib/chrono/wlroots/bin/wayland-scanner)
+Has header "linux/dma-buf.h" : YES 
+Checking if define "DMA_BUF_IOCTL_IMPORT_SYNC_FILE" exists: YES 
+Has header "sys/eventfd.h" : YES 
+Has header "linux/sync_file.h" : YES 
+Run-time dependency egl found: YES 1.5
+Fetching value of define "EGL_EGLEXT_VERSION" with dependency egl: 20211210 
+Run-time dependency gbm found: YES 25.0.7-2+deb13u1
+Run-time dependency glesv2 found: YES 3.2
+Program glslang found: YES (/usr/bin/glslang)
+Program ./check.sh found: YES (/bin/sh -eu /src/build/deps/wlroots/render/gles2/shaders/./check.sh)
+Program ./embed.sh found: YES (/src/build/deps/wlroots/render/gles2/shaders/./embed.sh)
+Run-time dependency vulkan found: YES 1.4.309
+Check usable header "vulkan/vulkan.h" with dependency vulkan: YES 
+Program glslang found: YES (/usr/bin/glslang)
+Dependency pixman-1 found: NO found 0.44.0 but need: '>=0.46.0' (cached)
+
+render/pixman/meson.build:1:9: ERROR: Dependency 'pixman-1' is required but not found.
+
+A full log can be found at /src/build/deps/wlroots/build/meson-logs/meson-log.txt
