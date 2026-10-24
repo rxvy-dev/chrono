@@ -17,21 +17,32 @@ that lets you change everything without touching a config file.
 
 ## Install
 
-Arch Linux:
+One command on any supported distro. It installs the dependencies with your package manager, builds, and installs to `/usr`:
 
 ```sh
-sudo pacman -S --needed base-devel cmake ninja wlroots0.20 wayland wayland-protocols libinput \
-  libxkbcommon pixman cairo pango pam xcb-util-wm xorg-xwayland qt6-base qt6-declarative \
-  qt6-wayland layer-shell-qt
-# recommended extras
-sudo pacman -S --needed foot grim slurp wl-clipboard brightnessctl playerctl libnotify \
-  pipewire-pulse wireplumber networkmanager adwaita-icon-theme
 git clone https://github.com/rxvy-dev/chrono && cd chrono
 ./install.sh
 ```
 
-Other distros: install the same libraries (wlroots **0.20** is required) and run `./install.sh`.
-It builds with CMake and installs to `/usr` so login managers find the session.
+Update later with `git pull && ./install.sh`. Remove with `./install.sh --uninstall`.
+
+| Distro | Status |
+|---|---|
+| Arch, EndeavourOS, Manjaro, CachyOS, Artix | ✅ tested in CI |
+| Fedora (and Nobara) | ✅ tested in CI |
+| Debian 13 (trixie) | ✅ tested in CI (builds its own newer wlroots, first install takes a few extra minutes) |
+| Ubuntu 25.10+ (and Kubuntu, etc.) | ✅ tested in CI |
+| Void Linux | ✅ tested in CI |
+| openSUSE Tumbleweed | ✅ tested in CI |
+| Alpine (edge) | ✅ tested in CI |
+| Ubuntu 24.04 LTS, Linux Mint 22, Pop!_OS 22/24 | ⚠️ builds, but not working yet (its Qt is too old) |
+| Gentoo, NixOS, others | install the packages `./install.sh` lists, then run `./install.sh --no-deps` |
+
+Chrono needs wlroots **0.20**. If your distro doesn't package it, `install.sh` builds a private copy in
+`/usr/lib/chrono/wlroots` (plus anything else too old for it). Your system's own libraries are never replaced.
+
+Options: `--no-deps` (skip the package manager), `--prefix /usr/local`, `--uninstall`.
+To see the package list for your distro without installing anything: `scripts/install-deps.sh --print`.
 
 Then pick **Chrono** in your login manager, or run `chrono-session` from a TTY.
 
