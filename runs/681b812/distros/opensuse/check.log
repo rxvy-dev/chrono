@@ -1,0 +1,10 @@
+Unable to find image 'opensuse/tumbleweed:latest' locally
+latest: Pulling from opensuse/tumbleweed
+0dd9453e3496: Pulling fs layer
+0dd9453e3496: Download complete
+0dd9453e3496: Pull complete
+Digest: sha256:dd9dd83d48156b3c1acbdb2760e1031cfea5238f9f762a4e24db7061e651afae
+Status: Downloaded newer image for opensuse/tumbleweed:latest
+== installing dependencies
+== using wlroots 0.20.2 from /usr/lib64
+distro check passed

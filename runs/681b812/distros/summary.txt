@@ -1,0 +1,8 @@
+alpine=pass
+arch=pass
+debian=pass
+fedora=pass
+opensuse=pass
+ubuntu=pass
+ubuntu-lts=installed-but-check-failed
+void=pass

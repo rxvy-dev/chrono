@@ -1,0 +1,15 @@
+Unable to find image 'ubuntu:24.04' locally
+24.04: Pulling from library/ubuntu
+f2b4ef06ff01: Pulling fs layer
+5486761bbbdb: Download complete
+f2b4ef06ff01: Download complete
+f2b4ef06ff01: Pull complete
+Digest: sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac
+Status: Downloaded newer image for ubuntu:24.04
+== installing dependencies
+== your distro doesn't package wlroots 0.20 yet: building a private copy in /usr/lib/chrono/wlroots
+== meson 1.3.2 is too old: using a newer one from PyPI (private venv)
+== building wlroots 0.20.2 into /usr/lib/chrono/wlroots
+== wlroots 0.20.2 installed in /usr/lib/chrono/wlroots
+== using wlroots 0.20.2 from /usr/lib/chrono/wlroots/lib
+::error::chrono-shell is not running
