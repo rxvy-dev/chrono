@@ -146,6 +146,7 @@ Super+F1 = none        ; turn a built-in shortcut off
 | Oxocarbon | modern | graphite, square, one pink spark | |
 | Sakura | modern | cherry-blossom pink, light | |
 | Vaporwave | modern | pastel pink/cyan, sunset grid | |
+| Evil | modern | pitch black and blood red, gothic titles (install UnifrakturMaguntia for blackletter) | |
 | Classic Bevel | retro | mid-90s grey 3D bevels, solid navy titles | |
 | Ninety-Eight | retro | late-90s grey bevels, navy-to-sky title gradient | |
 | Platinum | retro | grey ridged title bars | |
