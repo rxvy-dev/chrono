@@ -116,6 +116,11 @@ if(CHRONO_COMPOSITOR)
     CHRONO_LIBEXECDIR="${CMAKE_INSTALL_FULL_LIBEXECDIR}")
   target_link_libraries(chrono PRIVATE chrono-common PkgConfig::WLROOTS PkgConfig::WLDEPS ${PAM_LIB} m)
   target_link_options(chrono PRIVATE -rdynamic)   # function names in crash backtraces
+  # a private wlroots (scripts/build-wlroots.sh, for distros without 0.20) is found through the RPATH
+  if(WLROOTS_LIBRARY_DIRS AND NOT WLROOTS_LIBRARY_DIRS MATCHES "^/usr/lib(64)?$|^/usr/lib/[^/]+-linux-gnu$")
+    set_target_properties(chrono PROPERTIES INSTALL_RPATH "${WLROOTS_LIBRARY_DIRS}")
+    message(STATUS "wlroots from ${WLROOTS_LIBRARY_DIRS} (RPATH set)")
+  endif()
 
   if(CHRONO_XWAYLAND)
     pkg_check_modules(XCB IMPORTED_TARGET xcb xcb-icccm)

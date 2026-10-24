@@ -1,0 +1,75 @@
+name: distros
+# Runs the real ./install.sh in a fresh container of each distro, then starts the installed
+# desktop headless (tests/distro-check.sh). Screenshots + logs go to the ci-results branch.
+on:
+  push:
+    branches-ignore: [ci-results]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: fedora,     image: "fedora:latest" }
+          - { name: debian,     image: "debian:trixie" }
+          - { name: ubuntu,     image: "ubuntu:rolling" }
+          - { name: ubuntu-lts, image: "ubuntu:24.04" }
+          - { name: void,       image: "ghcr.io/void-linux/void-glibc-full:latest" }
+          - { name: opensuse,   image: "opensuse/tumbleweed:latest" }
+          - { name: alpine,     image: "alpine:edge" }
+          - { name: arch,       image: "archlinux:latest" }
+    steps:
+      - uses: actions/checkout@v4
+      - name: install.sh + run the installed desktop on ${{ matrix.name }}
+        run: |
+          mkdir -p out
+          docker run --rm -v "$PWD:/src" -w /src "${{ matrix.image }}" sh -c '
+            # the bare images lack sudo/git; real installs already have them
+            if command -v pacman >/dev/null; then pacman -Syu --noconfirm --needed sudo git;
+            elif command -v dnf >/dev/null; then dnf install -y sudo git findutils;
+            elif command -v apt-get >/dev/null; then apt-get update && apt-get install -y sudo git;
+            elif command -v xbps-install >/dev/null; then xbps-install -Syu xbps && xbps-install -Syu sudo git;
+            elif command -v zypper >/dev/null; then zypper --non-interactive install sudo git findutils;
+            elif command -v apk >/dev/null; then apk add sudo git findutils;
+            fi >/dev/null 2>&1
+            git config --global --add safe.directory /src
+            rm -rf build
+            ./install.sh > out/install.log 2>&1 && touch out/install.ok || { tail -60 out/install.log; exit 1; }
+            grep -E "^== " out/install.log
+            sh tests/distro-check.sh out
+          ' 2>&1 | tee out/check.log
+          grep -q "distro check passed" out/check.log
+      - name: Upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: distro-${{ matrix.name }}
+          path: out/
+  publish:
+    needs: install
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: dl }
+      - name: Push to ci-results
+        run: |
+          git config user.name chrono-ci; git config user.email ci@chrono.invalid
+          for try in 1 2 3 4 5; do
+            git fetch origin ci-results && git checkout -qf FETCH_HEAD || exit 1
+            dest="runs/${GITHUB_SHA::7}/distros"; mkdir -p "$dest"
+            for d in dl/distro-*; do n=${d#dl/distro-}; mkdir -p "$dest/$n"
+              for f in install.log check.log chrono.log settings.log screen.png wlroots-lib.txt install.ok; do
+                [ -f "$d/$f" ] && { if [ "$f" = install.log ]; then tail -150 "$d/$f" > "$dest/$n/$f"; else cp "$d/$f" "$dest/$n/"; fi; }
+              done
+              if grep -q "distro check passed" "$d/check.log" 2>/dev/null; then echo "$n=pass"; elif [ -f "$d/install.ok" ]; then echo "$n=installed-but-check-failed"; else echo "$n=install-failed"; fi >> "$dest/summary.txt"
+            done
+            git add -A && git commit -qm "distro results ${GITHUB_SHA::7}" && git push -q origin HEAD:refs/heads/ci-results && break
+            sleep $((try * 5))
+          done
