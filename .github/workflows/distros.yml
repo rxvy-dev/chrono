@@ -57,14 +57,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-        with: { path: dl }
+        with: { path: /tmp/dl }
       - name: Push to ci-results
         run: |
           git config user.name chrono-ci; git config user.email ci@chrono.invalid
           for try in 1 2 3 4 5; do
             git fetch origin ci-results && git checkout -qf FETCH_HEAD || exit 1
             dest="runs/${GITHUB_SHA::7}/distros"; mkdir -p "$dest"
-            for d in dl/distro-*; do n=${d#dl/distro-}; mkdir -p "$dest/$n"
+            git rm -rq --ignore-unmatch dl
+            for d in /tmp/dl/distro-*; do n=${d#/tmp/dl/distro-}; mkdir -p "$dest/$n"
               for f in install.log check.log chrono.log settings.log screen.png wlroots-lib.txt install.ok; do
                 [ -f "$d/$f" ] && { if [ "$f" = install.log ]; then tail -150 "$d/$f" > "$dest/$n/$f"; else cp "$d/$f" "$dest/$n/"; fi; }
               done
