@@ -1,0 +1,3 @@
+	libwlroots-0.20.so => /lib64/libwlroots-0.20.so (0x000073e8044ee000)
+	libwayland-server.so.0 => /lib64/libwayland-server.so.0 (0x000073e8044d9000)
+	libdrm.so.2 => /lib64/libdrm.so.2 (0x000073e80433f000)
