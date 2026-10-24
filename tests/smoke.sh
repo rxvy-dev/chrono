@@ -99,6 +99,7 @@ if command -v chrono-settings >/dev/null; then
 fi
 chronoctl action "volume up" >/dev/null; sleep 0.5; grim "$OUT/shell-osd.png"
 # right-clicks on the panel (bottom bar, 1080p): a taskbar button, then empty space
+chronoctl pointer 5 5 >/dev/null; sleep 1        # gives the seat a pointer (no mouse on CI)
 chronoctl pointer 5 5 left >/dev/null; sleep 0.4   # closes the power menu left open above
 H=$(chronoctl outputs | python3 -c 'import json,sys; o=json.load(sys.stdin)[0]; print(o["height"])')
 chronoctl pointer 260 $((H - 22)) right >/dev/null; sleep 0.8; grim "$OUT/shell-rightclick-task.png"

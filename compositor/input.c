@@ -984,6 +984,9 @@ void input_debug_pointer(struct chrono_server *s, double x, double y, const char
 	struct timespec now;
 	clock_gettime(CLOCK_MONOTONIC, &now);
 	uint32_t ms = (uint32_t)(now.tv_sec * 1000 + now.tv_nsec / 1000000);
+	/* a headless test machine has no mouse, so clients never asked for wl_pointer: advertise one */
+	if (!(s->seat->capabilities & WL_SEAT_CAPABILITY_POINTER))
+		wlr_seat_set_capabilities(s->seat, s->seat->capabilities | WL_SEAT_CAPABILITY_POINTER);
 	wlr_cursor_warp_closest(s->cursor, NULL, x, y);
 	cursor_update_focus(s, ms);
 	wlr_seat_pointer_notify_frame(s->seat);
