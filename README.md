@@ -35,7 +35,7 @@ Update later with `git pull && ./install.sh`. Remove with `./install.sh --uninst
 | Void Linux | ✅ tested in CI |
 | openSUSE Tumbleweed | ✅ tested in CI |
 | Alpine (edge) | ✅ tested in CI |
-| Ubuntu 24.04 LTS, Linux Mint 22, Pop!_OS 22/24 | ⚠️ builds, but not working yet (its Qt is too old) |
+| Ubuntu 24.04 LTS, Linux Mint 22, Pop!_OS 22/24 | ⚠️ installs, but the panel crashes on start (likely its older Qt 6.4 / layer-shell-qt); not supported yet |
 | Gentoo, NixOS, others | install the packages `./install.sh` lists, then run `./install.sh --no-deps` |
 
 Chrono needs wlroots **0.20**. If your distro doesn't package it, `install.sh` builds a private copy in
