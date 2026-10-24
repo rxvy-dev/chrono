@@ -1,0 +1,6 @@
+	libwlroots-0.20.so => /usr/lib/chrono/wlroots/lib/libwlroots-0.20.so (0x00007302143ef000)
+	libwayland-server.so.0 => /usr/lib/chrono/wlroots/lib/libwayland-server.so.0 (0x00007302143d6000)
+	libxkbcommon.so.0 => /usr/lib/chrono/wlroots/lib/libxkbcommon.so.0 (0x0000730214363000)
+	libpixman-1.so.0 => /usr/lib/chrono/wlroots/lib/libpixman-1.so.0 (0x00007302141e3000)
+	libdrm.so.2 => /usr/lib/chrono/wlroots/lib/libdrm.so.2 (0x0000730213790000)
+	libwayland-client.so.0 => /usr/lib/chrono/wlroots/lib/libwayland-client.so.0 (0x00007302135c6000)
