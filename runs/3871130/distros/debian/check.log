@@ -1,0 +1,17 @@
+Unable to find image 'debian:trixie' locally
+trixie: Pulling from library/debian
+8d0037029946: Pulling fs layer
+8d0037029946: Download complete
+5ec37b31f678: Download complete
+8d0037029946: Pull complete
+Digest: sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308
+Status: Downloaded newer image for debian:trixie
+== installing dependencies
+== your distro doesn't package wlroots 0.20 yet: building a private copy in /usr/lib/chrono/wlroots
+== building wlroots 0.20.2 into /usr/lib/chrono/wlroots
+== pixman 0.44.0 is older than 0.46.0: building pixman-0.46.4 privately
+== libwayland 1.23.1 is older than 1.24.0: building 1.24.91 privately
+== wayland-protocols 1.44 is older than 1.47: building it too
+== wlroots 0.20.2 installed in /usr/lib/chrono/wlroots
+== using wlroots 0.20.2 from /usr/lib/chrono/wlroots/lib
+distro check passed
